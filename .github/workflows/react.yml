@@ -36,7 +36,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Yarn Test
-        run: npm test --passWithNoTests
+        run: yarn test --passWithNoTests
         env:
           CI: true
 
