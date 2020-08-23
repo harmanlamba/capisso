@@ -33,6 +33,15 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.+(js|jsx|ts|tsx)": "tslint --fix",
+    "*.+(json|css|html|md)": "prettier --write"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -48,6 +57,8 @@
   "devDependencies": {
     "@material-ui/types": "^5.1.0",
     "@types/react-router-dom": "^5.1.5",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
     "redux-devtools-extension": "^2.13.8",
     "tslint": "^6.1.3",
