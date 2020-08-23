@@ -1,0 +1,47 @@
+name: React Client Workflow
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Get Yarn Cache
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.OS }}-node-${{ hashFiles('client/yarn.lock') }}
+
+      - name: Yarn Install
+        run: yarn install --frozen-lockfile
+
+      - name: Yarn Test
+        run: npm test --passWithNoTests
+        env:
+          CI: true
+
+      - name: Yarn Build
+        run: yarn build
+
+      - name: Lint Files
+        run: yarn lint
