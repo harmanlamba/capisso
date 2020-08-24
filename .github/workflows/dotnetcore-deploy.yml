@@ -28,7 +28,7 @@ jobs:
       - name: Deploy build via SFTP
         uses: SamKirkland/FTP-Deploy-Action@3.1.1
         with:
-          ftp-server: ${{ secrets.SSH_BACKEND_DESTINATION }}
+          ftp-server: ${{ secrets.SFTP_BACKEND_DESTINATION }}
           ftp-username: ${{ secrets.SSH_USER }}
           ftp-password: ${{ secrets.SSH_PASS }}
           local-dir: server/build
