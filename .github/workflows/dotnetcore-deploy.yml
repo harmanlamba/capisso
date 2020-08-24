@@ -37,7 +37,7 @@ jobs:
       - name: Restart deployment
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ SSH_URL }}
+          host: ${{ secrets.SSH_URL }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASS }}
           port: 22
