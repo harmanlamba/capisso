@@ -1,11 +1,11 @@
-name: React Client Build Workflow
+name: React Client Deploy Workflow
 
 on:
-  pull_request:
+  push:
     branches: [master]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-
+      
       - name: Get Yarn Cache
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -35,11 +35,15 @@ jobs:
 
       - name: Yarn Test
         run: yarn test --passWithNoTests
-        env:
-          CI: true
 
       - name: Yarn Build
         run: yarn build
-
-      - name: Lint Files
-        run: yarn lint
+      
+      - name: Deploy build via SFTP (master only)
+        uses: SamKirkland/FTP-Deploy-Action@3.1.1
+        with:
+          ftp-server: ${{ secrets.SSH_DESTINATION }}
+          ftp-username: ${{ secrets.SSH_USER }}
+          ftp-password: ${{ secrets.SSH_PASS }}
+          local-dir: client/build/
+          git-ftp-args: --insecure

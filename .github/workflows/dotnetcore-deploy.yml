@@ -1,0 +1,44 @@
+name: .NET Server Deploy Workflow
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.101
+
+      - name: Dotnet Build
+        run: dotnet publish -r linux-x64 --self-contained false -o build
+
+      - name: Dotnet Test
+        run: dotnet test --verbosity normal
+        
+      - name: Deploy build via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@3.1.1
+        with:
+          ftp-server: ${{ secrets.SSH_BACKEND_DESTINATION }}
+          ftp-username: ${{ secrets.SSH_USER }}
+          ftp-password: ${{ secrets.SSH_PASS }}
+          local-dir: server/build
+          git-ftp-args: --insecure
+
+      - name: Restart deployment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ SSH_URL }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }}
+          port: 22
+          script: systemctl --user restart ${{ secrets.SERVICE_NAME }}
