@@ -1,3 +1,5 @@
+![.github/workflows/dotnetcore.yml](https://github.com/harmanlamba/capisso/workflows/.NET%20Server%20Build%20Workflow/badge.svg)
+![Node.js CI](https://github.com/harmanlamba/capisso/workflows/React%20Client%20Build%20Workflow/badge.svg)
 # Capisso
 Capisso is organisation management tool that tracks student projects.
 
