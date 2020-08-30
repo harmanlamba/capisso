@@ -21,10 +21,10 @@ namespace Capisso.Controllers
         }
 
         [HttpPost]
-        public async Task<CreatedDto> CreateOrganisation([FromBody] OrganisationDto organisationDto)
+        public async Task<ActionResult<CreatedDto>> CreateOrganisation([FromBody] OrganisationDto organisationDto)
         {
             int createdId = await _organisationService.CreateOrganisation(organisationDto);
-            return new CreatedDto { Id = createdId };
+            return Created($"/organisations/{createdId}", new CreatedDto { Id = createdId }); //TODO: Configure Base Url from configuration
         }
 
     }
