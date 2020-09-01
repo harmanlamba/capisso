@@ -86,8 +86,8 @@ namespace Capisso.Test.Controllers
 
             //Assert
             Assert.That(response.Count() == 1);
-            Assert.That(response.First().Id == organisations.First().Id);
-            Assert.That(response.First().Name == organisations.First().Name);
+            Assert.AreEqual(organisations.First().Id, response.First().Id);
+            Assert.AreEqual(organisations.First().Name, response.First().Name);
         }
 
     }
