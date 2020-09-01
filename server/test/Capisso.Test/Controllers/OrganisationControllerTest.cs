@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -60,6 +61,33 @@ namespace Capisso.Test.Controllers
             Assert.AreEqual(0, value.Id);
 
             _mockOrganisationRepository.Verify(x => x.InsertAsync(It.IsAny<Organisation>()), Times.Once);
+        }
+
+        [Test]
+        public async Task TestGetAllOrganisationOne()
+        {
+            //Arrange
+            var organisations = new List<Organisation> {
+                new Organisation {
+                    Id = 1,
+                    Name = "Test1",
+                    Address = "55 Symonds",
+                    Description = "UoA Accomodation",
+                    Status = "Adequate",
+                    Classifications = new List<string> { "Classficiation", "Classification1" }
+                }
+            };
+
+            _mockOrganisationRepository.Setup(x => x.GetAllAsync())
+                .Returns(async() => organisations);
+
+            //Act
+            IEnumerable<OrganisationDto> response = await _organisationsController.GetAllOrganisations();
+
+            //Assert
+            Assert.That(response.Count() == 1);
+            Assert.That(response.First().Id == organisations.First().Id);
+            Assert.That(response.First().Name == organisations.First().Name);
         }
 
     }

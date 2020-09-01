@@ -21,7 +21,7 @@ namespace Capisso.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<OrganisationDto>> ViewAllOrganisations()
+        public async Task<IEnumerable<OrganisationDto>> GetAllOrganisations()
         {
             return await _organisationService.GetAll();
         }
