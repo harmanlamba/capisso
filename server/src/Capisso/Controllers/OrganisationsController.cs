@@ -11,11 +11,11 @@ namespace Capisso.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class OrganisationController : ControllerBase
+    public class OrganisationsController : ControllerBase
     {
         private readonly IOrganisationService _organisationService;
 
-        public OrganisationController(IOrganisationService organisationService)
+        public OrganisationsController(IOrganisationService organisationService)
         {
             _organisationService = organisationService;
         }
