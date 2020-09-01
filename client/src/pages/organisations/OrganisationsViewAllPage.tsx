@@ -10,6 +10,9 @@ import {
   TableHead,
   TableRow,
   TableBody,
+  Box,
+  Typography,
+  Button,
 } from '@material-ui/core';
 
 import { getAllOrganisations } from '../../common/api/organisations';
@@ -55,9 +58,22 @@ export const OrganisationsViewAllPage: React.FC<{}> = () => {
 
   return (
     <div className={classes.content}>
-      <p>Welcome to the organisations landing page stub</p>
-
-      <Link to="/organisations/create">+ Add</Link>
+      <Box mb={2}>
+        <Typography variant="h4" display="inline">
+          {' '}
+          Organisations{' '}
+        </Typography>
+        <Box ml={2} position="relative" top="-0.5em" display="inline">
+          <Button
+            component={Link}
+            to="/organisations/add"
+            variant="contained"
+            color="primary"
+          >
+            + Add
+          </Button>
+        </Box>
+      </Box>
 
       <TableContainer component={Paper}>
         <Table className={classes.table}>
@@ -74,8 +90,7 @@ export const OrganisationsViewAllPage: React.FC<{}> = () => {
               <StyledTableRow key={row.id}>
                 <StyledTableCell> {row.name} </StyledTableCell>
                 <StyledTableCell>
-                  {' '}
-                  {row.classifications.join(', ')}{' '}
+                  {row.classifications.join(', ')}
                 </StyledTableCell>
                 <StyledTableCell> 0 </StyledTableCell>
                 <StyledTableCell> {row.status} </StyledTableCell>
