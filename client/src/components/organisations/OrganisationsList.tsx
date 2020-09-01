@@ -6,6 +6,7 @@ import {
   TableContainer,
   Table,
   Paper,
+  Chip,
   TableHead,
   TableRow,
   TableBody,
@@ -41,6 +42,16 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
+const getStatusColor = (status: string) => {
+  if (status === 'Active') {
+    return 'primary';
+  } else if (status === 'Inactive') {
+    return 'default';
+  } else {
+    return 'default';
+  }
+};
+
 export const OrganisationsList: React.FC<{
   organisations: IOrganisationDto[];
 }> = (props) => {
@@ -66,7 +77,9 @@ export const OrganisationsList: React.FC<{
                 {row.classifications.join(', ')}
               </StyledTableCell>
               <StyledTableCell> 0 </StyledTableCell>
-              <StyledTableCell> {row.status} </StyledTableCell>
+              <StyledTableCell>
+                <Chip label={row.status} color={getStatusColor(row.status)} />
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
