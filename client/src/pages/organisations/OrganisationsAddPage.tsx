@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
   },
 }));
 

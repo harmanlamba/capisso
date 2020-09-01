@@ -8,18 +8,17 @@ const useStyles = makeStyles((theme) => ({
   content: {
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
   },
 }));
 
-export const OrganisationsLandingPage: React.FC<{}> = () => {
+export const OrganisationsViewAllPage: React.FC<{}> = () => {
   const classes = useStyles();
 
   return (
     <div className={classes.content}>
       <p>Welcome to the organisations landing page stub</p>
 
-      <Link to="/organisations/add">+ Add</Link>
+      <Link to="/organisations/create">+ Add</Link>
     </div>
   );
 };
