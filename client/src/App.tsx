@@ -6,30 +6,41 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+import { NavigationDrawer } from './components/NavigationDrawer';
 import { OrganisationsLandingPage } from './pages/organisations/OrganisationsLandingPage';
 import { OrganisationsAddPage } from './pages/organisations/OrganisationsAddPage';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(() => ({
+  root: {
+    display: 'flex',
+  },
+}));
 
 export const App: React.FC<{}> = () => {
+  const classes = useStyles();
+
   return (
-    <Router>
-      <nav>Navigation component</nav>
+    <div className={classes.root}>
+      <Router>
+        <NavigationDrawer />
 
-      <Switch>
-        <Route
-          path="/organisations"
-          exact={true}
-          component={OrganisationsLandingPage}
-        />
-        <Route
-          path="/organisations/add"
-          exact={true}
-          component={OrganisationsAddPage}
-        />
+        <Switch>
+          <Route path="/organisations" exact={true}>
+            <OrganisationsLandingPage />
+          </Route>
 
-        <Route path="*">
-          <Redirect to="/organisations" />
-        </Route>
-      </Switch>
-    </Router>
+          <Route
+            path="/organisations/add"
+            exact={true}
+            component={OrganisationsAddPage}
+          />
+
+          <Route path="*">
+            <Redirect to="/organisations" />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
   );
 };

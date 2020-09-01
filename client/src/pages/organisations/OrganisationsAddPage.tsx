@@ -1,10 +1,22 @@
 import React from 'react';
 import { OrganisationsForm } from '../../components/organisations/OrganisationsForm';
+import { makeStyles } from '@material-ui/core';
+
+import { DRAWER_WIDTH } from '../../constants/constants';
+
+const useStyles = makeStyles((theme) => ({
+  content: {
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+  },
+}));
 
 export const OrganisationsAddPage: React.FC<{}> = () => {
+  const classes = useStyles();
   return (
-    <div>
-      <p>Welcome to the organisations create page stub</p>
+    <div className={classes.content}>
+      <p>Welcome to the organisations create page</p>
 
       <OrganisationsForm />
     </div>
