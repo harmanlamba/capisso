@@ -5,7 +5,7 @@ export const addOrganisation = async (
   organisation: IOrganisationDto
 ): Promise<ICreatedDto> => {
   const res = await axios.post(
-    'http://localhost:5000/organisations',
+    `${process.env.REACT_APP_API_BASE}/organisations`,
     organisation
   );
 
