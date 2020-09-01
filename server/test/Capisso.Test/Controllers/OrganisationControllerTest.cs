@@ -79,7 +79,7 @@ namespace Capisso.Test.Controllers
             };
 
             _mockOrganisationRepository.Setup(x => x.GetAllAsync())
-                .Returns(async() => organisations);
+                .Returns(async () => organisations);
 
             //Act
             IEnumerable<OrganisationDto> response = await _organisationsController.GetAllOrganisations();

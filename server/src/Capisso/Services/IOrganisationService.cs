@@ -8,6 +8,6 @@ namespace Capisso.Services
     public interface IOrganisationService
     {
         Task<int> CreateOrganisation(OrganisationDto organisationDto);
-        Task<IEnumerable<OrganisationDto>> GetAll(); 
+        Task<IEnumerable<OrganisationDto>> GetAll();
     }
 }
