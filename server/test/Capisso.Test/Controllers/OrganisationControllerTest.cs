@@ -20,7 +20,7 @@ namespace Capisso.Test.Controllers
         private MockUnitOfWork _mockUnitOfWork;
         private Mock<IOrganisationRepository> _mockOrganisationRepository;
         private OrganisationService _organisationService;
-        private OrganisationController _organisationController;
+        private OrganisationsController _organisationsController;
 
         [SetUp]
         public void Setup()
@@ -29,7 +29,7 @@ namespace Capisso.Test.Controllers
             _mockUnitOfWork = new MockUnitOfWork(_mockOrganisationRepository.Object);
             _organisationService = new OrganisationService(_mockUnitOfWork);
 
-            _organisationController = new OrganisationController(_organisationService);
+            _organisationsController = new OrganisationsController(_organisationService);
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Capisso.Test.Controllers
             _mockOrganisationRepository.Setup(x => x.InsertAsync(It.IsAny<Organisation>())).Returns(Task.FromResult(1));
 
             //Act
-            ActionResult<CreatedDto> response = await _organisationController.CreateOrganisation(organisationDto);
+            ActionResult<CreatedDto> response = await _organisationsController.CreateOrganisation(organisationDto);
 
             //Assert
             Assert.IsInstanceOf<CreatedResult>(response.Result);
