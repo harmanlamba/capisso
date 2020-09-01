@@ -6,7 +6,7 @@ import { DRAWER_WIDTH } from '../../constants/constants';
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    width: '100%',
     flexGrow: 1,
   },
 }));

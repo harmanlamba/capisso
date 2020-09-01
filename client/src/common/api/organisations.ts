@@ -11,3 +11,11 @@ export const addOrganisation = async (
 
   return res.data as ICreatedDto;
 };
+
+export const getAllOrganisations = async (): Promise<IOrganisationDto[]> => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_BASE}/organisations`
+  );
+
+  return res.data as IOrganisationDto[];
+};

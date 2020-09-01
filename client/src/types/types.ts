@@ -3,6 +3,7 @@ export interface ICreatedDto {
 }
 
 export interface IOrganisationDto {
+  id?: number;
   name: string;
   description: string;
   address: string;
