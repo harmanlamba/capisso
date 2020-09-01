@@ -2,8 +2,6 @@ import React from 'react';
 import { OrganisationsForm } from '../../components/organisations/OrganisationsForm';
 import { makeStyles } from '@material-ui/core';
 
-import { DRAWER_WIDTH } from '../../constants/constants';
-
 const useStyles = makeStyles((theme) => ({
   content: {
     width: '100%',

@@ -12,7 +12,6 @@ import {
   TableBody,
 } from '@material-ui/core';
 
-import { DRAWER_WIDTH } from '../../constants/constants';
 import { getAllOrganisations } from '../../common/api/organisations';
 import { IOrganisationDto } from '../../types/types';
 
