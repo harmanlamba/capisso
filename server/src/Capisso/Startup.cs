@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Capisso.Models;
+using Capisso.Repository;
+using Capisso.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,9 @@ namespace Capisso
                 options.UseMySql(Configuration["Database:ConnectionString"], mysqlOptions =>
                     mysqlOptions.ServerVersion(new Version(10, 4), ServerType.MariaDb))
             );
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IOrganisationService, OrganisationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
