@@ -20,6 +20,12 @@ namespace Capisso.Controllers
             _organisationService = organisationService;
         }
 
+        [HttpGet]
+        public async Task<IEnumerable<OrganisationDto>> ViewAllOrganisations()
+        {
+            return await _organisationService.GetAll();
+        }
+
         [HttpPost]
         public async Task<ActionResult<CreatedDto>> CreateOrganisation([FromBody] OrganisationDto organisationDto)
         {
