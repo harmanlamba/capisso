@@ -9,6 +9,7 @@ import {
 import { NavigationDrawer } from './components/NavigationDrawer';
 import { OrganisationsViewAllPage } from './pages/organisations/OrganisationsViewAllPage';
 import { OrganisationsAddPage } from './pages/organisations/OrganisationsAddPage';
+import { CoursesAddPage } from './pages/courses/CoursesAddPage';
 import { makeStyles, Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +38,12 @@ export const App: React.FC<{}> = () => {
               path="/organisations/add"
               exact={true}
               component={OrganisationsAddPage}
+            />
+
+            <Route
+              path="/courses/add"
+              exact={true}
+              component={CoursesAddPage}
             />
 
             <Route path="*">
