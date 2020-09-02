@@ -23,7 +23,11 @@ namespace Capisso.Test.Services
         public void Setup()
         {
             _mockOrganisationRepository = new Mock<IOrganisationRepository>();
-            _mockUnitOfWork = new MockUnitOfWork(_mockOrganisationRepository.Object);
+            _mockUnitOfWork = new MockUnitOfWork
+            {
+                OrganisationRepository = _mockOrganisationRepository.Object
+            };
+
             _organisationService = new OrganisationService(_mockUnitOfWork);
         }
 

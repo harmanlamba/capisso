@@ -25,7 +25,11 @@ namespace Capisso.Test.Controllers
         public void Setup()
         {
             _mockOrganisationRepository = new Mock<IOrganisationRepository>();
-            _mockUnitOfWork = new MockUnitOfWork(_mockOrganisationRepository.Object);
+            _mockUnitOfWork = new MockUnitOfWork
+            {
+                OrganisationRepository = _mockOrganisationRepository.Object
+            };
+
             _organisationService = new OrganisationService(_mockUnitOfWork);
 
             _organisationsController = new OrganisationsController(_organisationService);
