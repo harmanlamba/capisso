@@ -1,5 +1,6 @@
 ﻿using Capisso.Dto;
 using Capisso.Entities;
+using System;
 using System.Linq;
 
 namespace Capisso.Mapper
@@ -16,6 +17,19 @@ namespace Capisso.Mapper
                 Classifications = organisationDto.Classifications.ToList(),
                 Description = organisationDto.Description,
                 Status = organisationDto.Status
+            };
+        }
+
+        public static OrganisationDto ToDto(Organisation organisation)
+        {
+            return new OrganisationDto
+            {
+                Id = organisation.Id,
+                Name = organisation.Name,
+                Address = organisation.Address,
+                Classifications = organisation.Classifications,
+                Description = organisation.Description,
+                Status = organisation.Status
             };
         }
     }

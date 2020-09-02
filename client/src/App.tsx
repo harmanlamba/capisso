@@ -7,13 +7,15 @@ import {
 } from 'react-router-dom';
 
 import { NavigationDrawer } from './components/NavigationDrawer';
-import { OrganisationsLandingPage } from './pages/organisations/OrganisationsLandingPage';
+import { OrganisationsViewAllPage } from './pages/organisations/OrganisationsViewAllPage';
 import { OrganisationsAddPage } from './pages/organisations/OrganisationsAddPage';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Box } from '@material-ui/core';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    backgroundColor: theme.palette.background.default,
+    height: '100vh',
   },
 }));
 
@@ -25,21 +27,23 @@ export const App: React.FC<{}> = () => {
       <Router>
         <NavigationDrawer />
 
-        <Switch>
-          <Route path="/organisations" exact={true}>
-            <OrganisationsLandingPage />
-          </Route>
+        <Box width="100%" padding="1em">
+          <Switch>
+            <Route path="/organisations" exact={true}>
+              <OrganisationsViewAllPage />
+            </Route>
 
-          <Route
-            path="/organisations/add"
-            exact={true}
-            component={OrganisationsAddPage}
-          />
+            <Route
+              path="/organisations/add"
+              exact={true}
+              component={OrganisationsAddPage}
+            />
 
-          <Route path="*">
-            <Redirect to="/organisations" />
-          </Route>
-        </Switch>
+            <Route path="*">
+              <Redirect to="/organisations" />
+            </Route>
+          </Switch>
+        </Box>
       </Router>
     </div>
   );
