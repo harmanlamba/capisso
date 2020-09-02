@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Capisso.Test.Services
 {
-    class CourseServiceTest
+    public class CourseServiceTest
     {
         private MockUnitOfWork _mockUnitOfWork;
         private Mock<ICourseRepository> _mockCourseRepository;

@@ -36,7 +36,7 @@ namespace Capisso.Test.Controllers
         }
 
         [Test]
-        public async Task TestCreateOrganisationValidInput()
+        public async Task TestCreateCourseValidInput()
         {
             //Arrange
             var courseDto = new CourseDto
