@@ -17,6 +17,7 @@ namespace Capisso.Repository
         }
 
         public DbSet<Organisation> Organisations { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +37,14 @@ namespace Capisso.Repository
 
                 entity.Property(e => e.Address).IsRequired();
                 entity.Property(e => e.Status).IsRequired();
+            });
+
+            modelBuilder.Entity<Course>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired();
+                entity.Property(e => e.Code).IsRequired();
+                entity.Property(e => e.Description).IsRequired();
             });
         }
     }
