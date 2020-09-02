@@ -8,12 +8,14 @@ namespace Capisso.Test.Repository
 {
     public class MockUnitOfWork : IUnitOfWork
     {
-        public MockUnitOfWork(IOrganisationRepository organisationRepository)
+        public MockUnitOfWork()
         {
-            OrganisationRepository = organisationRepository;
+
         }
 
-        public IOrganisationRepository OrganisationRepository { get; }
+        public IOrganisationRepository OrganisationRepository { get; set; }
+
+        public ICourseRepository CourseRepository { get; set; }
 
         public void Dispose()
         {
