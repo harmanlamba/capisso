@@ -67,7 +67,7 @@ namespace Capisso.Test.Controllers
         public async Task TestGetAllOrganisationOne()
         {
             //Arrange
-            var organisations = new List<Organisation> {
+            IEnumerable<Organisation> organisations = new List<Organisation> {
                 new Organisation {
                     Id = 1,
                     Name = "Test1",
@@ -79,7 +79,7 @@ namespace Capisso.Test.Controllers
             };
 
             _mockOrganisationRepository.Setup(x => x.GetAllAsync())
-                .Returns(async () => organisations);
+                .Returns(Task.FromResult(organisations));
 
             //Act
             IEnumerable<OrganisationDto> response = await _organisationsController.GetAllOrganisations();
