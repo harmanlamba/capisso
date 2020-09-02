@@ -5,13 +5,11 @@ using Capisso.Repository;
 using Capisso.Services;
 using Capisso.Test.Repository;
 using FluentAssertions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Capisso.Test.Controllers
@@ -82,10 +80,10 @@ namespace Capisso.Test.Controllers
                 .Returns(Task.FromResult(organisations));
 
             //Act
-            IEnumerable<OrganisationDto> response = await _organisationsController.GetAllOrganisations();
+            var response = await _organisationsController.GetAllOrganisations();
 
             //Assert
-            Assert.That(response.Count() == 1);
+            Assert.AreEqual(1, response.Count());
             Assert.AreEqual(organisations.First().Id, response.First().Id);
             Assert.AreEqual(organisations.First().Name, response.First().Name);
         }
