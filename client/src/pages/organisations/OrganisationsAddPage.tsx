@@ -13,8 +13,6 @@ export const OrganisationsAddPage: React.FC<{}> = () => {
   const classes = useStyles();
   return (
     <div className={classes.content}>
-      <p>Welcome to the organisations create page</p>
-
       <OrganisationsForm />
     </div>
   );

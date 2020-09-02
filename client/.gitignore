@@ -2,6 +2,7 @@
 
 # config
 .env
+.env.development
 
 # dependencies
 /node_modules
