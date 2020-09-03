@@ -48,7 +48,7 @@ namespace Capisso
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IOrganisationService, OrganisationService>();
             services.AddScoped<ICourseService, CourseService>();
-
+            services.AddScoped<IProjectService, ProjectService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
