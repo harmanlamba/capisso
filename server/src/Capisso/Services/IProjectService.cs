@@ -9,6 +9,6 @@ namespace Capisso.Services
     public interface IProjectService
     {
         Task<int> CreateProject(ProjectDto projectDto);
-        Task<ProjectDto> GetProjectAsync(int projectId);
+        Task<ProjectDto> GetProject(int projectId);
     }
 }
