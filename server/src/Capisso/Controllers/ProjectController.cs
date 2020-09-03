@@ -27,5 +27,17 @@ namespace Capisso.Controllers
             return Created($"/projects/{createdId}", new CreatedDto { Id = createdId }); //TODO: Configure Base Url from configuration
         }
 
+        [HttpGet("{projectId:int}")]
+        public async Task<ActionResult<ProjectDto>> GetProject(int projectId)
+        {
+            var projectDto = await _projectService.GetProjectAsync(projectId);
+
+            if (projectDto == null)
+            {
+                return NotFound(); ;
+            }
+
+            return Ok(projectDto);
+        }
     }
 }
