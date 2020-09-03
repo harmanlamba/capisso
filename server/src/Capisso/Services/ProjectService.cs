@@ -31,5 +31,11 @@ namespace Capisso.Services
             var projects = await _unitOfWork.ProjectRepository.GetAllAsync();
             return projects.Select(project => ProjectMapper.ToDto(project));
         }
+
+        public async Task<ProjectDto> GetProjectAsync(int projectId)
+        {
+            var project = await _unitOfWork.ProjectRepository.GetByIdAsync(projectId);
+            return ProjectMapper.ToDto(project);
+        }
     }
 }
