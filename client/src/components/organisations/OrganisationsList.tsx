@@ -35,16 +35,6 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-export const getStatusColor = (status: string) => {
-  if (status === 'Active') {
-    return 'primary';
-  } else if (status === 'Inactive') {
-    return 'default';
-  } else {
-    return 'default';
-  }
-};
-
 export const OrganisationsList: React.FC<{
   organisations: IOrganisationDto[];
 }> = (props) => {
