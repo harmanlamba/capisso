@@ -26,6 +26,21 @@ namespace Capisso.Controllers
             return await _organisationService.GetAll();
         }
 
+        [HttpGet]
+        [Route("{organisationId}")]
+        public async Task<ActionResult<OrganisationDto>> GetOrganisation(int organisationId)
+        {
+            var organisation = await _organisationService.Get(organisationId);
+            if (organisation == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return organisation;
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<CreatedDto>> CreateOrganisation([FromBody] OrganisationDto organisationDto)
         {
