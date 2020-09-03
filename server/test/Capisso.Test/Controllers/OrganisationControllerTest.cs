@@ -92,5 +92,51 @@ namespace Capisso.Test.Controllers
             Assert.AreEqual(organisations.First().Name, response.First().Name);
         }
 
+        [Test]
+        public async Task TestGetOneOrganisation()
+        {
+            //Arrange
+            var organisation = new Organisation
+            {
+                Id = 1,
+                Name = "Test1",
+                Address = "55 Symonds",
+                Description = "UoA Accomodation",
+                Status = "Adequate",
+                Classifications = new List<string> { "Classficiation", "Classification1" }
+            };
+
+            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1))
+                .Returns(Task.FromResult(organisation));
+
+            //Act
+            var response = await _organisationsController.GetOrganisation(1);
+
+            //Assert
+            Assert.IsInstanceOf<OkObjectResult>(response.Result);
+            var result = response.Result as OkObjectResult;
+
+            Assert.IsInstanceOf<OrganisationDto>(result.Value);
+            var value = result.Value as OrganisationDto;
+
+            Assert.AreEqual(organisation.Id, value.Id);
+            Assert.AreEqual(organisation.Name, value.Name);
+
+        }
+
+        [Test]
+        public async Task TestGetOneOrganisationNotExists()
+        {
+            //Arrange
+            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(2))
+                .Returns(Task.FromResult<Organisation>(null));
+
+            //Act
+            var response = await _organisationsController.GetOrganisation(2);
+
+            //Assert
+            Assert.Null(response.Value);
+            Assert.IsInstanceOf<NotFoundResult>(response.Result);
+        }
     }
 }

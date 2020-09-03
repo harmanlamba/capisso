@@ -19,3 +19,13 @@ export const getAllOrganisations = async (): Promise<IOrganisationDto[]> => {
 
   return res.data as IOrganisationDto[];
 };
+
+export const getOrganisation = async (
+  organisationId: number
+): Promise<IOrganisationDto> => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_BASE}/organisations/${organisationId}`
+  );
+
+  return res.data as IOrganisationDto;
+};
