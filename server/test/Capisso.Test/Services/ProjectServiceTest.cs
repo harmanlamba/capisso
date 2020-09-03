@@ -70,7 +70,7 @@ namespace Capisso.Test.Services
             _mockProjectRepository.Setup(x => x.GetByIdAsync(It.IsAny<int>())).Returns(Task.FromResult<Project>(project));
 
             //Act
-            var projectDto = await _projectService.GetProjectAsync(1);
+            var projectDto = await _projectService.GetProject(1);
 
             //Assert
             Assert.AreEqual(1, projectDto.Id);

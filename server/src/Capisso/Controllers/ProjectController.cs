@@ -33,7 +33,7 @@ namespace Capisso.Controllers
             ProjectDto projectDto;
             try
             {
-                projectDto = await _projectService.GetProjectAsync(id);
+                projectDto = await _projectService.GetProject(id);
 
             }
             catch (EntityNotFoundException)
