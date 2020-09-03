@@ -56,10 +56,10 @@ export const OrganisationsForm: React.FC<{}> = () => {
         status: '',
         classifications: [],
       }}
-      onSubmit={async (values, { resetForm }) => {
+      onSubmit={async (values) => {
         try {
           await addOrganisation(values as IOrganisationDto);
-          resetForm();
+          history.goBack();
         } catch (e) {
           console.error(e);
         }
