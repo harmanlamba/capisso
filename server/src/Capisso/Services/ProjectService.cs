@@ -35,7 +35,13 @@ namespace Capisso.Services
         public async Task<ProjectDto> GetProjectAsync(int projectId)
         {
             var project = await _unitOfWork.ProjectRepository.GetByIdAsync(projectId);
-            return ProjectMapper.ToDto(project);
+
+            if (project != null)
+            {
+                return ProjectMapper.ToDto(project);
+            }
+
+            return null;
         }
     }
 }
