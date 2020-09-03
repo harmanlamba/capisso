@@ -10,8 +10,10 @@ import {
   TableHead,
   TableRow,
   TableBody,
+  useTheme,
 } from '@material-ui/core';
 import { IOrganisationDto } from '../../types/types';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -34,14 +36,6 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-}))(TableRow);
-
 export const getStatusColor = (status: string) => {
   if (status === 'Active') {
     return 'primary';
@@ -56,6 +50,8 @@ export const OrganisationsList: React.FC<{
   organisations: IOrganisationDto[];
 }> = (props) => {
   const classes = useStyles();
+  const theme = useTheme();
+
   const organisations = props.organisations;
 
   return (
@@ -71,7 +67,15 @@ export const OrganisationsList: React.FC<{
         </TableHead>
         <TableBody>
           {organisations.map((row) => (
-            <StyledTableRow key={row.id}>
+            <TableRow
+              key={row.id}
+              hover={true}
+              component={Link}
+              to={`/organisations/${row.id}/about`}
+              classes={{
+                root: 'no-underline',
+              }}
+            >
               <StyledTableCell> {row.name} </StyledTableCell>
               <StyledTableCell>
                 {row.classifications.join(', ')}
@@ -80,7 +84,7 @@ export const OrganisationsList: React.FC<{
               <StyledTableCell>
                 <Chip label={row.status} color={getStatusColor(row.status)} />
               </StyledTableCell>
-            </StyledTableRow>
+            </TableRow>
           ))}
         </TableBody>
       </Table>
