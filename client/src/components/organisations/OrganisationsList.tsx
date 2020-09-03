@@ -42,7 +42,7 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-const getStatusColor = (status: string) => {
+export const getStatusColor = (status: string) => {
   if (status === 'Active') {
     return 'primary';
   } else if (status === 'Inactive') {

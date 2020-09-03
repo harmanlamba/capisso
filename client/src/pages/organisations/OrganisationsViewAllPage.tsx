@@ -26,8 +26,7 @@ export const OrganisationsViewAllPage: React.FC<{}> = () => {
     <div className={classes.content}>
       <Box mb={2}>
         <Typography variant="h4" display="inline">
-          {' '}
-          Organisations{' '}
+          Organisations
         </Typography>
         <Box ml={2} position="relative" top="-0.5em" display="inline">
           <Button

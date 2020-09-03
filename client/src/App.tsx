@@ -13,6 +13,7 @@ import { CoursesViewAllPage } from './pages/courses/CoursesViewAllPage';
 import { CoursesAddPage } from './pages/courses/CoursesAddPage';
 
 import { makeStyles, Box } from '@material-ui/core';
+import { OrganisationViewPage } from './pages/organisations/OrganisationViewPage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,6 +42,13 @@ export const App: React.FC<{}> = () => {
               exact={true}
               component={OrganisationsAddPage}
             />
+
+            <Route
+              path="/organisations/:id/:page"
+              component={OrganisationViewPage}
+            />
+
+            <Route path="/organisations/:id" component={OrganisationViewPage} />
 
             <Route path="/courses" exact={true}>
               <CoursesViewAllPage />
