@@ -65,5 +65,54 @@ namespace Capisso.Test.Controllers
             _mockProjectRepository.Verify(x => x.InsertAsync(It.IsAny<Project>()), Times.Once);
         }
 
+        [Test]
+        public async Task TestGetSingularProject()
+        {
+            //Arrange
+            var project = new Project
+            {
+                Id = 1,
+                Title = "HCI Extreme",
+                Notes = "Notes Test",
+                Outcome = "Outcome Test",
+                StartDate = new DateTime(),
+                EndDate = new DateTime()
+            };
+
+            _mockProjectRepository.Setup(x => x.GetByIdAsync(1)).Returns(Task.FromResult<Project>(project));
+
+
+            //Act
+            ActionResult<ProjectDto> response = await _projectsController.GetProject(1);
+            OkObjectResult okResult = response.Result as OkObjectResult;
+            ProjectDto projectDto = okResult.Value.As<ProjectDto>();
+
+            //Assert
+            Assert.AreEqual(200, okResult.StatusCode);
+            Assert.NotNull(okResult.Value);
+            Assert.AreEqual(project.Id, projectDto.Id);
+            Assert.AreEqual(project.Title, projectDto.Title);
+
+            _mockProjectRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
+        }
+
+        [Test]
+        public async Task TestGetSingularProjectNotExists()
+        {
+            //Arrange
+            _mockProjectRepository.Setup(x => x.GetByIdAsync(2)).Returns(Task.FromResult<Project>(null));
+
+            //Act
+            ActionResult<ProjectDto> response = await _projectsController.GetProject(2);
+            NotFoundResult notFoundResult = response.Result as NotFoundResult;
+
+            //Assert
+            Assert.AreEqual(404, notFoundResult.StatusCode);
+
+            ProjectDto value = notFoundResult.As<ProjectDto>();
+            Assert.IsNull(value);
+
+            _mockProjectRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
+        }
     }
 }
