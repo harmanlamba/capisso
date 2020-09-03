@@ -62,5 +62,31 @@ namespace Capisso.Test.Controllers
             _mockCourseRepository.Verify(x => x.InsertAsync(It.IsAny<Course>()), Times.Once);
         }
 
+        [Test]
+        public async Task TestGetSingularCourse()
+        {
+            //Arrange
+            var course = new Course
+            {
+                Id = 1,
+                Name = "Course1",
+                Code = "Code1"
+            };
+
+            _mockCourseRepository.Setup(x => x.GetByIdAsync(1)).Returns(Task.FromResult<Course>(course));
+
+            //Act
+            ActionResult<CourseDto> response = await _coursesController.GetCourse(1);
+            OkObjectResult okResult = response.Result as OkObjectResult;
+            CourseDto courseDto = okResult.Value.As<CourseDto>();
+
+            //Assert
+            Assert.AreEqual(200, okResult.StatusCode);
+            Assert.NotNull(okResult.Value);
+            Assert.AreEqual(course.Id, courseDto.Id);
+            Assert.AreEqual(course.Name, courseDto.Name);
+            _mockCourseRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
+        }
+
     }
 }

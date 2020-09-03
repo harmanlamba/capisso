@@ -25,5 +25,13 @@ namespace Capisso.Services
 
             return course.Id;
         }
+
+        public async Task<CourseDto> GetCourse(int id)
+        {
+            var course = await _unitOfWork.CourseRepository.GetByIdAsync(id) ?? 
+                throw new EntityNotFoundException();
+
+            return CourseMapper.ToDto(course);
+        }
     }
 }

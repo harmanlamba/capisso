@@ -24,7 +24,24 @@ namespace Capisso.Controllers
         public async Task<ActionResult<CreatedDto>> CreateCourse([FromBody] CourseDto courseDto)
         {
             int createdId = await _courseService.CreateCourse(courseDto);
+
             return Created($"/courses/{createdId}", new CreatedDto { Id = createdId }); //TODO: Configure Base Url from configuration
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<CourseDto>> GetCourse(int id)
+        {
+            CourseDto courseDto; 
+            try
+            {
+                courseDto = await _courseService.GetCourse(id);
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return Ok(courseDto);
         }
 
     }
