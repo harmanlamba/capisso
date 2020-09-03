@@ -25,11 +25,27 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: '0 5px',
   },
+  classificationsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  classificationInput: {
+    flexGrow: 1,
+    marginRight: '25px',
+  },
+  classificationButton: {
+    margin: '12px 0',
+  },
 }));
 
 export const OrganisationsForm: React.FC<{}> = () => {
   const history = useHistory();
   const classes = useStyles();
+
+  const [classificationInput, setClassificationInput] = React.useState<string>(
+    ''
+  );
 
   return (
     <Formik
@@ -122,18 +138,26 @@ export const OrganisationsForm: React.FC<{}> = () => {
                     />
                   ))}
 
-                  <TextField
-                    className={classes.textField}
-                    fullWidth={true}
-                    variant="filled"
-                    label="Classifications"
-                    onKeyDown={(e: any) => {
-                      // enter
-                      if (e.keyCode === 13 && e.target.value) {
-                        arrayHelpers.push(e.target.value);
-                      }
-                    }}
-                  />
+                  <div className={classes.classificationsContainer}>
+                    <TextField
+                      className={`${classes.classificationInput} ${classes.textField}`}
+                      variant="filled"
+                      label="Classifications"
+                      value={classificationInput}
+                      onChange={(e) => setClassificationInput(e.target.value)}
+                    />
+                    <Button
+                      className={classes.classificationButton}
+                      onClick={() => {
+                        arrayHelpers.push(classificationInput);
+                        setClassificationInput('');
+                      }}
+                      variant="contained"
+                      color="default"
+                    >
+                      Add Classification
+                    </Button>
+                  </div>
                 </div>
               )}
             />
