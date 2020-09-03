@@ -5,7 +5,6 @@ import {
   Typography,
   Box,
   Button,
-  Chip,
   AppBar,
   Tabs,
   Tab,
@@ -13,8 +12,8 @@ import {
 import { useParams } from 'react-router-dom';
 import { IOrganisationDto } from '../../types/types';
 import { getOrganisation } from '../../common/api/organisations';
-import { getStatusColor } from '../../components/organisations/OrganisationsList';
 import { OrganisationViewAbout } from '../../components/organisations/OrganisationViewAbout';
+import { OrganisationStatusChip } from '../../components/organisations/OrganisationStatusChip';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -74,10 +73,7 @@ export const OrganisationViewPage: React.FC<{}> = () => {
               {organisation.name}
             </Typography>
             <Box ml={2} position="relative" top="-0.5em" display="inline">
-              <Chip
-                label={organisation.status}
-                color={getStatusColor(organisation.status)}
-              />{' '}
+              <OrganisationStatusChip status={organisation.status} />{' '}
               <Button variant="outlined" color="primary">
                 Edit
               </Button>

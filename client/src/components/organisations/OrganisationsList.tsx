@@ -6,14 +6,13 @@ import {
   TableContainer,
   Table,
   Paper,
-  Chip,
   TableHead,
   TableRow,
   TableBody,
-  useTheme,
 } from '@material-ui/core';
 import { IOrganisationDto } from '../../types/types';
 import { Link } from 'react-router-dom';
+import { OrganisationStatusChip } from './OrganisationStatusChip';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -50,7 +49,6 @@ export const OrganisationsList: React.FC<{
   organisations: IOrganisationDto[];
 }> = (props) => {
   const classes = useStyles();
-  const theme = useTheme();
 
   const organisations = props.organisations;
 
@@ -82,7 +80,7 @@ export const OrganisationsList: React.FC<{
               </StyledTableCell>
               <StyledTableCell> 0 </StyledTableCell>
               <StyledTableCell>
-                <Chip label={row.status} color={getStatusColor(row.status)} />
+                <OrganisationStatusChip status={row.status} />
               </StyledTableCell>
             </TableRow>
           ))}
