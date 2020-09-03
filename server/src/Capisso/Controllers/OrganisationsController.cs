@@ -23,21 +23,21 @@ namespace Capisso.Controllers
         [HttpGet]
         public async Task<IEnumerable<OrganisationDto>> GetAllOrganisations()
         {
-            return await _organisationService.GetAll();
+            return await _organisationService.GetAllOrganisations();
         }
 
         [HttpGet]
         [Route("{organisationId}")]
         public async Task<ActionResult<OrganisationDto>> GetOrganisation(int organisationId)
         {
-            var organisation = await _organisationService.Get(organisationId);
+            var organisation = await _organisationService.GetOrganisation(organisationId);
             if (organisation == null)
             {
                 return NotFound();
             }
             else
             {
-                return organisation;
+                return Ok(organisation);
             }
         }
 

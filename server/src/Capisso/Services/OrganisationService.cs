@@ -26,13 +26,13 @@ namespace Capisso.Services
             return organisation.Id;
         }
 
-        public async Task<IEnumerable<OrganisationDto>> GetAll()
+        public async Task<IEnumerable<OrganisationDto>> GetAllOrganisations()
         {
             var organisations = await _unitOfWork.OrganisationRepository.GetAllAsync();
             return organisations.Select(organisation => OrganisationMapper.ToDto(organisation));
         }
 
-        public async Task<OrganisationDto> Get(int organisationId)
+        public async Task<OrganisationDto> GetOrganisation(int organisationId)
         {
             var organisation = await _unitOfWork.OrganisationRepository.GetByIdAsync(organisationId);
             if (organisation == null)

@@ -113,9 +113,15 @@ namespace Capisso.Test.Controllers
             var response = await _organisationsController.GetOrganisation(1);
 
             //Assert
-            Assert.NotNull(response.Value);
-            Assert.AreEqual(organisation.Id, response.Value.Id);
-            Assert.AreEqual(organisation.Name, response.Value.Name);
+            Assert.IsInstanceOf<OkObjectResult>(response.Result);
+            var result = response.Result as OkObjectResult;
+
+            Assert.IsInstanceOf<OrganisationDto>(result.Value);
+            var value = result.Value as OrganisationDto;
+
+            Assert.AreEqual(organisation.Id, value.Id);
+            Assert.AreEqual(organisation.Name, value.Name);
+
         }
 
         [Test]
