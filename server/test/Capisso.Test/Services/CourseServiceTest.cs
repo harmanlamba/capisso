@@ -71,5 +71,33 @@ namespace Capisso.Test.Services
             Assert.AreEqual(course.Name, courseDto.Name);
             _mockCourseRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
         }
+
+        [Test]
+        public async Task TestUpdateCourseValidInput()
+        {
+            //Arrange
+            var course = new Course
+            {
+                Id = 1,
+                Name = "Course1",
+                Code = "Code1"
+            };
+            var courseDto = new CourseDto
+            {
+                Id = 1,
+                Name = "Course1New",
+                Code = "Code1New"
+            };
+
+            _mockCourseRepository.Setup(x => x.GetByIdAsync(It.IsAny<int>())).Returns(Task.FromResult<Course>(course));
+            _mockCourseRepository.Setup(x => x.Update(It.IsAny<Course>()));
+
+            //Act
+            await _courseService.UpdateCourse(courseDto);
+
+            //Assert
+            _mockCourseRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
+            _mockCourseRepository.Verify(x => x.Update(It.IsAny<Course>()), Times.Once);
+        }
     }
 }

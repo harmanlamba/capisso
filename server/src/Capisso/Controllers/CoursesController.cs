@@ -44,5 +44,20 @@ namespace Capisso.Controllers
             return Ok(courseDto);
         }
 
+        [HttpPut]
+        public async Task<ActionResult> UpdateCourse([FromBody] CourseDto courseDto)
+        {
+            try
+            {
+                await _courseService.UpdateCourse(courseDto);
+            } 
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
+
     }
 }
