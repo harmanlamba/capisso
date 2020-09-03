@@ -17,3 +17,12 @@ export interface ICourseDto {
   code: string;
   description: string;
 }
+
+export interface IProjectDto {
+  id?: number;
+  title: string;
+  notes: string;
+  outcome: string;
+  startDate: any;
+  endDate: any;
+}
