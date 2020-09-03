@@ -14,6 +14,7 @@ import { useParams } from 'react-router-dom';
 import { IOrganisationDto } from '../../types/types';
 import { getOrganisation } from '../../common/api/organisations';
 import { getStatusColor } from '../../components/organisations/OrganisationsList';
+import { OrganisationViewAbout } from '../../components/organisations/OrganisationViewAbout';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -90,15 +91,23 @@ export const OrganisationViewPage: React.FC<{}> = () => {
               <Tab label="Communications" />
             </Tabs>
           </AppBar>
-          <Switch>
-            <Route path="/organisations/:id/about" exact={true} />
-            <Route path="/organisations/:id/projects" exact={true} />
-            <Route path="/organisations/:id/contacts" />
-            <Route path="/organisations/:id/communications" exact={true} />
-            <Route path="*">
-              <Redirect to={`/organisations/${id}/about`} />
-            </Route>
-          </Switch>
+          <Box pt={2}>
+            <Switch>
+              <Route
+                path="/organisations/:id/about"
+                exact={true}
+                render={() => (
+                  <OrganisationViewAbout organisation={organisation} />
+                )}
+              />
+              <Route path="/organisations/:id/projects" exact={true} />
+              <Route path="/organisations/:id/contacts" />
+              <Route path="/organisations/:id/communications" exact={true} />
+              <Route path="*">
+                <Redirect to={`/organisations/${id}/about`} />
+              </Route>
+            </Switch>
+          </Box>
         </>
       ) : (
         'Loading...'
