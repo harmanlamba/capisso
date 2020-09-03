@@ -48,6 +48,7 @@ namespace Capisso
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IOrganisationService, OrganisationService>();
             services.AddScoped<ICourseService, CourseService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +66,12 @@ namespace Capisso
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+            var context = serviceScope.ServiceProvider.GetRequiredService<CapissoContext>();
+
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
         }
     }
 }
