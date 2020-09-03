@@ -13,8 +13,7 @@ namespace Capisso.Repository
         public CapissoContext(DbContextOptions<CapissoContext> options)
             : base(options)
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
+
         }
 
         public DbSet<Organisation> Organisations { get; set; }
