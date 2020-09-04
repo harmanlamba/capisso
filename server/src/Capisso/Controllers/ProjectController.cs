@@ -44,8 +44,7 @@ namespace Capisso.Controllers
             return Ok(projectDto);
         }
 
-        [HttpPut]
-        [Route("{projectId}")]
+        [HttpPut("{projectId:int}")]
         public async Task<ActionResult> UpdateProject([FromBody] ProjectDto projectDto, [FromRoute] int projectId)
         {
             if (projectDto.Id != projectId)
