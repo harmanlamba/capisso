@@ -1,14 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Formik, FieldArray, Form } from 'formik';
-import {
-  TextField,
-  Button,
-  Chip,
-  makeStyles,
-  Box,
-  Typography,
-} from '@material-ui/core';
+import { TextField, Button, Chip, makeStyles, Box } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { IOrganisationDto } from '../../types/types';
 

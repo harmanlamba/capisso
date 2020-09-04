@@ -47,7 +47,7 @@ namespace Capisso.Controllers
         {
             int createdId = await _organisationService.CreateOrganisation(organisationDto);
             return Created($"/organisations/{createdId}",
-                new CreatedDto {Id = createdId}); //TODO: Configure Base Url from configuration
+                new CreatedDto { Id = createdId }); //TODO: Configure Base Url from configuration
         }
 
         [HttpPut]
@@ -62,7 +62,7 @@ namespace Capisso.Controllers
 
             await _organisationService.UpdateOrganisation(organisationDto);
             return NoContent();
-           
+
         }
     }
 }

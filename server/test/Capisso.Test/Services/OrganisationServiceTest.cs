@@ -40,7 +40,7 @@ namespace Capisso.Test.Services
                 Address = "55 Symonds",
                 Description = "UoA Accomodation",
                 Status = "Adequate",
-                Classifications = new List<string> {"Classficiation", "Classification1"}
+                Classifications = new List<string> { "Classficiation", "Classification1" }
             };
 
             _mockOrganisationRepository.Setup(x => x.InsertAsync(It.IsAny<Organisation>())).Returns(Task.FromResult(1));
@@ -63,7 +63,7 @@ namespace Capisso.Test.Services
                 Address = "55 Symonds",
                 Description = "UoA Accomodation",
                 Status = "Adequate",
-                Classifications = new List<string> {"Classficiation", "Classification1"}
+                Classifications = new List<string> { "Classficiation", "Classification1" }
             };
 
             _mockOrganisationRepository.Setup(x => x.Update(It.IsAny<Organisation>())).Verifiable();

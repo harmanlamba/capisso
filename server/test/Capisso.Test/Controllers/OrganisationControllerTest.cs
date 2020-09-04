@@ -45,7 +45,7 @@ namespace Capisso.Test.Controllers
                 Address = "55 Symonds",
                 Description = "UoA Accomodation",
                 Status = "Adequate",
-                Classifications = new List<string> {"Classficiation", "Classification1"}
+                Classifications = new List<string> { "Classficiation", "Classification1" }
             };
 
             _mockOrganisationRepository.Setup(x => x.InsertAsync(It.IsAny<Organisation>())).Returns(Task.FromResult(1));
@@ -105,7 +105,7 @@ namespace Capisso.Test.Controllers
                 Address = "55 Symonds",
                 Description = "UoA Accomodation",
                 Status = "Adequate",
-                Classifications = new List<string> {"Classficiation", "Classification1"}
+                Classifications = new List<string> { "Classficiation", "Classification1" }
             };
 
             _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1))
@@ -151,7 +151,7 @@ namespace Capisso.Test.Controllers
                 Address = "55 Symonds",
                 Description = "UoA Accomodation",
                 Status = "Adequate",
-                Classifications = new List<string> {"Classficiation", "Classification1"}
+                Classifications = new List<string> { "Classficiation", "Classification1" }
             };
 
             _mockOrganisationRepository.Setup(x => x.Update(It.IsAny<Organisation>())).Verifiable();
@@ -175,7 +175,7 @@ namespace Capisso.Test.Controllers
                 Address = "55 Symonds",
                 Description = "UoA Accomodation",
                 Status = "Adequate",
-                Classifications = new List<string> {"Classficiation", "Classification1"}
+                Classifications = new List<string> { "Classficiation", "Classification1" }
             };
 
             // Act
