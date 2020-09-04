@@ -39,10 +39,19 @@ namespace Capisso.Services
             {
                 return null;
             }
-            else
-            {
-                return OrganisationMapper.ToDto(organisation);
-            }
+
+            return OrganisationMapper.ToDto(organisation);
+        }
+
+        public async Task<bool> UpdateOrganisation(OrganisationDto organisationDto)
+        {
+            var organization = OrganisationMapper.FromDto(organisationDto);
+
+
+            _unitOfWork.OrganisationRepository.Update(organization);
+            await _unitOfWork.SaveAsync();
+
+            return true;
         }
     }
 }

@@ -10,5 +10,7 @@ namespace Capisso.Services
         Task<int> CreateOrganisation(OrganisationDto organisationDto);
         Task<IEnumerable<OrganisationDto>> GetAllOrganisations();
         Task<OrganisationDto> GetOrganisation(int organisationId);
+
+        Task<bool> UpdateOrganisation(OrganisationDto organisationDto);
     }
 }
