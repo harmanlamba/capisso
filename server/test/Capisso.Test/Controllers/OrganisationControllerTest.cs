@@ -45,7 +45,7 @@ namespace Capisso.Test.Controllers
                 Address = "55 Symonds",
                 Description = "UoA Accomodation",
                 Status = "Adequate",
-                Classifications = new List<string> { "Classficiation", "Classification1" }
+                Classifications = new List<string> {"Classficiation", "Classification1"}
             };
 
             _mockOrganisationRepository.Setup(x => x.InsertAsync(It.IsAny<Organisation>())).Returns(Task.FromResult(1));
@@ -69,14 +69,16 @@ namespace Capisso.Test.Controllers
         public async Task TestGetAllOrganisationOne()
         {
             //Arrange
-            IEnumerable<Organisation> organisations = new List<Organisation> {
-                new Organisation {
+            IEnumerable<Organisation> organisations = new List<Organisation>
+            {
+                new Organisation
+                {
                     Id = 1,
                     Name = "Test1",
                     Address = "55 Symonds",
                     Description = "UoA Accomodation",
                     Status = "Adequate",
-                    Classifications = new List<string> { "Classficiation", "Classification1" }
+                    Classifications = new List<string> {"Classficiation", "Classification1"}
                 }
             };
 
@@ -103,7 +105,7 @@ namespace Capisso.Test.Controllers
                 Address = "55 Symonds",
                 Description = "UoA Accomodation",
                 Status = "Adequate",
-                Classifications = new List<string> { "Classficiation", "Classification1" }
+                Classifications = new List<string> {"Classficiation", "Classification1"}
             };
 
             _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1))
@@ -121,7 +123,6 @@ namespace Capisso.Test.Controllers
 
             Assert.AreEqual(organisation.Id, value.Id);
             Assert.AreEqual(organisation.Name, value.Name);
-
         }
 
         [Test]
@@ -137,6 +138,52 @@ namespace Capisso.Test.Controllers
             //Assert
             Assert.Null(response.Value);
             Assert.IsInstanceOf<NotFoundResult>(response.Result);
+        }
+
+        [Test]
+        public async Task TestUpdateOrganisationWithValidId()
+        {
+            // Arrange
+            var organisation = new OrganisationDto
+            {
+                Id = 1,
+                Name = "Test1",
+                Address = "55 Symonds",
+                Description = "UoA Accomodation",
+                Status = "Adequate",
+                Classifications = new List<string> {"Classficiation", "Classification1"}
+            };
+
+            _mockOrganisationRepository.Setup(x => x.Update(It.IsAny<Organisation>())).Verifiable();
+
+            // Act
+            var response = await _organisationsController.UpdateOrganisation(organisation, 1);
+
+            // Assert
+            Assert.IsInstanceOf<NoContentResult>(response);
+            _mockOrganisationRepository.Verify();
+        }
+
+        [Test]
+        public async Task TestUpdateOrganisationWithInvalidId()
+        {
+            // Arrange
+            var organisation = new OrganisationDto
+            {
+                Id = 1,
+                Name = "Test1",
+                Address = "55 Symonds",
+                Description = "UoA Accomodation",
+                Status = "Adequate",
+                Classifications = new List<string> {"Classficiation", "Classification1"}
+            };
+
+            // Act
+            var response = await _organisationsController.UpdateOrganisation(organisation, 2);
+
+            // Assert
+            Assert.IsInstanceOf<BadRequestResult>(response);
+            _mockOrganisationRepository.Verify(x => x.Update(It.IsAny<Organisation>()), Times.Never);
         }
     }
 }
