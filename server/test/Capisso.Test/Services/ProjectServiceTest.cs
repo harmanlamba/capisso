@@ -76,5 +76,27 @@ namespace Capisso.Test.Services
             Assert.AreEqual(1, projectDto.Id);
             _mockProjectRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
         }
+
+        [Test]
+        public async Task TestUpdateProjectValidInput()
+        {
+            var projectDto = new ProjectDto
+            {
+                Title = "NewTitle",
+                Notes = "Note1",
+                Outcome = "Outcome1",
+                StartDate = new DateTime(),
+                EndDate = new DateTime(),
+            };
+
+            _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>()));
+
+            // Act
+            var result = await _projectService.UpdateProject(projectDto);
+
+            //Assert
+            Assert.IsTrue(result);
+            _mockProjectRepository.Verify(x => x.Update(It.IsAny<Project>()), Times.Once);
+        }
     }
 }

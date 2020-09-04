@@ -114,5 +114,54 @@ namespace Capisso.Test.Controllers
 
             _mockProjectRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
         }
+        public async Task TestUpdateProjectValidInput()
+        {
+            var projectDto = new ProjectDto
+            {
+                Id = 1,
+                Title = "NewTitle",
+                Notes = "NewNotes",
+                Outcome = "NewOutcome",
+                StartDate = new DateTime(),
+                EndDate = new DateTime(),
+            };
+
+            _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>()));
+
+            // Act
+            ActionResult<NonActionAttribute> response = await _projectsController.UpdateProject(projectDto, 1);
+
+            // Assert
+            Assert.IsInstanceOf<NoContentResult>(response.Result);
+            NoContentResult updateResult = response.Result as NoContentResult;
+            Assert.AreEqual(204, updateResult.StatusCode);
+
+            _mockProjectRepository.Verify(x => x.Update(It.IsAny<Project>()), Times.Once);
+        }
+
+        public async Task TestUpdateProjectInvalidInput()
+        {
+            var projectDto = new ProjectDto
+            {
+                Id = 2,
+                Title = "NewTitle",
+                Notes = "NewNotes",
+                Outcome = "NewOutcome",
+                StartDate = new DateTime(),
+                EndDate = new DateTime(),
+            };
+
+            _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>()));
+
+            // Act
+            ActionResult<NonActionAttribute> response = await _projectsController.UpdateProject(projectDto, 2);
+
+            // Assert
+            Assert.IsInstanceOf<BadRequestResult>(response.Result);
+            BadRequestResult updateResult = response.Result as BadRequestResult;
+            Assert.AreEqual(400, updateResult.StatusCode);
+
+            _mockProjectRepository.Verify(x => x.Update(It.IsAny<Project>()), Times.Never);
+        }
     }
 }
