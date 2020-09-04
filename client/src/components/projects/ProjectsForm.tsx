@@ -32,7 +32,6 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
 }) => {
   const history = useHistory();
   const classes = useStyles();
-  console.log(initialValues);
 
   return (
     <Formik
