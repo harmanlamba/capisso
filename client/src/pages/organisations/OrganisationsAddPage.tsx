@@ -1,6 +1,6 @@
 import React from 'react';
 import { OrganisationsForm } from '../../components/organisations/OrganisationsForm';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import { addOrganisation } from '../../common/api/organisations';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,6 +14,7 @@ export const OrganisationsAddPage: React.FC<{}> = () => {
   const classes = useStyles();
   return (
     <div className={classes.content}>
+      <Typography variant="h4">Add Organisation</Typography>
       <OrganisationsForm onSubmit={addOrganisation} />
     </div>
   );

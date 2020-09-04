@@ -97,7 +97,6 @@ export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
             flexDirection="column"
             justifyContent="center"
           >
-            <Typography variant="h4">Add Organisation</Typography>
             <TextField
               className={classes.textField}
               variant="filled"

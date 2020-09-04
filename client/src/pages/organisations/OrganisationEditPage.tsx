@@ -1,6 +1,6 @@
 import React from 'react';
 import { OrganisationsForm } from '../../components/organisations/OrganisationsForm';
-import { makeStyles, CircularProgress } from '@material-ui/core';
+import { makeStyles, CircularProgress, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import { IOrganisationDto } from '../../types/types';
 import {
@@ -36,6 +36,7 @@ export const OrganisationsEditPage: React.FC<{}> = () => {
 
   return (
     <div className={classes.content}>
+      <Typography variant="h4">Edit Organisation</Typography>
       {loading ? (
         <CircularProgress
           className={classes.progressRing}
