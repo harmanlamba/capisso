@@ -1,22 +1,21 @@
+import { Box, makeStyles } from '@material-ui/core';
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   Redirect,
+  Route,
+  Switch,
 } from 'react-router-dom';
-
 import { NavigationDrawer } from './components/NavigationDrawer';
-import { OrganisationsViewAllPage } from './pages/organisations/OrganisationsViewAllPage';
-import { OrganisationsAddPage } from './pages/organisations/OrganisationsAddPage';
-import { CoursesViewAllPage } from './pages/courses/CoursesViewAllPage';
 import { CoursesAddPage } from './pages/courses/CoursesAddPage';
-import { ProjectsViewAllPage } from './pages/projects/ProjectsViewAllPage';
-import { ProjectsAddPage } from './pages/projects/ProjectsAddPage';
-import { ProjectViewPage } from './pages/projects/ProjectViewPage';
-
-import { makeStyles, Box } from '@material-ui/core';
+import { CoursesViewAllPage } from './pages/courses/CoursesViewAllPage';
+import { OrganisationsAddPage } from './pages/organisations/OrganisationsAddPage';
+import { OrganisationsViewAllPage } from './pages/organisations/OrganisationsViewAllPage';
 import { OrganisationViewPage } from './pages/organisations/OrganisationViewPage';
+import { ProjectEditPage } from './pages/projects/ProjectEditPage';
+import { ProjectsAddPage } from './pages/projects/ProjectsAddPage';
+import { ProjectsViewAllPage } from './pages/projects/ProjectsViewAllPage';
+import { ProjectViewPage } from './pages/projects/ProjectViewPage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,6 +82,12 @@ export const App: React.FC<{}> = () => {
               path="/projects/:id"
               exact={true}
               component={ProjectViewPage}
+            />
+
+            <Route
+              path="/projects/:id/edit"
+              exact={true}
+              component={ProjectEditPage}
             />
 
             <Route

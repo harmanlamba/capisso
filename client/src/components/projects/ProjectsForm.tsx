@@ -1,12 +1,7 @@
-import {
-  Box,
-  Button,
-  makeStyles,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, makeStyles, TextField } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { Form, Formik } from 'formik';
+import moment from 'moment';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { IProjectDto } from '../../types/types';
@@ -27,14 +22,17 @@ const useStyles = makeStyles((theme) => ({
 export interface IProjectsFormProps {
   initialValues?: IProjectDto;
   onSubmit(project: IProjectDto): Promise<any>;
+  type: 'edit' | 'add';
 }
 
 export const ProjectsForm: React.FC<IProjectsFormProps> = ({
   initialValues,
   onSubmit,
+  type,
 }) => {
   const history = useHistory();
   const classes = useStyles();
+  console.log(initialValues);
 
   return (
     <Formik
@@ -71,7 +69,6 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
       {({ values, handleChange, handleSubmit, errors }) => (
         <Form>
           <Box className={classes.boxContainer} flexDirection="column">
-            <Typography variant="h4">Add project</Typography>
             <TextField
               className={classes.textField}
               variant="filled"
@@ -90,7 +87,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
               label="Start Date"
               name="startDate"
               onChange={handleChange}
-              value={values.startDate}
+              value={moment(values.startDate).format('YYYY-MM-DD')}
               required={true}
               error={!!errors.startDate}
               fullWidth={true}
@@ -105,7 +102,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
               label="End Date"
               name="endDate"
               onChange={handleChange}
-              value={values.endDate}
+              value={moment(values.endDate).format('YYYY-MM-DD')}
               fullWidth={true}
               InputLabelProps={{
                 shrink: true,
@@ -158,7 +155,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                 onClick={() => handleSubmit()}
                 startIcon={<Add />}
               >
-                Add
+                {type}
               </Button>
             </Box>
           </Box>

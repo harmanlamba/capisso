@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { addProject } from '../../common/api/projects';
 import { ProjectsForm } from '../../components/projects/ProjectsForm';
@@ -15,7 +15,8 @@ export const ProjectsAddPage: React.FC<{}> = () => {
 
   return (
     <div className={classes.content}>
-      <ProjectsForm onSubmit={addProject} />
+      <Typography variant="h4">Add project</Typography>
+      <ProjectsForm onSubmit={addProject} type="add" />
     </div>
   );
 };
