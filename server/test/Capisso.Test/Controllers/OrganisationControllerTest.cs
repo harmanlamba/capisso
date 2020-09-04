@@ -144,7 +144,7 @@ namespace Capisso.Test.Controllers
         public async Task TestUpdateOrganisationWithValidId()
         {
             // Arrange
-            var organisation = new OrganisationDto
+            var organisation = new Organisation
             {
                 Id = 1,
                 Name = "Test1",
@@ -153,11 +153,25 @@ namespace Capisso.Test.Controllers
                 Status = "Adequate",
                 Classifications = new List<string> { "Classficiation", "Classification1" }
             };
-
+            
+            // Arrange
+            var organisationUpdated = new OrganisationDto
+            {
+                Id = 1,
+                Name = "Test12",
+                Address = "55 Symmonds",
+                Description = "UoA Accomodation",
+                Status = "Adequate",
+                Classifications = new List<string> { "Classficiation", "Classification1" }
+            };
+            
+            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1))
+                .Returns(Task.FromResult(organisation));
+            
             _mockOrganisationRepository.Setup(x => x.Update(It.IsAny<Organisation>())).Verifiable();
 
             // Act
-            var response = await _organisationsController.UpdateOrganisation(organisation, 1);
+            var response = await _organisationsController.UpdateOrganisation(organisationUpdated, 1);
 
             // Assert
             Assert.IsInstanceOf<NoContentResult>(response);

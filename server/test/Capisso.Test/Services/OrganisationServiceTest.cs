@@ -56,20 +56,35 @@ namespace Capisso.Test.Services
         [Test]
         public async Task TestUpdateOrganisationValidInput()
         {
-            //Arrange
-            var organisationDto = new OrganisationDto
+            // Arrange
+            var organisation = new Organisation
             {
+                Id = 1,
                 Name = "Test1",
                 Address = "55 Symonds",
                 Description = "UoA Accomodation",
                 Status = "Adequate",
                 Classifications = new List<string> { "Classficiation", "Classification1" }
             };
-
+            
+            var organisationUpdated = new OrganisationDto
+            {
+                Id = 1,
+                Name = "Test12",
+                Address = "55 Symmonds",
+                Description = "UoA Accomodation",
+                Status = "Adequate",
+                Classifications = new List<string> { "Classficiation", "Classification1" }
+            };
+            
+            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1))
+                .Returns(Task.FromResult(organisation));
+            
             _mockOrganisationRepository.Setup(x => x.Update(It.IsAny<Organisation>())).Verifiable();
+            
 
             //Act
-            await _organisationService.UpdateOrganisation(organisationDto);
+            await _organisationService.UpdateOrganisation(organisationUpdated);
 
             // Assert
             _mockOrganisationRepository.Verify();
