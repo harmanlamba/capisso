@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import { Switch, Route, Redirect, useHistory, Link } from 'react-router-dom';
 import {
   makeStyles,
   Typography,
@@ -80,9 +80,11 @@ export const OrganisationViewPage: React.FC<{}> = () => {
             </Typography>
             <Box ml={2} position="relative" top="-0.5em" display="inline">
               <OrganisationStatusChip status={organisation.status} />{' '}
-              <Button variant="outlined" color="primary">
-                Edit
-              </Button>
+              <Link to={`/organisations/${organisation.id}/edit`}>
+                <Button variant="outlined" color="primary">
+                  Edit
+                </Button>
+              </Link>
             </Box>
           </Box>
           <AppBar position="static">
