@@ -1,16 +1,14 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { Formik, Form } from 'formik';
 import {
+  Box,
+  Button,
   makeStyles,
   TextField,
-  Button,
-  Box,
   Typography,
 } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-
-import { addProject } from '../../common/api/projects';
+import { Form, Formik } from 'formik';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { IProjectDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +24,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ProjectsForm: React.FC<{}> = () => {
+export interface IProjectsFormProps {
+  initialValues?: IProjectDto;
+  onSubmit(project: IProjectDto): Promise<any>;
+}
+
+export const ProjectsForm: React.FC<IProjectsFormProps> = ({
+  initialValues,
+  onSubmit,
+}) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -38,10 +44,11 @@ export const ProjectsForm: React.FC<{}> = () => {
         endDate: undefined,
         notes: undefined,
         outcome: undefined,
+        ...initialValues,
       }}
       onSubmit={async (values, { resetForm }) => {
         try {
-          await addProject(values as IProjectDto);
+          await onSubmit(values as IProjectDto);
           history.push('/projects');
         } catch (e) {
           console.error(e);
