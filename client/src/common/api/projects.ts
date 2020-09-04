@@ -11,3 +11,10 @@ export const addProject = async (
 
   return res.data as ICreatedDto;
 };
+
+export const getProject = async (projectId: number): Promise<IProjectDto> => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_BASE}/projects/${projectId}`
+  );
+  return res.data as IProjectDto;
+};
