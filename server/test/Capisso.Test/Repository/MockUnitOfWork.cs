@@ -14,8 +14,8 @@ namespace Capisso.Test.Repository
         }
 
         public IOrganisationRepository OrganisationRepository { get; set; }
-
         public ICourseRepository CourseRepository { get; set; }
+        public IProjectRepository ProjectRepository { get; set; }
 
         public void Dispose()
         {

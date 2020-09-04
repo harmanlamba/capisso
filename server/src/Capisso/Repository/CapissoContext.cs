@@ -1,5 +1,6 @@
 ﻿using Capisso.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
@@ -18,6 +19,7 @@ namespace Capisso.Repository
 
         public DbSet<Organisation> Organisations { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,6 +47,16 @@ namespace Capisso.Repository
                 entity.Property(e => e.Name).IsRequired();
                 entity.Property(e => e.Code).IsRequired();
                 entity.Property(e => e.Description).IsRequired();
+            });
+
+            modelBuilder.Entity<Project>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Title).IsRequired();
+                entity.Property(e => e.Notes);
+                entity.Property(e => e.Outcome);
+                entity.Property(e => e.StartDate).IsRequired();
+                entity.Property(e => e.EndDate);
             });
         }
     }

@@ -12,11 +12,12 @@ namespace Capisso.Repository
 
             OrganisationRepository = new OrganisationRepository(_dbContext);
             CourseRepository = new CourseRepository(_dbContext);
+            ProjectRepository = new ProjectRepository(_dbContext);
         }
 
         public IOrganisationRepository OrganisationRepository { get; private set; }
-
         public ICourseRepository CourseRepository { get; private set; }
+        public IProjectRepository ProjectRepository { get; private set; }
 
         public async Task SaveAsync()
         {

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Capisso.Services
 {
-    public interface ICourseService
+    public interface IProjectService
     {
-        Task<int> CreateCourse(CourseDto courseDto);
+        Task<int> CreateProject(ProjectDto projectDto);
     }
 }

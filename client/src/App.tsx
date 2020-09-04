@@ -11,6 +11,8 @@ import { OrganisationsViewAllPage } from './pages/organisations/OrganisationsVie
 import { OrganisationsAddPage } from './pages/organisations/OrganisationsAddPage';
 import { CoursesViewAllPage } from './pages/courses/CoursesViewAllPage';
 import { CoursesAddPage } from './pages/courses/CoursesAddPage';
+import { ProjectsViewAllPage } from './pages/projects/ProjectsViewAllPage';
+import { ProjectsAddPage } from './pages/projects/ProjectsAddPage';
 
 import { makeStyles, Box } from '@material-ui/core';
 import { OrganisationViewPage } from './pages/organisations/OrganisationViewPage';
@@ -33,9 +35,11 @@ export const App: React.FC<{}> = () => {
 
         <Box width="100%" padding="1em">
           <Switch>
-            <Route path="/organisations" exact={true}>
-              <OrganisationsViewAllPage />
-            </Route>
+            <Route
+              path="/organisations"
+              exact={true}
+              component={OrganisationsViewAllPage}
+            />
 
             <Route
               path="/organisations/add"
@@ -50,14 +54,28 @@ export const App: React.FC<{}> = () => {
 
             <Route path="/organisations/:id" component={OrganisationViewPage} />
 
-            <Route path="/courses" exact={true}>
-              <CoursesViewAllPage />
-            </Route>
+            <Route
+              path="/courses"
+              exact={true}
+              component={CoursesViewAllPage}
+            />
 
             <Route
               path="/courses/add"
               exact={true}
               component={CoursesAddPage}
+            />
+
+            <Route
+              path="/projects"
+              exact={true}
+              component={ProjectsViewAllPage}
+            />
+
+            <Route
+              path="/projects/add"
+              exact={true}
+              component={ProjectsAddPage}
             />
 
             <Route path="*">
