@@ -29,3 +29,12 @@ export const getOrganisation = async (
 
   return res.data as IOrganisationDto;
 };
+
+export const editOrganisation = async (
+  organisation: IOrganisationDto
+): Promise<void> => {
+  await axios.put(
+    `${process.env.REACT_APP_API_BASE}/organisations/${organisation.id}`,
+    organisation
+  );
+};
