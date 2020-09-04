@@ -21,8 +21,8 @@ export interface ICourseDto {
 export interface IProjectDto {
   id?: number;
   title: string;
-  notes: string;
-  outcome: string;
-  startDate: any;
-  endDate: any;
+  notes?: string;
+  outcome?: string;
+  startDate: string;
+  endDate?: string;
 }

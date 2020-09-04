@@ -34,10 +34,10 @@ export const ProjectsForm: React.FC<{}> = () => {
     <Formik
       initialValues={{
         title: '',
-        notes: '',
         startDate: '',
-        endDate: '',
-        outcome: '',
+        endDate: undefined,
+        notes: undefined,
+        outcome: undefined,
       }}
       onSubmit={async (values, { resetForm }) => {
         try {
@@ -54,6 +54,10 @@ export const ProjectsForm: React.FC<{}> = () => {
           errors.title = 'Required';
         }
 
+        if (!values.startDate) {
+          errors.startDate = 'Required';
+        }
+
         return errors;
       }}
     >
@@ -61,7 +65,6 @@ export const ProjectsForm: React.FC<{}> = () => {
         <Form>
           <Box className={classes.boxContainer} flexDirection="column">
             <Typography variant="h4">Add project</Typography>
-
             <TextField
               className={classes.textField}
               variant="filled"
@@ -73,32 +76,6 @@ export const ProjectsForm: React.FC<{}> = () => {
               error={!!errors.title}
               fullWidth={true}
             />
-            <TextField
-              className={classes.textField}
-              variant="filled"
-              label="Notes"
-              name="notes"
-              onChange={handleChange}
-              value={values.notes}
-              required={true}
-              error={!!errors.notes}
-              fullWidth={true}
-            />
-
-            <TextField
-              className={classes.textField}
-              variant="filled"
-              label="Outcome"
-              name="outcome"
-              multiline={true}
-              rows={5}
-              onChange={handleChange}
-              value={values.outcome}
-              required={true}
-              error={!!errors.outcome}
-              fullWidth={true}
-            />
-
             <TextField
               type="date"
               className={classes.textField}
@@ -114,7 +91,6 @@ export const ProjectsForm: React.FC<{}> = () => {
                 shrink: true,
               }}
             />
-
             <TextField
               type="date"
               className={classes.textField}
@@ -123,12 +99,33 @@ export const ProjectsForm: React.FC<{}> = () => {
               name="endDate"
               onChange={handleChange}
               value={values.endDate}
-              required={true}
-              error={!!errors.endDate}
               fullWidth={true}
               InputLabelProps={{
                 shrink: true,
               }}
+            />
+            <TextField
+              className={classes.textField}
+              variant="filled"
+              label="Notes"
+              name="notes"
+              multiline={true}
+              rows={3}
+              onChange={handleChange}
+              value={values.notes}
+              error={!!errors.notes}
+              fullWidth={true}
+            />
+            <TextField
+              className={classes.textField}
+              variant="filled"
+              label="Outcome"
+              name="outcome"
+              multiline={true}
+              rows={2}
+              onChange={handleChange}
+              value={values.outcome}
+              fullWidth={true}
             />
 
             <Box

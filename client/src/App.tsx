@@ -35,9 +35,11 @@ export const App: React.FC<{}> = () => {
 
         <Box width="100%" padding="1em">
           <Switch>
-            <Route path="/organisations" exact={true}>
-              <OrganisationsViewAllPage />
-            </Route>
+            <Route
+              path="/organisations"
+              exact={true}
+              component={OrganisationsViewAllPage}
+            />
 
             <Route
               path="/organisations/add"
@@ -52,9 +54,11 @@ export const App: React.FC<{}> = () => {
 
             <Route path="/organisations/:id" component={OrganisationViewPage} />
 
-            <Route path="/courses" exact={true}>
-              <CoursesViewAllPage />
-            </Route>
+            <Route
+              path="/courses"
+              exact={true}
+              component={CoursesViewAllPage}
+            />
 
             <Route
               path="/courses/add"
@@ -62,9 +66,11 @@ export const App: React.FC<{}> = () => {
               component={CoursesAddPage}
             />
 
-            <Route path="/projects" exact={true}>
-              <ProjectsViewAllPage />
-            </Route>
+            <Route
+              path="/projects"
+              exact={true}
+              component={ProjectsViewAllPage}
+            />
 
             <Route
               path="/projects/add"

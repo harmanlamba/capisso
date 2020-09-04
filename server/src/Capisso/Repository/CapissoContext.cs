@@ -53,10 +53,10 @@ namespace Capisso.Repository
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Title).IsRequired();
-                entity.Property(e => e.Notes).IsRequired();
-                entity.Property(e => e.Outcome).IsRequired();
+                entity.Property(e => e.Notes);
+                entity.Property(e => e.Outcome);
                 entity.Property(e => e.StartDate).IsRequired();
-                entity.Property(e => e.EndDate).IsRequired();
+                entity.Property(e => e.EndDate);
             });
         }
     }

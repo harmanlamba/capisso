@@ -12,6 +12,6 @@ namespace Capisso.Dto
         public string Notes { get; set; }
         public string Outcome { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }
