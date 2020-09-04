@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles, Paper, Box, Typography } from '@material-ui/core';
 import { IProjectDto } from '../../types/types';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -14,6 +15,9 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
   project,
 }) => {
   const classes = useStyles();
+
+  const formattedStartDate = moment(project.startDate);
+  const formattedEndDate = moment(project.endDate);
 
   return (
     <div className={classes.content}>
@@ -60,7 +64,8 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
                 Start date - End date
               </Typography>
               <p>
-                {project.startDate} - {project.endDate}
+                {formattedStartDate.format('YYYY-MM-DD')} -{' '}
+                {formattedEndDate.format('YYYY-MM-DD')}
               </p>
             </Box>
           </Paper>
