@@ -10,8 +10,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-
-import { addOrganisation } from '../../common/api/organisations';
 import { IOrganisationDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +37,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const OrganisationsForm: React.FC<{}> = () => {
+export interface IOrganisationFormProps {
+  initialValues?: IOrganisationDto;
+  onSubmit(organisation: IOrganisationDto): Promise<any>;
+}
+export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
+  initialValues,
+  onSubmit,
+}) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -54,11 +59,12 @@ export const OrganisationsForm: React.FC<{}> = () => {
         description: '',
         address: '',
         status: '',
-        classifications: [],
+        classifications: [] as string[],
+        ...initialValues,
       }}
       onSubmit={async (values) => {
         try {
-          await addOrganisation(values as IOrganisationDto);
+          await onSubmit(values);
           history.goBack();
         } catch (e) {
           console.error(e);
