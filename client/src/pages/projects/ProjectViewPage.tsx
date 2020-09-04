@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import {
-  makeStyles,
-  Typography,
+  AppBar,
   Box,
   Button,
-  AppBar,
-  Tabs,
-  Tab,
   CircularProgress,
+  makeStyles,
+  Tab,
+  Tabs,
+  Typography,
 } from '@material-ui/core';
-import { useParams } from 'react-router-dom';
-import { IProjectDto } from '../../types/types';
+import React, { useEffect, useState } from 'react';
+import {
+  Link,
+  Redirect,
+  Route,
+  Switch,
+  useHistory,
+  useParams,
+} from 'react-router-dom';
 import { getProject } from '../../common/api/projects';
-
 import { ProjectViewAbout } from '../../components/projects/ProjectViewAbout';
+import { IProjectDto } from '../../types/types';
 
 const useStyles = makeStyles(() => ({
   content: {
@@ -79,9 +84,11 @@ export const ProjectViewPage: React.FC<{}> = () => {
               {project.title}
             </Typography>
             <Box ml={2} position="relative" top="-0.5em" display="inline">
-              <Button variant="outlined" color="primary">
-                Edit
-              </Button>
+              <Link to={`/projects/${project.id}/edit`}>
+                <Button variant="outlined" color="primary">
+                  Edit
+                </Button>
+              </Link>
             </Box>
           </Box>
           <AppBar position="static">
