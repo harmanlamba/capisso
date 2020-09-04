@@ -40,10 +40,12 @@ const useStyles = makeStyles((theme) => ({
 export interface IOrganisationFormProps {
   initialValues?: IOrganisationDto;
   onSubmit(organisation: IOrganisationDto): Promise<any>;
+  type: 'add' | 'edit';
 }
 export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
   initialValues,
   onSubmit,
+  type,
 }) => {
   const history = useHistory();
   const classes = useStyles();
@@ -204,7 +206,7 @@ export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
                 onClick={() => handleSubmit()}
                 startIcon={<Add />}
               >
-                Add
+                {type}
               </Button>
             </Box>
           </Box>

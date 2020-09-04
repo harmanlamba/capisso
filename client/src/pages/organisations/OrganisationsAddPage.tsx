@@ -15,7 +15,7 @@ export const OrganisationsAddPage: React.FC<{}> = () => {
   return (
     <div className={classes.content}>
       <Typography variant="h4">Add Organisation</Typography>
-      <OrganisationsForm onSubmit={addOrganisation} />
+      <OrganisationsForm onSubmit={addOrganisation} type="add" />
     </div>
   );
 };
