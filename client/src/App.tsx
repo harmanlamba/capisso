@@ -85,6 +85,12 @@ export const App: React.FC<{}> = () => {
               component={ProjectViewPage}
             />
 
+            <Route
+              path="/projects/:id/:page"
+              exact={true}
+              component={ProjectViewPage}
+            />
+
             <Route path="*">
               <Redirect to="/organisations" />
             </Route>
