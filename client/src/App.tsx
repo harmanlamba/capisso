@@ -13,6 +13,7 @@ import { CoursesViewAllPage } from './pages/courses/CoursesViewAllPage';
 import { CoursesAddPage } from './pages/courses/CoursesAddPage';
 import { ProjectsViewAllPage } from './pages/projects/ProjectsViewAllPage';
 import { ProjectsAddPage } from './pages/projects/ProjectsAddPage';
+import { ProjectViewPage } from './pages/projects/ProjectViewPage';
 
 import { makeStyles, Box } from '@material-ui/core';
 import { OrganisationViewPage } from './pages/organisations/OrganisationViewPage';
@@ -76,6 +77,12 @@ export const App: React.FC<{}> = () => {
               path="/projects/add"
               exact={true}
               component={ProjectsAddPage}
+            />
+
+            <Route
+              path="/projects/:id"
+              exact={true}
+              component={ProjectViewPage}
             />
 
             <Route path="*">
