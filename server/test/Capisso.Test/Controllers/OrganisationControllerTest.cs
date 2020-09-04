@@ -153,7 +153,7 @@ namespace Capisso.Test.Controllers
                 Status = "Adequate",
                 Classifications = new List<string> { "Classficiation", "Classification1" }
             };
-            
+
             // Arrange
             var organisationUpdated = new OrganisationDto
             {
@@ -164,10 +164,10 @@ namespace Capisso.Test.Controllers
                 Status = "Adequate",
                 Classifications = new List<string> { "Classficiation", "Classification1" }
             };
-            
+
             _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1))
                 .Returns(Task.FromResult(organisation));
-            
+
             _mockOrganisationRepository.Setup(x => x.Update(It.IsAny<Organisation>())).Verifiable();
 
             // Act

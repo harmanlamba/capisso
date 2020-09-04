@@ -66,7 +66,7 @@ namespace Capisso.Test.Services
                 Status = "Adequate",
                 Classifications = new List<string> { "Classficiation", "Classification1" }
             };
-            
+
             var organisationUpdated = new OrganisationDto
             {
                 Id = 1,
@@ -76,12 +76,12 @@ namespace Capisso.Test.Services
                 Status = "Adequate",
                 Classifications = new List<string> { "Classficiation", "Classification1" }
             };
-            
+
             _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1))
                 .Returns(Task.FromResult(organisation));
-            
+
             _mockOrganisationRepository.Setup(x => x.Update(It.IsAny<Organisation>())).Verifiable();
-            
+
 
             //Act
             await _organisationService.UpdateOrganisation(organisationUpdated);
