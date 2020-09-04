@@ -1,16 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import {
-  makeStyles,
-  TextField,
-  Button,
-  Box,
-  Typography,
-} from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import { makeStyles, TextField, Button, Box } from '@material-ui/core';
+import { Add, Edit } from '@material-ui/icons';
 
-import { addCourse } from '../../common/api/courses';
 import { ICourseDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +19,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const CoursesForm: React.FC<{}> = () => {
+export interface ICourseFormProps {
+  initialValues?: ICourseDto;
+  onSubmit(course: ICourseDto): Promise<any>;
+  type: 'add' | 'edit';
+}
+export const CoursesForm: React.FC<ICourseFormProps> = ({
+  initialValues,
+  onSubmit,
+  type,
+}) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -36,10 +38,11 @@ export const CoursesForm: React.FC<{}> = () => {
         name: '',
         code: '',
         description: '',
+        ...initialValues,
       }}
       onSubmit={async (values, { resetForm }) => {
         try {
-          await addCourse(values as ICourseDto);
+          await onSubmit(values);
           history.push('/courses');
         } catch (e) {
           console.error(e);
@@ -61,8 +64,6 @@ export const CoursesForm: React.FC<{}> = () => {
       {({ values, handleChange, handleSubmit, errors }) => (
         <Form>
           <Box className={classes.boxContainer} flexDirection="column">
-            <Typography variant="h4">Add course</Typography>
-
             <TextField
               className={classes.textField}
               variant="filled"
@@ -119,9 +120,9 @@ export const CoursesForm: React.FC<{}> = () => {
                 variant="contained"
                 color="primary"
                 onClick={() => handleSubmit()}
-                startIcon={<Add />}
+                startIcon={type === 'add' ? <Add /> : <Edit />}
               >
-                Add
+                {type}
               </Button>
             </Box>
           </Box>

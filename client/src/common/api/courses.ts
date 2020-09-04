@@ -9,3 +9,18 @@ export const addCourse = async (course: ICourseDto): Promise<ICreatedDto> => {
 
   return res.data as ICreatedDto;
 };
+
+export const getCourse = async (courseId: number): Promise<ICourseDto> => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_BASE}/courses/${courseId}`
+  );
+
+  return res.data as ICourseDto;
+};
+
+export const editCourse = async (course: ICourseDto): Promise<void> => {
+  await axios.put(
+    `${process.env.REACT_APP_API_BASE}/courses/${course.id}`,
+    course
+  );
+};

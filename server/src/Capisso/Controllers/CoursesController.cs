@@ -31,7 +31,7 @@ namespace Capisso.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<CourseDto>> GetCourse(int id)
         {
-            CourseDto courseDto; 
+            CourseDto courseDto;
             try
             {
                 courseDto = await _courseService.GetCourse(id);
@@ -45,18 +45,16 @@ namespace Capisso.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateCourse([FromBody] CourseDto courseDto)
+        [Route("{courseId}")]
+        public async Task<ActionResult> UpdateCourse([FromBody] CourseDto courseDto, [FromRoute] int courseId)
         {
-            try
+            if (courseDto.Id != courseId)
             {
-                await _courseService.UpdateCourse(courseDto);
-            } 
-            catch (EntityNotFoundException)
-            {
-                return NotFound();
+                return BadRequest();
             }
 
-            return Ok();
+            await _courseService.UpdateCourse(courseDto);
+            return NoContent();
         }
 
     }

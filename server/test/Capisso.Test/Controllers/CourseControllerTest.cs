@@ -92,28 +92,21 @@ namespace Capisso.Test.Controllers
         public async Task TestUpdateSingularCourse()
         {
             //Arrange
-            var course = new Course
+            var courseDto = new CourseDto
             {
                 Id = 1,
                 Name = "Course1",
                 Code = "Code1"
             };
-            var courseDto = new CourseDto
-            {
-                Name = "Course1",
-                Code = "Code1"
-            };
 
-            _mockCourseRepository.Setup(x => x.GetByIdAsync(It.IsAny<int>())).Returns(Task.FromResult<Course>(course));
             _mockCourseRepository.Setup(x => x.Update(It.IsAny<Course>()));
 
             //Act
-            ActionResult response = await _coursesController.UpdateCourse(courseDto);
+            ActionResult response = await _coursesController.UpdateCourse(courseDto, 1);
 
             //Assert
-            Assert.IsInstanceOf(typeof(OkResult), response);
+            Assert.IsInstanceOf(typeof(NoContentResult), response);
 
-            _mockCourseRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
             _mockCourseRepository.Verify(x => x.Update(It.IsAny<Course>()), Times.Once);
         }
     }

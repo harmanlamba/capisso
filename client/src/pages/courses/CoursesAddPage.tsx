@@ -1,6 +1,7 @@
 import React from 'react';
 import { CoursesForm } from '../../components/courses/CoursesForm';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
+import { addCourse } from '../../common/api/courses';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -13,7 +14,8 @@ export const CoursesAddPage: React.FC<{}> = () => {
   const classes = useStyles();
   return (
     <div className={classes.content}>
-      <CoursesForm />
+      <Typography variant="h4">Add Course</Typography>
+      <CoursesForm onSubmit={addCourse} type="add" />
     </div>
   );
 };

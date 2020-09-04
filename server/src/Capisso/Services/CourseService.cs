@@ -29,7 +29,7 @@ namespace Capisso.Services
 
         public async Task<CourseDto> GetCourse(int id)
         {
-            var course = await _unitOfWork.CourseRepository.GetByIdAsync(id) ?? 
+            var course = await _unitOfWork.CourseRepository.GetByIdAsync(id) ??
                 throw new EntityNotFoundException();
 
             return CourseMapper.ToDto(course);
@@ -38,11 +38,6 @@ namespace Capisso.Services
         public async Task UpdateCourse(CourseDto courseDto)
         {
             var course = CourseMapper.FromDto(courseDto);
-
-            if (await _unitOfWork.CourseRepository.GetByIdAsync(course.Id) == null)
-            {
-                throw new EntityNotFoundException();
-            }
 
             _unitOfWork.CourseRepository.Update(course);
             await _unitOfWork.SaveAsync();
