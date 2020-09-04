@@ -38,5 +38,15 @@ namespace Capisso.Services
 
             return ProjectMapper.ToDto(project);
         }
+        public async Task<bool> UpdateProject(ProjectDto projectDto)
+        {
+            var project = ProjectMapper.FromDto(projectDto);
+
+            _unitOfWork.ProjectRepository.Update(project);
+            await _unitOfWork.SaveAsync();
+
+            return true;
+        }
+
     }
 }
