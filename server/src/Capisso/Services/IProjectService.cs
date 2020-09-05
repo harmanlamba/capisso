@@ -10,5 +10,6 @@ namespace Capisso.Services
     {
         Task<int> CreateProject(ProjectDto projectDto);
         Task<ProjectDto> GetProject(int projectId);
+        Task<bool> UpdateProject(ProjectDto projectDto);
     }
 }

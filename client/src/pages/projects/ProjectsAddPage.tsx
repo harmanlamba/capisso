@@ -1,6 +1,7 @@
+import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
+import { addProject } from '../../common/api/projects';
 import { ProjectsForm } from '../../components/projects/ProjectsForm';
-import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -11,9 +12,11 @@ const useStyles = makeStyles((theme) => ({
 
 export const ProjectsAddPage: React.FC<{}> = () => {
   const classes = useStyles();
+
   return (
     <div className={classes.content}>
-      <ProjectsForm />
+      <Typography variant="h4">Add project</Typography>
+      <ProjectsForm onSubmit={addProject} type="add" />
     </div>
   );
 };

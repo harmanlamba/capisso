@@ -4,6 +4,9 @@
   "rules": {
     "prettier": true,
     "jsx-no-lambda": false,
-    "no-console": false
+    "no-console": [true, "log"]
+  },
+  "linterOptions": {
+    "exclude": ["src/serviceWorker.ts"]
   }
 }

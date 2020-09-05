@@ -1,16 +1,9 @@
+import { Box, Button, makeStyles, TextField } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
+import { Form, Formik } from 'formik';
+import moment from 'moment';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Formik, Form } from 'formik';
-import {
-  makeStyles,
-  TextField,
-  Button,
-  Box,
-  Typography,
-} from '@material-ui/core';
-import { Add } from '@material-ui/icons';
-
-import { addProject } from '../../common/api/projects';
 import { IProjectDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +19,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ProjectsForm: React.FC<{}> = () => {
+export interface IProjectsFormProps {
+  initialValues?: IProjectDto;
+  onSubmit(project: IProjectDto): Promise<any>;
+  type: 'edit' | 'add';
+}
+
+export const ProjectsForm: React.FC<IProjectsFormProps> = ({
+  initialValues,
+  onSubmit,
+  type,
+}) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -38,10 +41,11 @@ export const ProjectsForm: React.FC<{}> = () => {
         endDate: undefined,
         notes: undefined,
         outcome: undefined,
+        ...initialValues,
       }}
       onSubmit={async (values, { resetForm }) => {
         try {
-          await addProject(values as IProjectDto);
+          await onSubmit(values as IProjectDto);
           history.push('/projects');
         } catch (e) {
           console.error(e);
@@ -64,7 +68,6 @@ export const ProjectsForm: React.FC<{}> = () => {
       {({ values, handleChange, handleSubmit, errors }) => (
         <Form>
           <Box className={classes.boxContainer} flexDirection="column">
-            <Typography variant="h4">Add project</Typography>
             <TextField
               className={classes.textField}
               variant="filled"
@@ -83,7 +86,7 @@ export const ProjectsForm: React.FC<{}> = () => {
               label="Start Date"
               name="startDate"
               onChange={handleChange}
-              value={values.startDate}
+              value={moment(values.startDate).format('YYYY-MM-DD')}
               required={true}
               error={!!errors.startDate}
               fullWidth={true}
@@ -98,7 +101,7 @@ export const ProjectsForm: React.FC<{}> = () => {
               label="End Date"
               name="endDate"
               onChange={handleChange}
-              value={values.endDate}
+              value={moment(values.endDate).format('YYYY-MM-DD')}
               fullWidth={true}
               InputLabelProps={{
                 shrink: true,
@@ -151,7 +154,7 @@ export const ProjectsForm: React.FC<{}> = () => {
                 onClick={() => handleSubmit()}
                 startIcon={<Add />}
               >
-                Add
+                {type}
               </Button>
             </Box>
           </Box>
