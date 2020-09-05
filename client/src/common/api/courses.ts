@@ -24,3 +24,8 @@ export const editCourse = async (course: ICourseDto): Promise<void> => {
     course
   );
 };
+
+export const getAllCourses = async (): Promise<ICourseDto[]> => {
+  const res = await axios.get(`${process.env.REACT_APP_API_BASE}/courses`);
+  return res.data as ICourseDto[];
+};
