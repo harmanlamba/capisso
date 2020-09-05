@@ -60,15 +60,8 @@ namespace Capisso.Controllers
                 return BadRequest();
             }
 
-            var organisation = await _organisationService.GetOrganisation(organisationId);
-            if (organisation == null)
-            {
-                return NotFound();
-            }
-
             await _organisationService.UpdateOrganisation(organisationDto);
             return NoContent();
-
         }
     }
 }
