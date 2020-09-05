@@ -69,8 +69,7 @@ namespace Capisso.Repository
 
             modelBuilder.Entity<ProjectCourse>(entity =>
             {
-                entity.HasKey(e => e.Id);
-                entity.HasIndex(e => new { e.ProjectId, e.CourseId }).IsUnique();
+                entity.HasKey(e => new { e.ProjectId, e.CourseId });
                 entity
                     .HasOne(e => e.Project)
                     .WithMany(e => e.ProjectCourses)
