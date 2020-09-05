@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Capisso.Dto;
-using Capisso.Entities;
 using Capisso.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Capisso.Controllers
 {
@@ -36,10 +32,8 @@ namespace Capisso.Controllers
             {
                 return NotFound();
             }
-            else
-            {
-                return Ok(organisation);
-            }
+
+            return Ok(organisation);
         }
 
         [HttpPost]

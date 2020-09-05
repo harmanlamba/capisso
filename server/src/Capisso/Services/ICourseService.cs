@@ -11,5 +11,6 @@ namespace Capisso.Services
         Task<int> CreateCourse(CourseDto courseDto);
         Task<CourseDto> GetCourse(int id);
         Task UpdateCourse(CourseDto courseDto);
+        Task<IEnumerable<CourseDto>> GetAllCourses();
     }
 }

@@ -7,6 +7,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -90,6 +91,33 @@ namespace Capisso.Test.Services
 
             //Assert
             _mockCourseRepository.Verify(x => x.Update(It.IsAny<Course>()), Times.Once);
+        }
+
+        [Test]
+        public async Task TestGetAllCourses()
+        {
+            // arrange
+            IEnumerable<Course> courses = new List<Course>
+            {
+                new Course
+                {
+                    Id = 13,
+                    Code = "my code",
+                    Description = "my description",
+                    Name = "my name",
+                    ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                }
+            };
+            _mockCourseRepository.Setup(x => x.GetAllAsync()).Returns(Task.FromResult(courses));
+
+            // act
+            var result = await _courseService.GetAllCourses();
+
+            // assert
+            Assert.NotNull(result);
+            Assert.AreEqual(1, result.Count());
+            Assert.AreEqual(13, result.First().Id);
+            Assert.AreEqual("my code", result.First().Code);
         }
     }
 }
