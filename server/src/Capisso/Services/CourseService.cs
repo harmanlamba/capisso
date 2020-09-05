@@ -1,4 +1,5 @@
 ﻿using Capisso.Dto;
+using Capisso.Entities;
 using Capisso.Mapper;
 using Capisso.Repository;
 using System;
@@ -24,6 +25,22 @@ namespace Capisso.Services
             await _unitOfWork.SaveAsync();
 
             return course.Id;
+        }
+
+        public async Task<CourseDto> GetCourse(int id)
+        {
+            var course = await _unitOfWork.CourseRepository.GetByIdAsync(id) ??
+                throw new EntityNotFoundException();
+
+            return CourseMapper.ToDto(course);
+        }
+
+        public async Task UpdateCourse(CourseDto courseDto)
+        {
+            var course = CourseMapper.FromDto(courseDto);
+
+            _unitOfWork.CourseRepository.Update(course);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

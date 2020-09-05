@@ -57,7 +57,7 @@ export const NavigationDrawer: React.FC<{}> = () => {
             button={true}
             key={index}
             onClick={() => history.push(route.location)}
-            selected={location.pathname.includes(route.location)}
+            selected={location.pathname.startsWith(route.location)}
           >
             <ListItemText primary={route.name} />
           </ListItem>
