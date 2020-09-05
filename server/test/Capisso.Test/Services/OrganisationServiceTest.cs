@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Capisso.Test.Services
 {
-
     public class OrganisationServiceTest
     {
         private MockUnitOfWork _mockUnitOfWork;
@@ -52,6 +51,43 @@ namespace Capisso.Test.Services
             //Assert
             Assert.AreEqual(0, id);
             _mockOrganisationRepository.Verify(x => x.InsertAsync(It.IsAny<Organisation>()), Times.Once);
+        }
+
+        [Test]
+        public async Task TestUpdateOrganisationValidInput()
+        {
+            // Arrange
+            var organisation = new Organisation
+            {
+                Id = 1,
+                Name = "Test1",
+                Address = "55 Symonds",
+                Description = "UoA Accomodation",
+                Status = "Adequate",
+                Classifications = new List<string> { "Classficiation", "Classification1" }
+            };
+
+            var organisationUpdated = new OrganisationDto
+            {
+                Id = 1,
+                Name = "Test12",
+                Address = "55 Symmonds",
+                Description = "UoA Accomodation",
+                Status = "Adequate",
+                Classifications = new List<string> { "Classficiation", "Classification1" }
+            };
+
+            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1))
+                .Returns(Task.FromResult(organisation));
+
+            _mockOrganisationRepository.Setup(x => x.Update(It.IsAny<Organisation>())).Verifiable();
+
+
+            //Act
+            await _organisationService.UpdateOrganisation(organisationUpdated);
+
+            // Assert
+            _mockOrganisationRepository.Verify();
         }
     }
 }

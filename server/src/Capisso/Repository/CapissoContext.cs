@@ -29,7 +29,7 @@ namespace Capisso.Repository
                 entity.Property(e => e.Name).IsRequired();
                 entity.Property(e => e.Description).IsRequired();
 
-                var splitStringConverter = new ValueConverter<List<string>, string>(v => string.Join(";", v), v => v.Split(new[] { ';' }).ToList());
+                var splitStringConverter = new ValueConverter<List<string>, string>(v => string.Join(";", v), v => string.IsNullOrEmpty(v) ? new List<string>() : v.Split(new[] { ';' }).ToList());
                 var valueComparer = new ValueComparer<List<string>>(
                     (c1, c2) => c1.SequenceEqual(c2),
                     c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),

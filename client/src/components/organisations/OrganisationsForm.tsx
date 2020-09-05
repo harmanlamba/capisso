@@ -1,17 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Formik, FieldArray, Form } from 'formik';
-import {
-  TextField,
-  Button,
-  Chip,
-  makeStyles,
-  Box,
-  Typography,
-} from '@material-ui/core';
+import { TextField, Button, Chip, makeStyles, Box } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-
-import { addOrganisation } from '../../common/api/organisations';
 import { IOrganisationDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +30,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const OrganisationsForm: React.FC<{}> = () => {
+export interface IOrganisationFormProps {
+  initialValues?: IOrganisationDto;
+  onSubmit(organisation: IOrganisationDto): Promise<any>;
+  type: 'add' | 'edit';
+}
+export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
+  initialValues,
+  onSubmit,
+  type,
+}) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -54,11 +54,12 @@ export const OrganisationsForm: React.FC<{}> = () => {
         description: '',
         address: '',
         status: '',
-        classifications: [],
+        classifications: [] as string[],
+        ...initialValues,
       }}
       onSubmit={async (values) => {
         try {
-          await addOrganisation(values as IOrganisationDto);
+          await onSubmit(values);
           history.goBack();
         } catch (e) {
           console.error(e);
@@ -91,7 +92,6 @@ export const OrganisationsForm: React.FC<{}> = () => {
             flexDirection="column"
             justifyContent="center"
           >
-            <Typography variant="h4">Add Organisation</Typography>
             <TextField
               className={classes.textField}
               variant="filled"
@@ -199,7 +199,7 @@ export const OrganisationsForm: React.FC<{}> = () => {
                 onClick={() => handleSubmit()}
                 startIcon={<Add />}
               >
-                Add
+                {type}
               </Button>
             </Box>
           </Box>
