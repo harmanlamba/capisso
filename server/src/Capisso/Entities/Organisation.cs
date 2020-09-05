@@ -9,5 +9,6 @@ namespace Capisso.Entities
         public List<string> Classifications { get; set; }
         public string Address { get; set; }
         public string Status { get; set; }
+        public virtual List<Project> Projects { get; set; }
     }
 }

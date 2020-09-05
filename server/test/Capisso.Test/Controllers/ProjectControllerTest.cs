@@ -8,17 +8,18 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
 
 namespace Capisso.Test.Controllers
 {
-    public class ProjectControllertest
+    public class ProjectControllerTest
     {
         private MockUnitOfWork _mockUnitOfWork;
         private Mock<IProjectRepository> _mockProjectRepository;
+        private Mock<ICourseRepository> _mockCourseRepository;
+        private Mock<IOrganisationRepository> _mockOrganisationRepository;
         private ProjectService _projectService;
         private ProjectsController _projectsController;
 
@@ -26,9 +27,13 @@ namespace Capisso.Test.Controllers
         public void Setup()
         {
             _mockProjectRepository = new Mock<IProjectRepository>();
+            _mockCourseRepository = new Mock<ICourseRepository>();
+            _mockOrganisationRepository = new Mock<IOrganisationRepository>();
             _mockUnitOfWork = new MockUnitOfWork
             {
-                ProjectRepository = _mockProjectRepository.Object
+                ProjectRepository = _mockProjectRepository.Object,
+                CourseRepository = _mockCourseRepository.Object,
+                OrganisationRepository = _mockOrganisationRepository.Object,
             };
 
             _projectService = new ProjectService(_mockUnitOfWork);
@@ -46,6 +51,8 @@ namespace Capisso.Test.Controllers
                 Outcome = "Outcome1",
                 StartDate = new DateTime(),
                 EndDate = new DateTime(),
+                CourseIds = Enumerable.Empty<int>(),
+                OrganisationId = 1,
             };
 
             _mockProjectRepository.Setup(x => x.InsertAsync(It.IsAny<Project>())).Returns(Task.FromResult(1));
@@ -76,18 +83,24 @@ namespace Capisso.Test.Controllers
                 Notes = "Notes Test",
                 Outcome = "Outcome Test",
                 StartDate = new DateTime(),
-                EndDate = new DateTime()
+                EndDate = new DateTime(),
+                ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                Organisation = new Organisation
+                {
+                    Id = 1,
+                }
             };
 
-            _mockProjectRepository.Setup(x => x.GetByIdAsync(1)).Returns(Task.FromResult<Project>(project));
-
+            _mockProjectRepository.Setup(x => x.GetByIdAsync(1)).Returns(Task.FromResult(project));
 
             //Act
             ActionResult<ProjectDto> response = await _projectsController.GetProject(1);
-            OkObjectResult okResult = response.Result as OkObjectResult;
-            ProjectDto projectDto = okResult.Value.As<ProjectDto>();
 
             //Assert
+            Assert.IsInstanceOf<OkObjectResult>(response.Result);
+            OkObjectResult okResult = response.Result as OkObjectResult;
+            Assert.IsInstanceOf<ProjectDto>(okResult.Value);
+            ProjectDto projectDto = okResult.Value.As<ProjectDto>();
             Assert.AreEqual(200, okResult.StatusCode);
             Assert.NotNull(okResult.Value);
             Assert.AreEqual(project.Id, projectDto.Id);
@@ -104,16 +117,18 @@ namespace Capisso.Test.Controllers
 
             //Act
             ActionResult<ProjectDto> response = await _projectsController.GetProject(2);
-            NotFoundResult notFoundResult = response.Result as NotFoundResult;
 
             //Assert
-            Assert.AreEqual(404, notFoundResult.StatusCode);
+            Assert.IsInstanceOf<NotFoundResult>(response.Result);
+            NotFoundResult notFoundResult = response.Result as NotFoundResult;
 
             ProjectDto value = notFoundResult.As<ProjectDto>();
             Assert.IsNull(value);
 
             _mockProjectRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
         }
+
+        [Test]
         public async Task TestUpdateProjectValidInput()
         {
             var projectDto = new ProjectDto
@@ -124,6 +139,8 @@ namespace Capisso.Test.Controllers
                 Outcome = "NewOutcome",
                 StartDate = new DateTime(),
                 EndDate = new DateTime(),
+                CourseIds = Enumerable.Empty<int>(),
+                OrganisationId = 1,
             };
 
             _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>()));
@@ -133,34 +150,32 @@ namespace Capisso.Test.Controllers
 
             // Assert
             Assert.IsInstanceOf<NoContentResult>(response.Result);
-            NoContentResult updateResult = response.Result as NoContentResult;
-            Assert.AreEqual(204, updateResult.StatusCode);
 
             _mockProjectRepository.Verify(x => x.Update(It.IsAny<Project>()), Times.Once);
         }
 
+        [Test]
         public async Task TestUpdateProjectInvalidInput()
         {
             var projectDto = new ProjectDto
             {
-                Id = 2,
+                Id = 69,
                 Title = "NewTitle",
                 Notes = "NewNotes",
                 Outcome = "NewOutcome",
                 StartDate = new DateTime(),
                 EndDate = new DateTime(),
+                CourseIds = Enumerable.Empty<int>(),
+                OrganisationId = 1,
             };
 
             _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>()));
 
             // Act
-            ActionResult<NonActionAttribute> response = await _projectsController.UpdateProject(projectDto, 2);
+            ActionResult<NonActionAttribute> response = await _projectsController.UpdateProject(projectDto, 420);
 
             // Assert
             Assert.IsInstanceOf<BadRequestResult>(response.Result);
-            BadRequestResult updateResult = response.Result as BadRequestResult;
-            Assert.AreEqual(400, updateResult.StatusCode);
-
             _mockProjectRepository.Verify(x => x.Update(It.IsAny<Project>()), Times.Never);
         }
     }

@@ -41,8 +41,10 @@ namespace Capisso
 
             services.AddControllers();
             services.AddDbContext<CapissoContext>(options =>
-                options.UseMySql(Configuration["Database:ConnectionString"], mysqlOptions =>
-                    mysqlOptions.ServerVersion(new Version(10, 4), ServerType.MariaDb))
+                options
+                    .UseMySql(Configuration["Database:ConnectionString"], mysqlOptions =>
+                        mysqlOptions.ServerVersion(new Version(10, 4), ServerType.MariaDb))
+                    .UseLazyLoadingProxies()
             );
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

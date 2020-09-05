@@ -7,6 +7,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,15 +17,21 @@ namespace Capisso.Test.Services
     {
         private MockUnitOfWork _mockUnitOfWork;
         private Mock<IProjectRepository> _mockProjectRepository;
+        private Mock<ICourseRepository> _mockCourseRepository;
+        private Mock<IOrganisationRepository> _mockOrganisationRepository;
         private ProjectService _projectService;
 
         [SetUp]
         public void Setup()
         {
             _mockProjectRepository = new Mock<IProjectRepository>();
+            _mockCourseRepository = new Mock<ICourseRepository>();
+            _mockOrganisationRepository = new Mock<IOrganisationRepository>();
             _mockUnitOfWork = new MockUnitOfWork
             {
-                ProjectRepository = _mockProjectRepository.Object
+                ProjectRepository = _mockProjectRepository.Object,
+                CourseRepository = _mockCourseRepository.Object,
+                OrganisationRepository = _mockOrganisationRepository.Object,
             };
             _projectService = new ProjectService(_mockUnitOfWork);
         }
@@ -40,6 +47,8 @@ namespace Capisso.Test.Services
                 Outcome = "Outcome1",
                 StartDate = new DateTime(),
                 EndDate = new DateTime(),
+                CourseIds = Enumerable.Empty<int>(),
+                OrganisationId = 1,
             };
 
             _mockProjectRepository.Setup(x => x.InsertAsync(It.IsAny<Project>())).Returns(Task.FromResult(1));
@@ -56,7 +65,7 @@ namespace Capisso.Test.Services
         [Test]
         public async Task TestGetSingularOrganisation()
         {
-            //Arange
+            //Arrange
             var project = new Project
             {
                 Id = 1,
@@ -64,10 +73,16 @@ namespace Capisso.Test.Services
                 Outcome = "Test Outcome",
                 Title = "Test Tile",
                 StartDate = new DateTime(),
-                EndDate = new DateTime()
+                EndDate = new DateTime(),
+                ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                Organisation = new Organisation
+                {
+                    Id = 1,
+                }
             };
 
-            _mockProjectRepository.Setup(x => x.GetByIdAsync(It.IsAny<int>())).Returns(Task.FromResult<Project>(project));
+            _mockProjectRepository.Setup(x => x.GetByIdAsync(It.IsAny<int>()))
+                .Returns(Task.FromResult(project));
 
             //Act
             var projectDto = await _projectService.GetProject(1);
@@ -87,6 +102,8 @@ namespace Capisso.Test.Services
                 Outcome = "Outcome1",
                 StartDate = new DateTime(),
                 EndDate = new DateTime(),
+                CourseIds = Enumerable.Empty<int>(),
+                OrganisationId = 1,
             };
 
             _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>()));
