@@ -1,20 +1,20 @@
 ﻿using Capisso.Dto;
 using Capisso.Entities;
 using System.Linq;
-using System.Threading.Tasks;
-using Capisso.Repository;
 
 namespace Capisso.Mapper
 {
     public static class ProjectMapper
     {
-        public static async Task<Project> FromDto(ProjectDto projectDto, IUnitOfWork unitOfWork)
+        /// <summary>
+        /// FromDto maps a Dto Project to an Entity.
+        /// Warning: It does not populate references
+        /// </summary>
+        /// <param name="projectDto"></param>
+        /// <returns></returns>
+        public static Project FromDto(ProjectDto projectDto)
         {
-            var courses = await unitOfWork.CourseRepository
-                .FindByAsync(c => projectDto.CourseIds.Contains(c.Id));
-            var organisation = await unitOfWork.OrganisationRepository.GetByIdAsync(projectDto.OrganisationId);
-
-            var project = new Project
+            return new Project
             {
                 Id = projectDto.Id,
                 Title = projectDto.Title,
@@ -22,18 +22,7 @@ namespace Capisso.Mapper
                 Outcome = projectDto.Outcome,
                 StartDate = projectDto.StartDate,
                 EndDate = projectDto.EndDate,
-                Organisation = organisation,
             };
-
-            project.ProjectCourses = courses.Select(course => new ProjectCourse
-            {
-                Course = course,
-                CourseId = course.Id,
-                Project = project,
-                ProjectId = project.Id
-            }).ToList();
-
-            return project;
         }
 
         public static ProjectDto ToDto(Project project)
