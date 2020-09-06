@@ -1,12 +1,13 @@
 import { Box, Button, makeStyles, TextField } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import { Add, Edit } from '@material-ui/icons';
 import { Form, Formik } from 'formik';
 import moment from 'moment';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { IProjectDto } from '../../types/types';
+import { IProjectDto, ICourseDto, IOrganisationDto } from '../../types/types';
+import { Autocomplete } from '@material-ui/lab';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   boxContainer: {
     margin: '50px 40px',
     maxWidth: 800,
@@ -23,12 +24,16 @@ export interface IProjectsFormProps {
   initialValues?: IProjectDto;
   onSubmit(project: IProjectDto): Promise<any>;
   type: 'edit' | 'add';
+  courses: ICourseDto[];
+  organisations: IOrganisationDto[];
 }
 
 export const ProjectsForm: React.FC<IProjectsFormProps> = ({
   initialValues,
   onSubmit,
   type,
+  courses,
+  organisations,
 }) => {
   const history = useHistory();
   const classes = useStyles();
@@ -41,9 +46,11 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
         endDate: undefined,
         notes: undefined,
         outcome: undefined,
+        organisationId: 0,
+        courseIds: [] as number[],
         ...initialValues,
       }}
-      onSubmit={async (values, { resetForm }) => {
+      onSubmit={async (values) => {
         try {
           await onSubmit(values as IProjectDto);
           history.push('/projects');
@@ -62,10 +69,18 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
           errors.startDate = 'Required';
         }
 
+        if (!values.organisationId) {
+          errors.organisationId = 'Required';
+        }
+
+        if (!values.courseIds.length) {
+          errors.courseIds = 'Required';
+        }
+
         return errors;
       }}
     >
-      {({ values, handleChange, handleSubmit, errors }) => (
+      {({ values, handleChange, handleSubmit, errors, setFieldValue }) => (
         <Form>
           <Box className={classes.boxContainer} flexDirection="column">
             <TextField
@@ -131,6 +146,50 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
               fullWidth={true}
             />
 
+            <Autocomplete
+              options={organisations}
+              getOptionLabel={(option) => option.name}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  className={classes.textField}
+                  variant="filled"
+                  label="Organisation"
+                  fullWidth={true}
+                  required={true}
+                  error={!!errors.organisationId}
+                />
+              )}
+              onChange={(_e, v) => setFieldValue('organisationId', v?.id)}
+              value={organisations.find((o) => o.id === values.organisationId)}
+            />
+
+            <Autocomplete
+              multiple={true}
+              options={courses}
+              getOptionLabel={(course) => `${course?.code}: ${course?.name}`}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  className={classes.textField}
+                  variant="filled"
+                  label="Courses"
+                  fullWidth={true}
+                  required={true}
+                  error={!!errors.courseIds}
+                />
+              )}
+              onChange={(_e, v) =>
+                setFieldValue(
+                  'courseIds',
+                  v.map((course) => course?.id)
+                )
+              }
+              value={values.courseIds.map((id) =>
+                courses.find((c) => c.id === id)
+              )}
+            />
+
             <Box
               className={classes.textField}
               display="flex"
@@ -152,7 +211,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                 variant="contained"
                 color="primary"
                 onClick={() => handleSubmit()}
-                startIcon={<Add />}
+                startIcon={type === 'add' ? <Add /> : <Edit />}
               >
                 {type}
               </Button>

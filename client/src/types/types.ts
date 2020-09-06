@@ -25,4 +25,6 @@ export interface IProjectDto {
   outcome?: string;
   startDate: string;
   endDate?: string;
+  organisationId: number;
+  courseIds: number[];
 }

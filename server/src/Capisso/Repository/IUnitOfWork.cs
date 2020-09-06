@@ -8,6 +8,7 @@ namespace Capisso.Repository
         IOrganisationRepository OrganisationRepository { get; }
         ICourseRepository CourseRepository { get; }
         IProjectRepository ProjectRepository { get; }
+        IProjectCourseRepository ProjectCourseRepository { get; }
         Task SaveAsync();
     }
 }

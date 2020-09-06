@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Capisso.Dto
 {
@@ -13,5 +11,7 @@ namespace Capisso.Dto
         public string Outcome { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public IEnumerable<int> CourseIds { get; set; }
+        public int OrganisationId { get; set; }
     }
 }

@@ -1,14 +1,17 @@
 ﻿using Capisso.Dto;
 using Capisso.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Capisso.Mapper
 {
     public static class ProjectMapper
     {
+        /// <summary>
+        /// FromDto maps a Dto Project to an Entity.
+        /// Warning: It does not populate references
+        /// </summary>
+        /// <param name="projectDto"></param>
+        /// <returns></returns>
         public static Project FromDto(ProjectDto projectDto)
         {
             return new Project
@@ -32,6 +35,8 @@ namespace Capisso.Mapper
                 Outcome = project.Outcome,
                 StartDate = project.StartDate,
                 EndDate = project.EndDate,
+                CourseIds = project.ProjectCourses.Select(pc => pc.CourseId),
+                OrganisationId = project.OrganisationId
             };
         }
     }

@@ -109,5 +109,37 @@ namespace Capisso.Test.Controllers
 
             _mockCourseRepository.Verify(x => x.Update(It.IsAny<Course>()), Times.Once);
         }
+
+        [Test]
+        public async Task TestGetAllCourses()
+        {
+            // arrange
+            IEnumerable<Course> courses = new List<Course>
+            {
+                new Course
+                {
+                    Id = 13,
+                    Code = "my code",
+                    Description = "my description",
+                    Name = "my name",
+                    ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                }
+            };
+            _mockCourseRepository.Setup(x => x.GetAllAsync()).Returns(Task.FromResult(courses));
+
+            // act
+            var response = await _coursesController.GetAllCourses();
+
+            // assert
+            Assert.IsInstanceOf<OkObjectResult>(response.Result);
+            var result = response.Result as OkObjectResult;
+
+            Assert.IsInstanceOf<IEnumerable<CourseDto>>(result.Value);
+            var value = result.Value as IEnumerable<CourseDto>;
+
+            Assert.AreEqual(1, value.Count());
+            Assert.AreEqual(13, value.First().Id);
+            Assert.AreEqual("my code", value.First().Code);
+        }
     }
 }

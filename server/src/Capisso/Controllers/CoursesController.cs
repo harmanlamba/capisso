@@ -57,5 +57,10 @@ namespace Capisso.Controllers
             return NoContent();
         }
 
+        public async Task<ActionResult<IEnumerable<CourseDto>>> GetAllCourses()
+        {
+            var courses = await _courseService.GetAllCourses();
+            return Ok(courses);
+        }
     }
 }

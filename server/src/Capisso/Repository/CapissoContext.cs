@@ -1,6 +1,5 @@
 ﻿using Capisso.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
@@ -14,7 +13,6 @@ namespace Capisso.Repository
         public CapissoContext(DbContextOptions<CapissoContext> options)
             : base(options)
         {
-
         }
 
         public DbSet<Organisation> Organisations { get; set; }
@@ -29,13 +27,19 @@ namespace Capisso.Repository
                 entity.Property(e => e.Name).IsRequired();
                 entity.Property(e => e.Description).IsRequired();
 
-                var splitStringConverter = new ValueConverter<List<string>, string>(v => string.Join(";", v), v => string.IsNullOrEmpty(v) ? new List<string>() : v.Split(new[] { ';' }).ToList());
+                var splitStringConverter = new ValueConverter<List<string>, string>(v => string.Join(";", v),
+                    v => string.IsNullOrEmpty(v) ? new List<string>() : v.Split(new[] { ';' }).ToList());
                 var valueComparer = new ValueComparer<List<string>>(
                     (c1, c2) => c1.SequenceEqual(c2),
                     c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                     c => c.ToList());
 
-                entity.Property(e => e.Classifications).IsRequired().HasConversion(splitStringConverter).Metadata.SetValueComparer(valueComparer);
+                entity
+                    .Property(e => e.Classifications)
+                    .IsRequired()
+                    .HasConversion(splitStringConverter)
+                    .Metadata
+                    .SetValueComparer(valueComparer);
 
                 entity.Property(e => e.Address).IsRequired();
                 entity.Property(e => e.Status).IsRequired();
@@ -57,6 +61,23 @@ namespace Capisso.Repository
                 entity.Property(e => e.Outcome);
                 entity.Property(e => e.StartDate).IsRequired();
                 entity.Property(e => e.EndDate);
+                entity
+                    .HasOne(e => e.Organisation)
+                    .WithMany(e => e.Projects)
+                    .HasForeignKey(e => e.OrganisationId);
+            });
+
+            modelBuilder.Entity<ProjectCourse>(entity =>
+            {
+                entity.HasKey(e => new { e.ProjectId, e.CourseId });
+                entity
+                    .HasOne(e => e.Project)
+                    .WithMany(e => e.ProjectCourses)
+                    .HasForeignKey(e => e.ProjectId);
+                entity
+                    .HasOne(e => e.Course)
+                    .WithMany(e => e.ProjectCourses)
+                    .HasForeignKey(e => e.CourseId);
             });
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Capisso.Entities
 {
@@ -11,5 +10,8 @@ namespace Capisso.Entities
         public string Outcome { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public virtual List<ProjectCourse> ProjectCourses { get; set; }
+        public virtual Organisation Organisation { get; set; }
+        public int OrganisationId { get; set; }
     }
 }
