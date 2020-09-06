@@ -73,6 +73,10 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
           errors.organisationId = 'Required';
         }
 
+        if (!values.courseIds.length) {
+          errors.courseIds = 'Required';
+        }
+
         return errors;
       }}
     >
@@ -153,6 +157,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                   label="Organisation"
                   fullWidth={true}
                   required={true}
+                  error={!!errors.organisationId}
                 />
               )}
               onChange={(_e, v) => setFieldValue('organisationId', v?.id)}
@@ -171,6 +176,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                   label="Courses"
                   fullWidth={true}
                   required={true}
+                  error={!!errors.courseIds}
                 />
               )}
               onChange={(_e, v) =>
