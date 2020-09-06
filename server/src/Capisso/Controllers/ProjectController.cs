@@ -44,15 +44,22 @@ namespace Capisso.Controllers
             return Ok(projectDto);
         }
 
-        [HttpPut("{projectId:int}")]
-        public async Task<ActionResult> UpdateProject([FromBody] ProjectDto projectDto, [FromRoute] int projectId)
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> UpdateProject([FromBody] ProjectDto projectDto, [FromRoute] int id)
         {
-            if (projectDto.Id != projectId)
+            if (projectDto.Id != id)
             {
                 return BadRequest();
             }
 
-            await _projectService.UpdateProject(projectDto);
+            try {
+                await _projectService.UpdateProject(projectDto);
+            }
+            catch (EntityNotFoundException)
+            {
+                return BadRequest();
+            }
+
             return NoContent();
         }
     }

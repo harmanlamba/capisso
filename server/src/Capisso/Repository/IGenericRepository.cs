@@ -10,6 +10,7 @@ namespace Capisso.Repository
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<IEnumerable<T>> FindByAsync(Expression<Func<T, bool>> predicate);
+        Task<bool> Contains(T entity);
         Task<T> GetByIdAsync(object id);
         Task InsertAsync(T entity);
         void Update(T entity);

@@ -51,16 +51,22 @@ namespace Capisso.Controllers
         }
 
         [HttpPut]
-        [Route("{organisationId}")]
-        public async Task<ActionResult> UpdateOrganisation([FromBody] OrganisationDto organisationDto,
-            [FromRoute] int organisationId)
+        [Route("{id:int}")]
+        public async Task<ActionResult> UpdateOrganisation([FromBody] OrganisationDto organisationDto, [FromRoute] int id)
         {
-            if (organisationDto.Id != organisationId)
+            if (organisationDto.Id != id)
             {
                 return BadRequest();
             }
 
-            await _organisationService.UpdateOrganisation(organisationDto);
+            try {
+                await _organisationService.UpdateOrganisation(organisationDto);
+            }
+            catch (EntityNotFoundException)
+            {
+                return BadRequest();
+            }
+
             return NoContent();
         }
     }

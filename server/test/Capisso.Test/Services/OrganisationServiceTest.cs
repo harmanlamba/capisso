@@ -77,9 +77,7 @@ namespace Capisso.Test.Services
                 Classifications = new List<string> { "Classficiation", "Classification1" }
             };
 
-            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1))
-                .Returns(Task.FromResult(organisation));
-
+            _mockOrganisationRepository.Setup(x => x.Contains(It.IsAny<Organisation>())).Returns(Task.FromResult<bool>(true));
             _mockOrganisationRepository.Setup(x => x.Update(It.IsAny<Organisation>())).Verifiable();
 
 
@@ -87,7 +85,8 @@ namespace Capisso.Test.Services
             await _organisationService.UpdateOrganisation(organisationUpdated);
 
             // Assert
-            _mockOrganisationRepository.Verify();
+            _mockOrganisationRepository.Verify(x => x.Contains(It.IsAny<Organisation>()), Times.Once);
+            _mockOrganisationRepository.Verify(x => x.Update(It.IsAny<Organisation>()), Times.Once);
         }
     }
 }

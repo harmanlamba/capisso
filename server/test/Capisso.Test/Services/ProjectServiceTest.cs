@@ -89,13 +89,14 @@ namespace Capisso.Test.Services
                 EndDate = new DateTime(),
             };
 
+            _mockProjectRepository.Setup(x => x.Contains(It.IsAny<Project>())).Returns(Task.FromResult<bool>(true));
             _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>()));
 
             // Act
-            var result = await _projectService.UpdateProject(projectDto);
+            await _projectService.UpdateProject(projectDto);
 
             //Assert
-            Assert.IsTrue(result);
+            _mockProjectRepository.Verify(x => x.Contains(It.IsAny<Project>()), Times.Once);
             _mockProjectRepository.Verify(x => x.Update(It.IsAny<Project>()), Times.Once);
         }
     }

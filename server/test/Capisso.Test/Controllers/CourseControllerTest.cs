@@ -99,15 +99,42 @@ namespace Capisso.Test.Controllers
                 Code = "Code1"
             };
 
-            _mockCourseRepository.Setup(x => x.Update(It.IsAny<Course>()));
+            _mockCourseRepository.Setup(x => x.Contains(It.IsAny<Course>())).Returns(Task.FromResult<bool>(true));
+            _mockCourseRepository.Setup(x => x.Update(It.IsAny<Course>())).Verifiable();
 
             //Act
-            ActionResult response = await _coursesController.UpdateCourse(courseDto, 1);
+            ActionResult<NonActionAttribute> response = await _coursesController.UpdateCourse(courseDto, 1);
 
             //Assert
-            Assert.IsInstanceOf(typeof(NoContentResult), response);
+            Assert.IsInstanceOf<NoContentResult>(response.Result);
+            NoContentResult updateResult = response.Result as NoContentResult;
+            Assert.AreEqual(204, updateResult.StatusCode);
 
+            _mockCourseRepository.Verify(x => x.Contains(It.IsAny<Course>()), Times.Once);
             _mockCourseRepository.Verify(x => x.Update(It.IsAny<Course>()), Times.Once);
+        }
+
+        [Test]
+        public async Task TestUpdateOrganisationWithInvalidId()
+        {
+            // Arrange
+            var course = new CourseDto
+            {
+                Id = 1,
+                Name = "Course1",
+                Code = "Code1"
+            };
+
+            _mockCourseRepository.Setup(x => x.Contains(It.IsAny<Course>())).Returns(Task.FromResult<bool>(true));
+            _mockCourseRepository.Setup(x => x.Update(It.IsAny<Course>())).Verifiable();
+
+            // Act
+            var response = await _coursesController.UpdateCourse(course, 2);
+
+            // Assert
+            Assert.IsInstanceOf<BadRequestResult>(response);
+            _mockCourseRepository.Verify(x => x.Contains(It.IsAny<Course>()), Times.Never);
+            _mockCourseRepository.Verify(x => x.Update(It.IsAny<Course>()), Times.Never);
         }
     }
 }

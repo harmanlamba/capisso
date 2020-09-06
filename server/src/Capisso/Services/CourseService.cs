@@ -39,6 +39,11 @@ namespace Capisso.Services
         {
             var course = CourseMapper.FromDto(courseDto);
 
+            if (!await _unitOfWork.CourseRepository.Contains(course))
+            {
+                throw new EntityNotFoundException();
+            }
+
             _unitOfWork.CourseRepository.Update(course);
             await _unitOfWork.SaveAsync();
         }

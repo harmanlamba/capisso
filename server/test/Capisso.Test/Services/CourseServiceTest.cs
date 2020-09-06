@@ -83,12 +83,14 @@ namespace Capisso.Test.Services
                 Code = "Code1New"
             };
 
-            _mockCourseRepository.Setup(x => x.Update(It.IsAny<Course>()));
+            _mockCourseRepository.Setup(x => x.Contains(It.IsAny<Course>())).Returns(Task.FromResult<bool>(true));
+            _mockCourseRepository.Setup(x => x.Update(It.IsAny<Course>())).Verifiable();
 
             //Act
             await _courseService.UpdateCourse(courseDto);
 
             //Assert
+            _mockCourseRepository.Verify(x => x.Contains(It.IsAny<Course>()), Times.Once);
             _mockCourseRepository.Verify(x => x.Update(It.IsAny<Course>()), Times.Once);
         }
     }

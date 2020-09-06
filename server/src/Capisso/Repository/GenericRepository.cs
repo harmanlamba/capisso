@@ -23,6 +23,11 @@ namespace Capisso.Repository
             return await _dbSet.FindAsync(id);
         }
 
+        public virtual async Task<bool> Contains(T entity)
+        {
+            return await _dbSet.ContainsAsync<T>(entity);
+        }
+
         public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();

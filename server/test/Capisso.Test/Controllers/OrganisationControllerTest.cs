@@ -165,17 +165,19 @@ namespace Capisso.Test.Controllers
                 Classifications = new List<string> { "Classficiation", "Classification1" }
             };
 
-            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1))
-                .Returns(Task.FromResult(organisation));
-
+            _mockOrganisationRepository.Setup(x => x.Contains(It.IsAny<Organisation>())).Returns(Task.FromResult<bool>(true));
             _mockOrganisationRepository.Setup(x => x.Update(It.IsAny<Organisation>())).Verifiable();
 
             // Act
-            var response = await _organisationsController.UpdateOrganisation(organisationUpdated, 1);
+            ActionResult<NonActionAttribute> response = await _organisationsController.UpdateOrganisation(organisationUpdated, 1);
 
             // Assert
-            Assert.IsInstanceOf<NoContentResult>(response);
-            _mockOrganisationRepository.Verify();
+            Assert.IsInstanceOf<NoContentResult>(response.Result);
+            NoContentResult updateResult = response.Result as NoContentResult;
+            Assert.AreEqual(204, updateResult.StatusCode);
+
+            _mockOrganisationRepository.Verify(x => x.Contains(It.IsAny<Organisation>()), Times.Once);
+            _mockOrganisationRepository.Verify(x => x.Update(It.IsAny<Organisation>()), Times.Once);
         }
 
         [Test]
@@ -192,11 +194,15 @@ namespace Capisso.Test.Controllers
                 Classifications = new List<string> { "Classficiation", "Classification1" }
             };
 
+            _mockOrganisationRepository.Setup(x => x.Contains(It.IsAny<Organisation>())).Returns(Task.FromResult<bool>(true));
+            _mockOrganisationRepository.Setup(x => x.Update(It.IsAny<Organisation>())).Verifiable();
+
             // Act
             var response = await _organisationsController.UpdateOrganisation(organisation, 2);
 
             // Assert
             Assert.IsInstanceOf<BadRequestResult>(response);
+            _mockOrganisationRepository.Verify(x => x.Contains(It.IsAny<Organisation>()), Times.Never);
             _mockOrganisationRepository.Verify(x => x.Update(It.IsAny<Organisation>()), Times.Never);
         }
     }

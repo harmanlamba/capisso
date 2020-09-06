@@ -38,14 +38,18 @@ namespace Capisso.Services
 
             return ProjectMapper.ToDto(project);
         }
-        public async Task<bool> UpdateProject(ProjectDto projectDto)
+
+        public async Task UpdateProject(ProjectDto projectDto)
         {
             var project = ProjectMapper.FromDto(projectDto);
 
+            if (!await _unitOfWork.ProjectRepository.Contains(project))
+            {
+                throw new EntityNotFoundException();
+            }
+
             _unitOfWork.ProjectRepository.Update(project);
             await _unitOfWork.SaveAsync();
-
-            return true;
         }
 
     }

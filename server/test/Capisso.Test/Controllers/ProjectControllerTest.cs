@@ -126,7 +126,8 @@ namespace Capisso.Test.Controllers
                 EndDate = new DateTime(),
             };
 
-            _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>()));
+            _mockProjectRepository.Setup(x => x.Contains(It.IsAny<Project>())).Returns(Task.FromResult<bool>(true));
+            _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>())).Verifiable();
 
             // Act
             ActionResult<NonActionAttribute> response = await _projectsController.UpdateProject(projectDto, 1);
@@ -136,6 +137,7 @@ namespace Capisso.Test.Controllers
             NoContentResult updateResult = response.Result as NoContentResult;
             Assert.AreEqual(204, updateResult.StatusCode);
 
+            _mockProjectRepository.Verify(x => x.Contains(It.IsAny<Project>()), Times.Once);
             _mockProjectRepository.Verify(x => x.Update(It.IsAny<Project>()), Times.Once);
         }
 
@@ -151,7 +153,8 @@ namespace Capisso.Test.Controllers
                 EndDate = new DateTime(),
             };
 
-            _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>()));
+            _mockProjectRepository.Setup(x => x.Contains(It.IsAny<Project>())).Returns(Task.FromResult<bool>(true));
+            _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>())).Verifiable();
 
             // Act
             ActionResult<NonActionAttribute> response = await _projectsController.UpdateProject(projectDto, 2);
@@ -161,6 +164,7 @@ namespace Capisso.Test.Controllers
             BadRequestResult updateResult = response.Result as BadRequestResult;
             Assert.AreEqual(400, updateResult.StatusCode);
 
+            _mockProjectRepository.Verify(x => x.Contains(It.IsAny<Project>()), Times.Never);
             _mockProjectRepository.Verify(x => x.Update(It.IsAny<Project>()), Times.Never);
         }
     }

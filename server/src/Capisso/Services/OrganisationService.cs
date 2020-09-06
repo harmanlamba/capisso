@@ -45,8 +45,14 @@ namespace Capisso.Services
 
         public async Task UpdateOrganisation(OrganisationDto organisationDto)
         {
-            var organization = OrganisationMapper.FromDto(organisationDto);
-            _unitOfWork.OrganisationRepository.Update(organization);
+            var organisation = OrganisationMapper.FromDto(organisationDto);
+
+            if (!await _unitOfWork.OrganisationRepository.Contains(organisation))
+            {
+                throw new EntityNotFoundException();
+            }
+
+            _unitOfWork.OrganisationRepository.Update(organisation);
             await _unitOfWork.SaveAsync();
         }
     }
