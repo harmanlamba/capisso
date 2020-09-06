@@ -20,6 +20,7 @@ namespace Capisso.Test.Controllers
         private Mock<IProjectRepository> _mockProjectRepository;
         private Mock<ICourseRepository> _mockCourseRepository;
         private Mock<IOrganisationRepository> _mockOrganisationRepository;
+        private Mock<IProjectCourseRepository> _mockProjectCourseRepository;
         private ProjectService _projectService;
         private ProjectsController _projectsController;
 
@@ -29,11 +30,13 @@ namespace Capisso.Test.Controllers
             _mockProjectRepository = new Mock<IProjectRepository>();
             _mockCourseRepository = new Mock<ICourseRepository>();
             _mockOrganisationRepository = new Mock<IOrganisationRepository>();
+            _mockProjectCourseRepository = new Mock<IProjectCourseRepository>();
             _mockUnitOfWork = new MockUnitOfWork
             {
                 ProjectRepository = _mockProjectRepository.Object,
                 CourseRepository = _mockCourseRepository.Object,
                 OrganisationRepository = _mockOrganisationRepository.Object,
+                ProjectCourseRepository = _mockProjectCourseRepository.Object,
             };
 
             _projectService = new ProjectService(_mockUnitOfWork);
@@ -54,8 +57,13 @@ namespace Capisso.Test.Controllers
                 CourseIds = Enumerable.Empty<int>(),
                 OrganisationId = 1,
             };
+            var organisation = new Organisation
+            {
+                Id = 1,
+            };
 
             _mockProjectRepository.Setup(x => x.InsertAsync(It.IsAny<Project>())).Returns(Task.FromResult(1));
+            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(organisation);
 
             // Act
             ActionResult<CreatedDto> response = await _projectsController.CreateProject(projectDto);
@@ -142,8 +150,13 @@ namespace Capisso.Test.Controllers
                 CourseIds = Enumerable.Empty<int>(),
                 OrganisationId = 1,
             };
+            var organisation = new Organisation
+            {
+                Id = 1
+            };
 
             _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>()));
+            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(organisation);
 
             // Act
             ActionResult<NonActionAttribute> response = await _projectsController.UpdateProject(projectDto, 1);

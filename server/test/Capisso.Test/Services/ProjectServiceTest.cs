@@ -6,9 +6,7 @@ using Capisso.Test.Repository;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Capisso.Test.Services
@@ -19,6 +17,7 @@ namespace Capisso.Test.Services
         private Mock<IProjectRepository> _mockProjectRepository;
         private Mock<ICourseRepository> _mockCourseRepository;
         private Mock<IOrganisationRepository> _mockOrganisationRepository;
+        private Mock<IProjectCourseRepository> _mockProjectCourseRepository;
         private ProjectService _projectService;
 
         [SetUp]
@@ -27,11 +26,13 @@ namespace Capisso.Test.Services
             _mockProjectRepository = new Mock<IProjectRepository>();
             _mockCourseRepository = new Mock<ICourseRepository>();
             _mockOrganisationRepository = new Mock<IOrganisationRepository>();
+            _mockProjectCourseRepository = new Mock<IProjectCourseRepository>();
             _mockUnitOfWork = new MockUnitOfWork
             {
                 ProjectRepository = _mockProjectRepository.Object,
                 CourseRepository = _mockCourseRepository.Object,
                 OrganisationRepository = _mockOrganisationRepository.Object,
+                ProjectCourseRepository = _mockProjectCourseRepository.Object,
             };
             _projectService = new ProjectService(_mockUnitOfWork);
         }
@@ -50,8 +51,13 @@ namespace Capisso.Test.Services
                 CourseIds = Enumerable.Empty<int>(),
                 OrganisationId = 1,
             };
+            var organisation = new Organisation
+            {
+                Id = 1
+            };
 
             _mockProjectRepository.Setup(x => x.InsertAsync(It.IsAny<Project>())).Returns(Task.FromResult(1));
+            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(organisation);
 
             // Act
             var id = await _projectService.CreateProject(projectDto);
@@ -105,8 +111,13 @@ namespace Capisso.Test.Services
                 CourseIds = Enumerable.Empty<int>(),
                 OrganisationId = 1,
             };
+            var organisation = new Organisation
+            {
+                Id = 1,
+            };
 
             _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>()));
+            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(organisation);
 
             // Act
             var result = await _projectService.UpdateProject(projectDto);
