@@ -9,7 +9,7 @@ namespace Capisso.Mapper
 {
     public static class CourseMapper
     {
-        public static Course FromDto(CourseDto courseDto)
+        public static Course FromDto(this CourseDto courseDto)
         {
             return new Course
             {
@@ -20,7 +20,7 @@ namespace Capisso.Mapper
             };
         }
 
-        public static CourseDto ToDto(Course course)
+        public static CourseDto ToDto(this Course course)
         {
             return new CourseDto
             {

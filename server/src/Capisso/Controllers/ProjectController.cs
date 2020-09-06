@@ -52,7 +52,8 @@ namespace Capisso.Controllers
                 return BadRequest();
             }
 
-            try {
+            try
+            {
                 await _projectService.UpdateProject(projectDto);
             }
             catch (EntityNotFoundException)

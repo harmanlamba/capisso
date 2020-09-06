@@ -59,7 +59,8 @@ namespace Capisso.Controllers
                 return BadRequest();
             }
 
-            try {
+            try
+            {
                 await _organisationService.UpdateOrganisation(organisationDto);
             }
             catch (EntityNotFoundException)

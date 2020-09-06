@@ -7,7 +7,7 @@ namespace Capisso.Mapper
 {
     public static class OrganisationMapper
     {
-        public static Organisation FromDto(OrganisationDto organisationDto)
+        public static Organisation FromDto(this OrganisationDto organisationDto)
         {
             return new Organisation
             {
@@ -20,7 +20,7 @@ namespace Capisso.Mapper
             };
         }
 
-        public static OrganisationDto ToDto(Organisation organisation)
+        public static OrganisationDto ToDto(this Organisation organisation)
         {
             return new OrganisationDto
             {

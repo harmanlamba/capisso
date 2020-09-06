@@ -19,7 +19,7 @@ namespace Capisso.Services
 
         public async Task<int> CreateProject(ProjectDto projectDto)
         {
-            var project = ProjectMapper.FromDto(projectDto);
+            var project = projectDto.FromDto();
             await _unitOfWork.ProjectRepository.InsertAsync(project);
             await _unitOfWork.SaveAsync();
 
@@ -29,19 +29,19 @@ namespace Capisso.Services
         public async Task<IEnumerable<ProjectDto>> GetAll()
         {
             var projects = await _unitOfWork.ProjectRepository.GetAllAsync();
-            return projects.Select(project => ProjectMapper.ToDto(project));
+            return projects.Select(project => project.ToDto());
         }
 
         public async Task<ProjectDto> GetProject(int projectId)
         {
             var project = await _unitOfWork.ProjectRepository.GetByIdAsync(projectId) ?? throw new EntityNotFoundException();
 
-            return ProjectMapper.ToDto(project);
+            return project.ToDto();
         }
 
         public async Task UpdateProject(ProjectDto projectDto)
         {
-            var project = ProjectMapper.FromDto(projectDto);
+            var project = projectDto.FromDto();
 
             if (!await _unitOfWork.ProjectRepository.Contains(project))
             {

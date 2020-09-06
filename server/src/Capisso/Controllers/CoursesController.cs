@@ -57,7 +57,7 @@ namespace Capisso.Controllers
             {
                 await _courseService.UpdateCourse(courseDto);
             }
-            catch(EntityNotFoundException)
+            catch (EntityNotFoundException)
             {
                 return BadRequest();
             }

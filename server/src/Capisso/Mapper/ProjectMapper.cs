@@ -9,7 +9,7 @@ namespace Capisso.Mapper
 {
     public static class ProjectMapper
     {
-        public static Project FromDto(ProjectDto projectDto)
+        public static Project FromDto(this ProjectDto projectDto)
         {
             return new Project
             {
@@ -22,7 +22,7 @@ namespace Capisso.Mapper
             };
         }
 
-        public static ProjectDto ToDto(Project project)
+        public static ProjectDto ToDto(this Project project)
         {
             return new ProjectDto
             {

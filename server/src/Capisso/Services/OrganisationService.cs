@@ -19,7 +19,7 @@ namespace Capisso.Services
 
         public async Task<int> CreateOrganisation(OrganisationDto organisationDto)
         {
-            var organisation = OrganisationMapper.FromDto(organisationDto);
+            var organisation = organisationDto.FromDto();
             await _unitOfWork.OrganisationRepository.InsertAsync(organisation);
             await _unitOfWork.SaveAsync();
 
@@ -29,7 +29,7 @@ namespace Capisso.Services
         public async Task<IEnumerable<OrganisationDto>> GetAllOrganisations()
         {
             var organisations = await _unitOfWork.OrganisationRepository.GetAllAsync();
-            return organisations.Select(organisation => OrganisationMapper.ToDto(organisation));
+            return organisations.Select(organisation => organisation.ToDto());
         }
 
         public async Task<OrganisationDto> GetOrganisation(int organisationId)
@@ -40,12 +40,12 @@ namespace Capisso.Services
                 return null;
             }
 
-            return OrganisationMapper.ToDto(organisation);
+            return organisation.ToDto();
         }
 
         public async Task UpdateOrganisation(OrganisationDto organisationDto)
         {
-            var organisation = OrganisationMapper.FromDto(organisationDto);
+            var organisation = organisationDto.FromDto();
 
             if (!await _unitOfWork.OrganisationRepository.Contains(organisation))
             {
