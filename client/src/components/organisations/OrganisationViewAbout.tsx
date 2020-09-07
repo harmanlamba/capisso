@@ -1,5 +1,5 @@
+import { Box, makeStyles, Paper, Typography } from '@material-ui/core';
 import React from 'react';
-import { makeStyles, Paper, Box, Typography } from '@material-ui/core';
 import { IOrganisationDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
