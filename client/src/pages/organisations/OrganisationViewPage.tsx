@@ -2,7 +2,6 @@ import {
   AppBar,
   Box,
   Button,
-  CircularProgress,
   makeStyles,
   Tab,
   Tabs,
@@ -18,6 +17,7 @@ import {
   useParams,
 } from 'react-router-dom';
 import { getOrganisation } from '../../common/api/organisations';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { OrganisationStatusChip } from '../../components/organisations/OrganisationStatusChip';
 import { OrganisationViewAbout } from '../../components/organisations/OrganisationViewAbout';
 import { IOrganisationDto } from '../../types/types';
@@ -27,11 +27,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     width: '100%',
     flexGrow: 1,
-  },
-  progressRing: {
-    marginLeft: '50%',
-    paddingTop: '200px',
-    paddingBottom: '10px',
   },
 }));
 
@@ -125,11 +120,7 @@ export const OrganisationViewPage: React.FC<{}> = () => {
           </Box>
         </>
       ) : (
-        <CircularProgress
-          className={classes.progressRing}
-          size={60}
-          thickness={6}
-        />
+        <LoadingSpinner />
       )}
     </div>
   );

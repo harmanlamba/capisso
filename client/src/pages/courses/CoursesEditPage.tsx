@@ -1,19 +1,15 @@
+import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import { CoursesForm } from '../../components/courses/CoursesForm';
-import { makeStyles, CircularProgress, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
-import { ICourseDto } from '../../types/types';
 import { editCourse, getCourse } from '../../common/api/courses';
+import { CoursesForm } from '../../components/courses/CoursesForm';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
+import { ICourseDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
   content: {
     width: '100%',
     flexGrow: 1,
-  },
-  progressRing: {
-    marginLeft: '50%',
-    paddingTop: '200px',
-    paddingBottom: '10px',
   },
 }));
 
@@ -35,11 +31,7 @@ export const CoursesEditPage: React.FC<{}> = () => {
     <div className={classes.content}>
       <Typography variant="h4">Edit Course</Typography>
       {loading ? (
-        <CircularProgress
-          className={classes.progressRing}
-          size={60}
-          thickness={6}
-        />
+        <LoadingSpinner />
       ) : (
         <CoursesForm initialValues={course} onSubmit={editCourse} type="edit" />
       )}

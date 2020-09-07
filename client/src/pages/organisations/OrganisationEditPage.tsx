@@ -1,22 +1,18 @@
+import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import { OrganisationsForm } from '../../components/organisations/OrganisationsForm';
-import { makeStyles, CircularProgress, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
-import { IOrganisationDto } from '../../types/types';
 import {
   editOrganisation,
   getOrganisation,
 } from '../../common/api/organisations';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
+import { OrganisationsForm } from '../../components/organisations/OrganisationsForm';
+import { IOrganisationDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
   content: {
     width: '100%',
     flexGrow: 1,
-  },
-  progressRing: {
-    marginLeft: '50%',
-    paddingTop: '200px',
-    paddingBottom: '10px',
   },
 }));
 
@@ -38,11 +34,7 @@ export const OrganisationsEditPage: React.FC<{}> = () => {
     <div className={classes.content}>
       <Typography variant="h4">Edit Organisation</Typography>
       {loading ? (
-        <CircularProgress
-          className={classes.progressRing}
-          size={60}
-          thickness={6}
-        />
+        <LoadingSpinner />
       ) : (
         <OrganisationsForm
           initialValues={organisation}

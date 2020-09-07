@@ -1,20 +1,16 @@
-import { CircularProgress, makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { editProject, getProject } from '../../common/api/projects';
+import { useCourses, useOrganisations } from '../../common/hooks/apiHooks';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { ProjectsForm } from '../../components/projects/ProjectsForm';
 import { IProjectDto } from '../../types/types';
-import { useOrganisations, useCourses } from '../../common/hooks/apiHooks';
 
 const useStyles = makeStyles((theme) => ({
   content: {
     width: '100%',
     flexGrow: 1,
-  },
-  progressRing: {
-    marginLeft: '50%',
-    paddingTop: '200px',
-    paddingBottom: '10px',
   },
 }));
 
@@ -39,11 +35,7 @@ export const ProjectEditPage: React.FC<{}> = () => {
     <div className={classes.content}>
       <Typography variant="h4">Edit project</Typography>
       {loading ? (
-        <CircularProgress
-          className={classes.progressRing}
-          size={60}
-          thickness={6}
-        />
+        <LoadingSpinner />
       ) : (
         <ProjectsForm
           onSubmit={editProject}
