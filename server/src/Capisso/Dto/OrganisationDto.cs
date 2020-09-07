@@ -10,5 +10,6 @@ namespace Capisso.Dto
         public IEnumerable<string> Classifications { get; set; }
         public string Address { get; set; }
         public string Status { get; set; }
+        public int? ProjectCount { get; set; }
     }
 }

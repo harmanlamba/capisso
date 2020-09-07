@@ -1,17 +1,17 @@
-import React from 'react';
 import {
   makeStyles,
-  withStyles,
+  Paper,
+  Table,
+  TableBody,
   TableCell,
   TableContainer,
-  Table,
-  Paper,
   TableHead,
   TableRow,
-  TableBody,
+  withStyles,
 } from '@material-ui/core';
-import { IOrganisationDto } from '../../types/types';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { IOrganisationDto } from '../../types/types';
 import { OrganisationStatusChip } from './OrganisationStatusChip';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +49,7 @@ export const OrganisationsList: React.FC<{
           <TableRow>
             <StyledTableCell> Organization Name </StyledTableCell>
             <StyledTableCell> Classifications </StyledTableCell>
-            <StyledTableCell> Number Projects </StyledTableCell>
+            <StyledTableCell> Number of Projects </StyledTableCell>
             <StyledTableCell> Status </StyledTableCell>
           </TableRow>
         </TableHead>
@@ -68,7 +68,7 @@ export const OrganisationsList: React.FC<{
               <StyledTableCell>
                 {row.classifications.join(', ')}
               </StyledTableCell>
-              <StyledTableCell> 0 </StyledTableCell>
+              <StyledTableCell> {row.projectCount} </StyledTableCell>
               <StyledTableCell>
                 <OrganisationStatusChip status={row.status} />
               </StyledTableCell>
