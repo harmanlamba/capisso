@@ -47,7 +47,6 @@ export const ProjectsList: React.FC<{
           <TableRow>
             <StyledTableCell> Project Name </StyledTableCell>
             <StyledTableCell> Start Date </StyledTableCell>
-            <StyledTableCell> End Date </StyledTableCell>
             <StyledTableCell> Outcome </StyledTableCell>
           </TableRow>
         </TableHead>
@@ -65,9 +64,6 @@ export const ProjectsList: React.FC<{
               <StyledTableCell> {row.title} </StyledTableCell>
               <StyledTableCell>
                 {moment(row.startDate).format('YYYY-MM-DD')}
-              </StyledTableCell>
-              <StyledTableCell>
-                {row.endDate ? moment(row.endDate).format('YYYY-MM-DD') : 'N/A'}
               </StyledTableCell>
               <StyledTableCell>{row.outcome}</StyledTableCell>
             </TableRow>
