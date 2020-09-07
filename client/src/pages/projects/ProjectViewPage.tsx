@@ -2,7 +2,6 @@ import {
   AppBar,
   Box,
   Button,
-  CircularProgress,
   makeStyles,
   Tab,
   Tabs,
@@ -18,6 +17,7 @@ import {
   useParams,
 } from 'react-router-dom';
 import { getProject } from '../../common/api/projects';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { ProjectViewAbout } from '../../components/projects/ProjectViewAbout';
 import { IProjectDto } from '../../types/types';
 
@@ -25,11 +25,6 @@ const useStyles = makeStyles(() => ({
   content: {
     width: '100%',
     flexGrow: 1,
-  },
-  progressRing: {
-    marginLeft: '50%',
-    paddingTop: '200px',
-    paddingBottom: '10px',
   },
 }));
 
@@ -112,11 +107,7 @@ export const ProjectViewPage: React.FC<{}> = () => {
           </Box>
         </>
       ) : (
-        <CircularProgress
-          className={classes.progressRing}
-          size={60}
-          thickness={6}
-        />
+        <LoadingSpinner />
       )}
     </div>
   );

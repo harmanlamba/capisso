@@ -8,6 +8,7 @@ namespace Capisso.Services
 {
     public interface IProjectService
     {
+        Task<IEnumerable<ProjectDto>> GetAllProjects(int? organisationId);
         Task<int> CreateProject(ProjectDto projectDto);
         Task<ProjectDto> GetProject(int projectId);
         Task<bool> UpdateProject(ProjectDto projectDto);

@@ -52,9 +52,12 @@ namespace Capisso.Services
             return project.Id;
         }
 
-        public async Task<IEnumerable<ProjectDto>> GetAllProjects()
+        public async Task<IEnumerable<ProjectDto>> GetAllProjects(int? organisationId = null)
         {
-            var projects = await _unitOfWork.ProjectRepository.GetAllAsync();
+            var projects = organisationId == null ?
+                await _unitOfWork.ProjectRepository.GetAllAsync() :
+                await _unitOfWork.ProjectRepository.FindByAsync(p => p.OrganisationId == organisationId);
+
             return projects.Select(ProjectMapper.ToDto);
         }
 

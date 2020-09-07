@@ -8,6 +8,8 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Capisso.Test.Services
 {
@@ -69,7 +71,7 @@ namespace Capisso.Test.Services
 
 
         [Test]
-        public async Task TestGetSingularOrganisation()
+        public async Task TestGetSingularProject()
         {
             //Arrange
             var project = new Project
@@ -96,6 +98,87 @@ namespace Capisso.Test.Services
             //Assert
             Assert.AreEqual(1, projectDto.Id);
             _mockProjectRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
+        }
+
+        [Test]
+        public async Task TestGetAllProjectsOne()
+        {
+            //Arrange
+            IEnumerable<Project> projects = new List<Project> {
+                new Project
+                {
+                    Id = 1,
+                    Notes = "Test Notes",
+                    Outcome = "Test Outcome",
+                    Title = "Test Tile",
+                    StartDate = new DateTime(),
+                    EndDate = new DateTime(),
+                    ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                    Organisation = new Organisation
+                    {
+                        Id = 1,
+                    }
+                }
+            };
+
+            _mockProjectRepository.Setup(x => x.GetAllAsync()).Returns(Task.FromResult(projects));
+
+            //Act
+            var result = await _projectService.GetAllProjects();
+
+            //Assert
+            Assert.AreEqual(1, result.First().Id);
+            Assert.AreEqual(1, result.Count());
+            _mockProjectRepository.Verify(x => x.GetAllAsync(), Times.Once);
+        }
+
+        [Test]
+        public async Task TestGetAllProjectsByOrganisation()
+        {
+            //Arrange
+            int orgId = 1;
+            IEnumerable<Project> projects = new List<Project> {
+                new Project
+                {
+                    Id = 1,
+                    Notes = "Test Notes",
+                    Outcome = "Test Outcome",
+                    Title = "Test Tile",
+                    StartDate = new DateTime(),
+                    EndDate = new DateTime(),
+                    ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                    Organisation = new Organisation
+                    {
+                        Id = 1,
+                    }
+                },
+                new Project
+                {
+                    Id = 2,
+                    Notes = "Test Notes",
+                    Outcome = "Test Outcome",
+                    Title = "Test Tile",
+                    StartDate = new DateTime(),
+                    EndDate = new DateTime(),
+                    ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                    Organisation = new Organisation
+                    {
+                        Id = 2,
+                    }
+                },
+            };
+            var expectedProjects = projects.Take(1);
+
+            _mockProjectRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<Func<Project, bool>>>()))
+                .Returns(Task.FromResult(expectedProjects));
+
+            //Act
+            var result = await _projectService.GetAllProjects(orgId);
+
+            //Assert
+            Assert.AreEqual(expectedProjects.Count(), result.Count());
+            CollectionAssert.AreEquivalent(expectedProjects.Select(p => p.Id), result.Select(p => p.Id));
+            _mockProjectRepository.Verify(x => x.FindByAsync(It.IsAny<Expression<Func<Project, bool>>>()), Times.Once);
         }
 
         [Test]

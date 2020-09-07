@@ -1,30 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Switch, Route, Redirect, useHistory, Link } from 'react-router-dom';
 import {
-  makeStyles,
-  Typography,
+  AppBar,
   Box,
   Button,
-  AppBar,
-  Tabs,
+  makeStyles,
   Tab,
-  CircularProgress,
+  Tabs,
+  Typography,
 } from '@material-ui/core';
-import { useParams } from 'react-router-dom';
-import { IOrganisationDto } from '../../types/types';
+import React, { useEffect, useState } from 'react';
+import {
+  Link,
+  Redirect,
+  Route,
+  Switch,
+  useHistory,
+  useParams,
+} from 'react-router-dom';
 import { getOrganisation } from '../../common/api/organisations';
-import { OrganisationViewAbout } from '../../components/organisations/OrganisationViewAbout';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { OrganisationStatusChip } from '../../components/organisations/OrganisationStatusChip';
+import { OrganisationViewAbout } from '../../components/organisations/OrganisationViewAbout';
+import { IOrganisationDto } from '../../types/types';
+import { OrganisationViewProjects } from './OrganisationViewProjects';
 
 const useStyles = makeStyles((theme) => ({
   content: {
     width: '100%',
     flexGrow: 1,
-  },
-  progressRing: {
-    marginLeft: '50%',
-    paddingTop: '200px',
-    paddingBottom: '10px',
   },
 }));
 
@@ -104,7 +106,11 @@ export const OrganisationViewPage: React.FC<{}> = () => {
                   <OrganisationViewAbout organisation={organisation} />
                 )}
               />
-              <Route path="/organisations/:id/projects" exact={true} />
+              <Route
+                path="/organisations/:id/projects"
+                exact={true}
+                render={() => <OrganisationViewProjects />}
+              />
               <Route path="/organisations/:id/contacts" />
               <Route path="/organisations/:id/communications" exact={true} />
               <Route path="*">
@@ -114,11 +120,7 @@ export const OrganisationViewPage: React.FC<{}> = () => {
           </Box>
         </>
       ) : (
-        <CircularProgress
-          className={classes.progressRing}
-          size={60}
-          thickness={6}
-        />
+        <LoadingSpinner />
       )}
     </div>
   );

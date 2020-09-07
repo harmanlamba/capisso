@@ -9,10 +9,10 @@ import {
   TableRow,
   withStyles,
 } from '@material-ui/core';
+import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IOrganisationDto } from '../../types/types';
-import { OrganisationStatusChip } from './OrganisationStatusChip';
+import { IProjectDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -35,43 +35,37 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-export const OrganisationsList: React.FC<{
-  organisations: IOrganisationDto[];
-}> = (props) => {
+export const ProjectsList: React.FC<{
+  projects: IProjectDto[];
+}> = ({ projects }) => {
   const classes = useStyles();
-
-  const organisations = props.organisations;
 
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <StyledTableCell> Organization Name </StyledTableCell>
-            <StyledTableCell> Classifications </StyledTableCell>
-            <StyledTableCell> Number of Projects </StyledTableCell>
-            <StyledTableCell> Status </StyledTableCell>
+            <StyledTableCell> Project Name </StyledTableCell>
+            <StyledTableCell> Start Date </StyledTableCell>
+            <StyledTableCell> Outcome </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {organisations.map((row) => (
+          {projects.map((row) => (
             <TableRow
               key={row.id}
               hover={true}
               component={Link}
-              to={`/organisations/${row.id}/about`}
+              to={`/projects/${row.id}/about`}
               classes={{
                 root: 'no-underline',
               }}
             >
-              <StyledTableCell> {row.name} </StyledTableCell>
+              <StyledTableCell> {row.title} </StyledTableCell>
               <StyledTableCell>
-                {row.classifications.join(', ')}
+                {moment(row.startDate).format('YYYY-MM-DD')}
               </StyledTableCell>
-              <StyledTableCell> {row.projectCount} </StyledTableCell>
-              <StyledTableCell>
-                <OrganisationStatusChip status={row.status} />
-              </StyledTableCell>
+              <StyledTableCell>{row.outcome}</StyledTableCell>
             </TableRow>
           ))}
         </TableBody>

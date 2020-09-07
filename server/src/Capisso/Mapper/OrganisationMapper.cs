@@ -29,7 +29,8 @@ namespace Capisso.Mapper
                 Address = organisation.Address,
                 Classifications = organisation.Classifications,
                 Description = organisation.Description,
-                Status = organisation.Status
+                Status = organisation.Status,
+                ProjectCount = organisation.Projects.Count()
             };
         }
     }

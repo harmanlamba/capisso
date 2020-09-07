@@ -9,6 +9,7 @@ export interface IOrganisationDto {
   address: string;
   status: string;
   classifications: string[];
+  projectCount?: number;
 }
 
 export interface ICourseDto {

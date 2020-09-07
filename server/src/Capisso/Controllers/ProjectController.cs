@@ -20,6 +20,12 @@ namespace Capisso.Controllers
             _projectService = projectService;
         }
 
+        [HttpGet]
+        public async Task<IEnumerable<ProjectDto>> GetAllProjects([FromQuery] int? organisationId = null)
+        {
+            return await _projectService.GetAllProjects(organisationId);
+        }
+
         [HttpPost]
         public async Task<ActionResult<CreatedDto>> CreateProject([FromBody] ProjectDto projectDto)
         {

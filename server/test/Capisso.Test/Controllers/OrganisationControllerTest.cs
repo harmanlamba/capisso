@@ -69,6 +69,7 @@ namespace Capisso.Test.Controllers
         public async Task TestGetAllOrganisationOne()
         {
             //Arrange
+            var projects = new List<Project> { new Project { Id = 1 }, new Project { Id = 42 } };
             IEnumerable<Organisation> organisations = new List<Organisation>
             {
                 new Organisation
@@ -78,7 +79,8 @@ namespace Capisso.Test.Controllers
                     Address = "55 Symonds",
                     Description = "UoA Accomodation",
                     Status = "Adequate",
-                    Classifications = new List<string> {"Classficiation", "Classification1"}
+                    Classifications = new List<string> {"Classficiation", "Classification1"},
+                    Projects = projects
                 }
             };
 
@@ -92,12 +94,14 @@ namespace Capisso.Test.Controllers
             Assert.AreEqual(1, response.Count());
             Assert.AreEqual(organisations.First().Id, response.First().Id);
             Assert.AreEqual(organisations.First().Name, response.First().Name);
+            Assert.AreEqual(projects.Count, response.First().ProjectCount);
         }
 
         [Test]
         public async Task TestGetOneOrganisation()
         {
             //Arrange
+            var projects = new List<Project> { new Project { Id = 1 }, new Project { Id = 42 } };
             var organisation = new Organisation
             {
                 Id = 1,
@@ -105,7 +109,8 @@ namespace Capisso.Test.Controllers
                 Address = "55 Symonds",
                 Description = "UoA Accomodation",
                 Status = "Adequate",
-                Classifications = new List<string> { "Classficiation", "Classification1" }
+                Classifications = new List<string> { "Classficiation", "Classification1" },
+                Projects = projects
             };
 
             _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1))
@@ -123,6 +128,7 @@ namespace Capisso.Test.Controllers
 
             Assert.AreEqual(organisation.Id, value.Id);
             Assert.AreEqual(organisation.Name, value.Name);
+            Assert.AreEqual(projects.Count, value.ProjectCount);
         }
 
         [Test]

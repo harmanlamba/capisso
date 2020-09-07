@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IOrganisationDto, ICreatedDto } from '../../types/types';
+import { ICreatedDto, IOrganisationDto, IProjectDto } from '../../types/types';
 
 export const addOrganisation = async (
   organisation: IOrganisationDto
@@ -37,4 +37,14 @@ export const editOrganisation = async (
     `${process.env.REACT_APP_API_BASE}/organisations/${organisation.id}`,
     organisation
   );
+};
+
+export const getProjectsForOrganisation = async (
+  organisationId: number
+): Promise<IProjectDto[]> => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_BASE}/projects?organisationId=${organisationId}`
+  );
+
+  return res.data as IProjectDto[];
 };
