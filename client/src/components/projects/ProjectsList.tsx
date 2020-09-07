@@ -67,7 +67,7 @@ export const ProjectsList: React.FC<{
                 {moment(row.startDate).format('YYYY-MM-DD')}
               </StyledTableCell>
               <StyledTableCell>
-                {moment(row.endDate).format('YYYY-MM-DD') ?? 'Incomplete'}
+                {row.endDate ? moment(row.endDate).format('YYYY-MM-DD') : 'N/A'}
               </StyledTableCell>
               <StyledTableCell>{row.outcome}</StyledTableCell>
             </TableRow>
