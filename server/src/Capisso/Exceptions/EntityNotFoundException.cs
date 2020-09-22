@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Capisso.Services
+namespace Capisso.Exceptions
 {
     [Serializable]
-    internal class EntityNotFoundException : Exception
+    public class EntityNotFoundException : Exception
     {
         public EntityNotFoundException()
         {
