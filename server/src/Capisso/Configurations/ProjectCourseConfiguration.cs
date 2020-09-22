@@ -8,7 +8,7 @@ namespace Capisso.Configurations
     {
         public void Configure(EntityTypeBuilder<ProjectCourse> builder)
         {
-            builder.HasKey(e => new {e.ProjectId, e.CourseId});
+            builder.HasKey(e => new { e.ProjectId, e.CourseId });
             builder
                 .HasOne(e => e.Project)
                 .WithMany(e => e.ProjectCourses)

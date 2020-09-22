@@ -18,7 +18,7 @@ namespace Capisso.Configurations
             builder.Property(e => e.Description).IsRequired();
 
             var splitStringConverter = new ValueConverter<List<string>, string>(v => string.Join(";", v),
-                v => string.IsNullOrEmpty(v) ? new List<string>() : v.Split(new[] {';'}).ToList());
+                v => string.IsNullOrEmpty(v) ? new List<string>() : v.Split(new[] { ';' }).ToList());
             var valueComparer = new ValueComparer<List<string>>(
                 (c1, c2) => c1.SequenceEqual(c2),
                 c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
@@ -39,7 +39,7 @@ namespace Capisso.Configurations
                 {
                     Id = 1,
                     Name = "Topiver",
-                    Classifications = new List<string> {"Trading", "C++"},
+                    Classifications = new List<string> { "Trading", "C++" },
                     Address = "39 Hunter St, Sydney NSW 2000, Australia",
                     Status = "Active",
                     Description =
@@ -49,7 +49,7 @@ namespace Capisso.Configurations
                 {
                     Id = 2,
                     Name = "Fletnix",
-                    Classifications = new List<string> {"Streaming", "Java", "JavaScript"},
+                    Classifications = new List<string> { "Streaming", "Java", "JavaScript" },
                     Address = "Fletnix Corporate Headquarters 100 Winchester Circle Los Gatos, CA 95032,",
                     Status = "Active",
                     Description =
@@ -59,7 +59,7 @@ namespace Capisso.Configurations
                 {
                     Id = 3,
                     Name = "Aslattian",
-                    Classifications = new List<string> {"Java", "React", "AWS"},
+                    Classifications = new List<string> { "Java", "React", "AWS" },
                     Address = "6/341 George St, Sydney NSW 2000, Australia",
                     Status = "Inactive",
                     Description =
