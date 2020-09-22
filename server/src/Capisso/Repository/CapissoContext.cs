@@ -1,4 +1,5 @@
-﻿using Capisso.Entities;
+﻿using Capisso.Configurations;
+using Capisso.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Capisso.Repository
@@ -13,6 +14,7 @@ namespace Capisso.Repository
         public DbSet<Organisation> Organisations { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,6 +22,7 @@ namespace Capisso.Repository
             modelBuilder.ApplyConfiguration(new CourseConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectCourseConfiguration());
+            modelBuilder.ApplyConfiguration(new ContactConfiguration());
         }
     }
 }
