@@ -49,7 +49,7 @@ namespace Capisso.Test.Services
                 .Verifiable();
             _mockOrganisationRepository
                 .Setup(x => x.GetByIdAsync(1))
-                .ReturnsAsync(new Organisation {Id = 1})
+                .ReturnsAsync(new Organisation { Id = 1 })
                 .Verifiable();
 
             // act
