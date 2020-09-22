@@ -22,6 +22,7 @@ import { OrganisationStatusChip } from '../../components/organisations/Organisat
 import { OrganisationViewAbout } from '../../components/organisations/OrganisationViewAbout';
 import { IOrganisationDto } from '../../types/types';
 import { OrganisationViewProjects } from './OrganisationViewProjects';
+import { OrganisationViewContacts } from './OrganisationViewContacts';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -111,7 +112,11 @@ export const OrganisationViewPage: React.FC<{}> = () => {
                 exact={true}
                 render={() => <OrganisationViewProjects />}
               />
-              <Route path="/organisations/:id/contacts" />
+              <Route
+                path="/organisations/:id/contacts"
+                exact={true}
+                render={() => <OrganisationViewContacts />}
+              />
               <Route path="/organisations/:id/communications" exact={true} />
               <Route path="*">
                 <Redirect to={`/organisations/${id}/about`} />
