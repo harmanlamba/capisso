@@ -23,7 +23,7 @@ namespace Capisso.Controllers
             try
             {
                 int createdId = await _contactService.CreateContact(contactDto);
-                return Created($"/contact/{createdId}",
+                return Created($"/contacts/{createdId}",
                     new CreatedDto { Id = createdId }); //TODO: Configure Base Url from configuration
             }
             catch (EntityNotFoundException)
