@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Capisso.Repository;
 using Capisso.Services;
@@ -39,7 +40,12 @@ namespace Capisso
                         .WithExposedHeaders("location"));
             });
 
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
             services.AddDbContext<CapissoContext>(options =>
                 options
                     .UseMySql(Configuration["Database:ConnectionString"], mysqlOptions =>

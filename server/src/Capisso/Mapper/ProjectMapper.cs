@@ -22,6 +22,7 @@ namespace Capisso.Mapper
                 Outcome = projectDto.Outcome,
                 StartDate = projectDto.StartDate,
                 EndDate = projectDto.EndDate,
+                Status = projectDto.Status,
             };
         }
 
@@ -35,6 +36,7 @@ namespace Capisso.Mapper
                 Outcome = project.Outcome,
                 StartDate = project.StartDate,
                 EndDate = project.EndDate,
+                Status = project.Status,
                 CourseIds = project.ProjectCourses.Select(pc => pc.CourseId),
                 OrganisationId = project.OrganisationId
             };
