@@ -15,12 +15,14 @@ namespace Capisso.Repository
             CourseRepository = new CourseRepository(_dbContext);
             ProjectRepository = new ProjectRepository(_dbContext);
             ProjectCourseRepository = new ProjectCourseRepository(_dbContext);
+            ContactRepository = new ContactRepository(_dbContext);
         }
 
         public IOrganisationRepository OrganisationRepository { get; }
         public ICourseRepository CourseRepository { get; }
         public IProjectRepository ProjectRepository { get; }
         public IProjectCourseRepository ProjectCourseRepository { get; }
+        public IContactRepository ContactRepository { get; }
 
         public async Task SaveAsync()
         {
