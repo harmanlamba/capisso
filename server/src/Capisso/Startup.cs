@@ -72,8 +72,7 @@ namespace Capisso
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
             var context = serviceScope.ServiceProvider.GetRequiredService<CapissoContext>();
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
         }
     }
 }
