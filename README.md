@@ -22,3 +22,10 @@ GRANT ALL PRIVILEGES ON `capisso`.* TO 'efcoreuser'@'localhost';
 ## Test the Application
 1. In the server directory, run `dotnet test`.
 1. In the client directory, run `yarn test`
+
+## Creating Migrations
+1. Modify Entity classes or database context
+1. Run `dotnet ef migrations add <MigrationName>`  
+OR in the Package Manager console: `PM> Add-Migration <MigrationName>`
+1. Restart the server or manually apply the migration using: `dotnet ef database update`  
+OR in the Package Manager console: `PM> Update-Database`
