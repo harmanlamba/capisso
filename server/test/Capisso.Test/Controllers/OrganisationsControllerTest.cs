@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Capisso.Test.Controllers
 {
-    public class OrganisationControllerTest
+    public class OrganisationsControllerTest
     {
         private MockUnitOfWork _mockUnitOfWork;
         private Mock<IOrganisationRepository> _mockOrganisationRepository;
