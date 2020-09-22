@@ -26,6 +26,11 @@ export interface IProjectDto {
   outcome?: string;
   startDate: string;
   endDate?: string;
+  status:
+    | 'Pending'
+    | 'InProgress'
+    | 'CompletedSuccessfully'
+    | 'CompletedWithIssues';
   organisationId: number;
   courseIds: number[];
 }

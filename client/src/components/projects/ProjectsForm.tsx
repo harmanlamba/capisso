@@ -1,4 +1,10 @@
-import { Box, Button, makeStyles, TextField } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  makeStyles,
+  TextField,
+  MenuItem,
+} from '@material-ui/core';
 import { Add, Edit } from '@material-ui/icons';
 import { Form, Formik } from 'formik';
 import moment from 'moment';
@@ -19,6 +25,25 @@ const useStyles = makeStyles(() => ({
     margin: '0 5px',
   },
 }));
+
+const projectStatusOptions = [
+  {
+    label: 'Pending',
+    value: 'Pending',
+  },
+  {
+    label: 'In Progress',
+    value: 'InProgress',
+  },
+  {
+    label: 'Completed Successfully',
+    value: 'CompletedSuccessfully',
+  },
+  {
+    label: 'Completed With Issues',
+    value: 'CompletedWithIssues',
+  },
+];
 
 export interface IProjectsFormProps {
   initialValues?: IProjectDto;
@@ -44,6 +69,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
         title: '',
         startDate: '',
         endDate: undefined,
+        status: 'Pending',
         notes: undefined,
         outcome: undefined,
         organisationId: 0,
@@ -67,6 +93,10 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
 
         if (!values.startDate) {
           errors.startDate = 'Required';
+        }
+
+        if (!values.status) {
+          errors.status = 'Required';
         }
 
         if (!values.organisationId) {
@@ -122,6 +152,26 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                 shrink: true,
               }}
             />
+
+            <TextField
+              className={classes.textField}
+              variant="filled"
+              label="Status"
+              name="status"
+              onChange={handleChange}
+              value={values.status}
+              error={!!errors.status}
+              fullWidth={true}
+              required={true}
+              select={true}
+            >
+              {projectStatusOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+
             <TextField
               className={classes.textField}
               variant="filled"
