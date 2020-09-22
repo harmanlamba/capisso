@@ -14,7 +14,7 @@ using System;
 
 namespace Capisso.Test.Controllers
 {
-    public class ProjectControllerTest
+    public class ProjectsControllerTest
     {
         private MockUnitOfWork _mockUnitOfWork;
         private Mock<IProjectRepository> _mockProjectRepository;

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Capisso.Test.Controllers
 {
-    public class CourseControllerTest
+    public class CoursesControllerTest
     {
         private MockUnitOfWork _mockUnitOfWork;
         private Mock<ICourseRepository> _mockCourseRepository;
