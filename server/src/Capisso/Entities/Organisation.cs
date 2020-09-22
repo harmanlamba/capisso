@@ -10,5 +10,6 @@ namespace Capisso.Entities
         public string Address { get; set; }
         public string Status { get; set; }
         public virtual List<Project> Projects { get; set; }
+        public virtual List<Contact> Contacts { get; set; }
     }
 }
