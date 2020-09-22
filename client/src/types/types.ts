@@ -9,11 +9,15 @@ export interface IOrganisationDto {
   name: string;
   description: string;
   address: string;
-  status: string;
+  status: OrganisationStatus;
   classifications: string[];
   projectCount?: number;
 }
 
+export enum OrganisationStatus {
+  active = 'Active',
+  inactive = 'Inactive',
+}
 export interface ICourseDto {
   id?: number;
   name: string;

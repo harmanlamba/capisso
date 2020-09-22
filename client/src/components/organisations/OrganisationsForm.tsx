@@ -1,9 +1,19 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Formik, FieldArray, Form } from 'formik';
-import { TextField, Button, Chip, makeStyles, Box } from '@material-ui/core';
+import {
+  TextField,
+  Button,
+  Chip,
+  makeStyles,
+  Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-import { IOrganisationDto } from '../../types/types';
+import { IOrganisationDto, OrganisationStatus } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
   boxContainer: {
@@ -15,6 +25,10 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: '0 5px',
+  },
+  formControl: {
+    minWidth: 120,
+    margin: '12px 0px',
   },
   classificationsContainer: {
     display: 'flex',
@@ -53,7 +67,7 @@ export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
         name: '',
         description: '',
         address: '',
-        status: '',
+        status: OrganisationStatus.inactive,
         classifications: [] as string[],
         ...initialValues,
       }}
@@ -114,17 +128,21 @@ export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
               required={true}
               error={!!errors.address}
             />
-            <TextField
-              className={classes.textField}
-              variant="filled"
-              fullWidth={true}
-              label="Status"
-              name="status"
-              onChange={handleChange}
-              value={values.status}
-              required={true}
-              error={!!errors.status}
-            />
+            <FormControl className={classes.formControl} required={true}>
+              <InputLabel id="Organisation-status">Status</InputLabel>
+              <Select
+                variant="filled"
+                name="status"
+                onChange={handleChange}
+                value={values.status}
+                error={!!errors.status}
+              >
+                <MenuItem value={OrganisationStatus.inactive}>
+                  Inactive
+                </MenuItem>
+                <MenuItem value={OrganisationStatus.active}>Active</MenuItem>
+              </Select>
+            </FormControl>
 
             <FieldArray
               name="classifications"
