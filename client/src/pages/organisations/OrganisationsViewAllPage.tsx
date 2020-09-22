@@ -42,10 +42,7 @@ export const OrganisationsViewAllPage: React.FC<{}> = () => {
   return (
     <div className={classes.content}>
       <Box mb={2}>
-        <Grid
-          justify="space-between" // Add it here :)
-          container={true}
-        >
+        <Grid justify="space-between" container={true}>
           <Box>
             <Typography variant="h4" display="inline">
               Organisations
