@@ -13,6 +13,7 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
         builder.Property(e => e.Outcome);
         builder.Property(e => e.StartDate).IsRequired();
         builder.Property(e => e.EndDate);
+        builder.Property(e => e.Status).IsRequired();
         builder
             .HasOne(e => e.Organisation)
             .WithMany(e => e.Projects)
@@ -24,6 +25,7 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
                 Title = "Organisation and project managment tool",
                 StartDate = new DateTime(2020, 3, 1, 7, 0, 0),
                 OrganisationId = 1,
+                Status = ProjectStatus.Pending
             },
             new Project
             {
@@ -31,6 +33,7 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
                 Title = "Student enrolment tool",
                 StartDate = new DateTime(2019, 2, 3, 9, 0, 0),
                 OrganisationId = 2,
+                Status = ProjectStatus.CompletedSuccessfully
             },
             new Project
             {
@@ -38,6 +41,7 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
                 Title = "Fletnix app runs on calculator",
                 StartDate = new DateTime(2020, 1, 2, 9, 0, 0),
                 OrganisationId = 2,
+                Status = ProjectStatus.InProgress
             },
             new Project
             {
@@ -45,6 +49,7 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
                 Title = "Speed up Jira",
                 StartDate = new DateTime(2020, 5, 8, 8, 0, 0),
                 OrganisationId = 3,
+                Status = ProjectStatus.CompletedWithIssues
             }
         );
     }

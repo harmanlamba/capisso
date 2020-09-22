@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Capisso.Entities;
 
 namespace Capisso.Dto
 {
@@ -11,6 +12,7 @@ namespace Capisso.Dto
         public string Outcome { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public ProjectStatus Status { get; set; }
         public IEnumerable<int> CourseIds { get; set; }
         public int OrganisationId { get; set; }
     }
