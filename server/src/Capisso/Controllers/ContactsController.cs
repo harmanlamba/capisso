@@ -2,6 +2,7 @@
 using Capisso.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Capisso.Exceptions;
 
 namespace Capisso.Controllers
 {

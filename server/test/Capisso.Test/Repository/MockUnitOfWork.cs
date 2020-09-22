@@ -9,6 +9,7 @@ namespace Capisso.Test.Repository
         public ICourseRepository CourseRepository { get; set; }
         public IProjectRepository ProjectRepository { get; set; }
         public IProjectCourseRepository ProjectCourseRepository { get; set; }
+        public IContactRepository ContactRepository { get; set; }
 
         public void Dispose()
         {

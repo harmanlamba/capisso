@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Capisso.Entities;
+using Capisso.Exceptions;
 
 namespace Capisso.Services
 {

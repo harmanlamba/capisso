@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Capisso.Dto;
 using Capisso.Entities;
+using Capisso.Exceptions;
 using Capisso.Services;
 using Microsoft.AspNetCore.Mvc;
 
