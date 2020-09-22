@@ -61,13 +61,15 @@ export const OrganisationsViewAllPage: React.FC<{}> = () => {
               </Button>
             </Box>
           </Box>
-          <TextField
-            id="filter-field"
-            onChange={(event) => setFilterTerm(event.target.value)}
-            label="Filter"
-            variant="outlined"
-            size="small"
-          />
+          <Box mt={0.3}>
+            <TextField
+              id="filter-field"
+              onChange={(event) => setFilterTerm(event.target.value)}
+              label="Filter"
+              variant="outlined"
+              size="small"
+            />
+          </Box>
         </Grid>
       </Box>
 
