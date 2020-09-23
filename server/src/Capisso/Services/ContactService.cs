@@ -33,5 +33,15 @@ namespace Capisso.Services
 
             return contact.Id;
         }
+
+        public async Task<IEnumerable<ContactDto>> GetContactsForOrganisation(int organisationId)
+        {
+            var contacts = await _unitOfWork.ContactRepository.FindByAsync(contact => contact.OrganisationId == organisationId);
+
+            var contactDtos = contacts.Select(x => ContactMapper.ToDto(x));
+
+            return contactDtos;
+        }
+
     }
 }

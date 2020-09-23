@@ -3,6 +3,8 @@ using Capisso.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Capisso.Exceptions;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Capisso.Controllers
 {
@@ -30,6 +32,12 @@ namespace Capisso.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<ContactDto>> GetContactForOrganisation([FromQuery] int organisationId)
+        {
+            return await _contactService.GetContactsForOrganisation(organisationId);
         }
     }
 }
