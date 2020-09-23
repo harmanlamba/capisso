@@ -1,10 +1,8 @@
 import React from 'react';
-
-import { getAllOrganisations } from '../api/organisations';
+import { ICourseDto, IOrganisationDto, IProjectDto } from '../../types/types';
 import { getAllCourses } from '../api/courses';
+import { getAllOrganisations, getOrganisation } from '../api/organisations';
 import { getAllProjects } from '../api/projects';
-
-import { IOrganisationDto, ICourseDto, IProjectDto } from '../../types/types';
 
 export const useOrganisations = () => {
   const [error, setError] = React.useState<Error>();
@@ -60,4 +58,23 @@ export const useProjects = () => {
   }, []);
 
   return { projects, loading, error };
+};
+
+export const useOrganisation = (id: number) => {
+  const [error, setError] = React.useState<Error>();
+  const [loading, setLoading] = React.useState<boolean>();
+  const [organisation, setOrganisation] = React.useState<IOrganisationDto>();
+
+  React.useEffect(() => {
+    setLoading(true);
+    getOrganisation(id)
+      .then((data) => setOrganisation(data))
+      .catch((e) => {
+        console.error(e);
+        setError(e);
+      })
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  return { organisation, loading, error };
 };
