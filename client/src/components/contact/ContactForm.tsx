@@ -4,6 +4,7 @@ import { Autocomplete } from '@material-ui/lab';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { EMAIL_REGEX, PHONE_NUMBER_REGEX } from '../../constants/constants';
 import { IContactDto, IOrganisationDto } from '../../types/types';
 
 const useStyles = makeStyles(() => ({
@@ -59,6 +60,17 @@ export const ContactForm: React.FC<IContactFormProps> = ({
           errors.title = 'Required';
         }
 
+        if (values.email && !EMAIL_REGEX.test(values.email)) {
+          errors.email = 'Invalid email address';
+        }
+
+        if (
+          values.phoneNumber &&
+          !PHONE_NUMBER_REGEX.test(values.phoneNumber)
+        ) {
+          errors.phoneNumber = 'Invalid phone number';
+        }
+
         if (!values.organisationId) {
           errors.organisationId = 'Required';
         }
@@ -91,6 +103,7 @@ export const ContactForm: React.FC<IContactFormProps> = ({
               onChange={handleChange}
               value={values.email}
               error={!!errors.email}
+              helperText={errors.email}
               fullWidth={true}
             />
             <TextField
@@ -103,6 +116,7 @@ export const ContactForm: React.FC<IContactFormProps> = ({
               onChange={handleChange}
               value={values.phoneNumber}
               error={!!errors.phoneNumber}
+              helperText={errors.phoneNumber}
               fullWidth={true}
             />
             <Autocomplete
