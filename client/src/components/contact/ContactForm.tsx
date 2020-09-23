@@ -43,7 +43,9 @@ export const ContactForm: React.FC<IContactFormProps> = ({
       onSubmit={async (values) => {
         try {
           await onSubmit(values as IContactDto);
-          history.push('/organisations');
+          history.push(
+            `/organisations/${initialValues.organisationId}/contacts`
+          );
         } catch (e) {
           console.error(e);
         }
