@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, Paper, Box, Typography } from '@material-ui/core';
-import { IProjectDto } from '../../types/types';
+import { ICourseDto, IProjectDto } from '../../types/types';
 import moment from 'moment';
+import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
+import { getOrganisation } from '../../common/api/organisations';
+import { IOrganisationDto } from '../../types/types';
+import { getCourse } from '../../common/api/courses';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -15,9 +20,25 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
   project,
 }) => {
   const classes = useStyles();
+  const history = useHistory();
 
   const formattedStartDate = moment(project.startDate);
   const formattedEndDate = moment(project.endDate);
+
+  const [organisation, setOrganisation] = React.useState<IOrganisationDto>();
+  const [courses, setCourses] = React.useState<ICourseDto[]>([]);
+
+  useEffect(() => {
+    getOrganisation(project.organisationId)
+      .then((data) => setOrganisation(data))
+      .catch((error) => console.error(error));
+
+    project.courseIds.forEach((courseId) => {
+      getCourse(courseId)
+        .then((data) => setCourses((courseList) => [...courseList, data]))
+        .catch((error) => console.error(error));
+    });
+  }, [project.organisationId, project.courseIds]);
 
   return (
     <div className={classes.content}>
@@ -43,7 +64,6 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
           </Paper>
         </Box>
       )}
-
       {project.outcome && (
         <Box mb={2}>
           <Paper>
@@ -67,6 +87,46 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
                 {formattedStartDate.format('YYYY-MM-DD')} -{' '}
                 {formattedEndDate.format('YYYY-MM-DD')}
               </p>
+            </Box>
+          </Paper>
+        </Box>
+      )}
+      {project.organisationId && (
+        <Box mb={2}>
+          <Paper>
+            <Box p={2}>
+              <Typography variant="h6" color="primary" display="inline">
+                Organisation:
+                <Button
+                  color="primary"
+                  size="large"
+                  onClick={() =>
+                    history.push(
+                      `/organisations/${project.organisationId}/about`
+                    )
+                  }
+                >
+                  {organisation && <p>{organisation.name}</p>}
+                </Button>
+              </Typography>
+            </Box>
+          </Paper>
+        </Box>
+      )}
+      {project.courseIds && (
+        <Box mb={2}>
+          <Paper>
+            <Box p={2}>
+              <Typography variant="h6" color="primary" display="inline">
+                Courses
+              </Typography>
+              <ul>
+                {courses.map((course) => (
+                  <li key={course.id}>
+                    {course.code}: {course.name}
+                  </li>
+                ))}
+              </ul>
             </Box>
           </Paper>
         </Box>
