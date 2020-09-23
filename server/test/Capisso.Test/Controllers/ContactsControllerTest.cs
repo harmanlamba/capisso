@@ -138,7 +138,7 @@ namespace Capisso.Test.Controllers
             _mockContactRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(Task.FromResult((IEnumerable<Contact>)contacts));
 
             // act
-            var response = await _contactsController.GetContactForOrganisation(1);
+            var response = await _contactsController.GetContacts(1);
             var responseList = response.ToList();
 
             // assert

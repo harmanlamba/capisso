@@ -35,9 +35,9 @@ namespace Capisso.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ContactDto>> GetContactForOrganisation([FromQuery] int organisationId)
+        public async Task<IEnumerable<ContactDto>> GetContacts([FromQuery] int? organisationId)
         {
-            return await _contactService.GetContactsForOrganisation(organisationId);
+            return await _contactService.GetContacts(organisationId);
         }
     }
 }

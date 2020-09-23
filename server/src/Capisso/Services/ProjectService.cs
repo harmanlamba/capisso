@@ -26,9 +26,12 @@ namespace Capisso.Services
             project.Organisation = await _unitOfWork.OrganisationRepository.GetByIdAsync(projectDto.OrganisationId)
                 ?? throw new EntityNotFoundException($"organisation with id <{projectDto.OrganisationId}> not found"); ;
 
-            //populate contact
-            project.Contact = await _unitOfWork.ContactRepository.GetByIdAsync(projectDto.ContactId)
-                ?? throw new EntityNotFoundException($"contact with id <{projectDto.ContactId}> not found");
+            if (projectDto.ContactId != null)
+            {
+                //populate contact
+                project.Contact = await _unitOfWork.ContactRepository.GetByIdAsync(projectDto.ContactId)
+                    ?? throw new EntityNotFoundException($"contact with id <{projectDto.ContactId}> not found");
+            }
 
             // create project course links
             var projectCourses = await Task.WhenAll(projectDto.CourseIds.Select(async courseId =>
