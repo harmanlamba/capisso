@@ -13,6 +13,7 @@ import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { IProjectDto } from '../../types/types';
+import { ProjectStatusChip } from './ProjectStatusChip';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -45,9 +46,10 @@ export const ProjectsList: React.FC<{
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <StyledTableCell> Project Name </StyledTableCell>
-            <StyledTableCell> Start Date </StyledTableCell>
-            <StyledTableCell> Outcome </StyledTableCell>
+            <StyledTableCell>Project Name </StyledTableCell>
+            <StyledTableCell>Start Date </StyledTableCell>
+            <StyledTableCell>Status</StyledTableCell>
+            <StyledTableCell>Outcome </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -64,6 +66,9 @@ export const ProjectsList: React.FC<{
               <StyledTableCell> {row.title} </StyledTableCell>
               <StyledTableCell>
                 {moment(row.startDate).format('YYYY-MM-DD')}
+              </StyledTableCell>
+              <StyledTableCell>
+                <ProjectStatusChip status={row.status} />
               </StyledTableCell>
               <StyledTableCell>{row.outcome}</StyledTableCell>
             </TableRow>
