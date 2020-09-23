@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Capisso.Exceptions;
+using Microsoft.AspNetCore.Mvc;
+using Capisso.Entities;
 
 namespace Capisso.Services
 {
@@ -34,11 +36,20 @@ namespace Capisso.Services
             return contact.Id;
         }
 
-        public async Task<IEnumerable<ContactDto>> GetContactsForOrganisation(int organisationId)
+        public async Task<IEnumerable<ContactDto>> GetContacts(int? organisationId)
         {
-            var contacts = await _unitOfWork.ContactRepository.FindByAsync(contact => contact.OrganisationId == organisationId);
+            IEnumerable<Contact> contacts;
 
-            var contactDtos = contacts.Select(x => ContactMapper.ToDto(x));
+            if (organisationId == null)
+            {
+                contacts = await _unitOfWork.ContactRepository.GetAllAsync();
+            }
+            else
+            {
+                contacts = await _unitOfWork.ContactRepository.FindByAsync(contact => contact.OrganisationId == organisationId);
+            }
+
+            var contactDtos = contacts.Select(ContactMapper.ToDto);
 
             return contactDtos;
         }
