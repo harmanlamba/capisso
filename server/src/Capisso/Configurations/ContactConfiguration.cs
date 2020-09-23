@@ -16,7 +16,6 @@ namespace Capisso.Configurations
             builder.Property(e => e.Name).IsRequired();
             builder.Property(e => e.PhoneNumber);
             builder.Property(e => e.Email);
-            builder.Property(e => e.Notes);
             builder
                 .HasOne(e => e.Organisation)
                 .WithMany(e => e.Contacts)

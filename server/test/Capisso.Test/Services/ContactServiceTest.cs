@@ -40,7 +40,6 @@ namespace Capisso.Test.Services
                 Name = "name",
                 PhoneNumber = "123",
                 Email = "name@name.com",
-                Notes = "notes",
                 OrganisationId = 1,
             };
             _mockContactRepository
@@ -70,7 +69,6 @@ namespace Capisso.Test.Services
                 Name = "name",
                 PhoneNumber = "123",
                 Email = "name@name.com",
-                Notes = "notes",
                 OrganisationId = 69,
             };
             _mockContactRepository
