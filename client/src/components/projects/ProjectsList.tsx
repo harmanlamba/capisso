@@ -49,7 +49,6 @@ export const ProjectsList: React.FC<{
             <StyledTableCell>Project Name </StyledTableCell>
             <StyledTableCell>Start Date </StyledTableCell>
             <StyledTableCell>Status</StyledTableCell>
-            <StyledTableCell>Outcome </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -70,7 +69,6 @@ export const ProjectsList: React.FC<{
               <StyledTableCell>
                 <ProjectStatusChip status={row.status} />
               </StyledTableCell>
-              <StyledTableCell>{row.outcome}</StyledTableCell>
             </TableRow>
           ))}
         </TableBody>
