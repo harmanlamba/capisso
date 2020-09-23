@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Capisso.Controllers;
 using Capisso.Dto;
@@ -98,5 +102,50 @@ namespace Capisso.Test.Controllers
             _mockContactRepository.Verify(x => x.InsertAsync(It.IsAny<Contact>()), Times.Never);
             _mockOrganisationRepository.Verify();
         }
+
+        [Test]
+        public async Task TestGetContactsByOrganisations()
+        {
+            // arrange
+            Contact contact = new Contact
+            {
+                Id = 1,
+                Name = "Ur'Zababa",
+                Email = "test@gmail.com",
+                PhoneNumber = "111",
+                OrganisationId = 69,
+                Projects = new List<Project>
+                {
+                    new Project {
+                        Id = 1,
+                        Title = "HCI Extreme",
+                        Notes = "Notes Test",
+                        Outcome = "Outcome Test",
+                        StartDate = new DateTime(),
+                        EndDate = new DateTime(),
+                        ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                        Organisation = new Organisation
+                        {
+                            Id = 1,
+                        }}
+                }
+            };
+
+            List<Contact> contacts = new List<Contact>();
+            contacts.Add(contact);
+
+
+            _mockContactRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(Task.FromResult((IEnumerable<Contact>)contacts));
+
+            // act
+            var response = await _contactsController.GetContactForOrganisation(1);
+            var responseList = response.ToList();
+
+            // assert
+            Assert.AreEqual(1, response.Count());
+            Assert.AreEqual(1, responseList[0].Id);
+            Assert.AreEqual("Ur'Zababa", responseList[0].Name);
+        }
+
     }
 }
