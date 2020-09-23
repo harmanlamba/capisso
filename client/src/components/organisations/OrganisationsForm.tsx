@@ -67,7 +67,7 @@ export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
         name: '',
         description: '',
         address: '',
-        status: OrganisationStatus.inactive,
+        status: OrganisationStatus.Inactive,
         classifications: [] as string[],
         ...initialValues,
       }}
@@ -137,10 +137,10 @@ export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
                 value={values.status}
                 error={!!errors.status}
               >
-                <MenuItem value={OrganisationStatus.inactive}>
+                <MenuItem value={OrganisationStatus.Inactive}>
                   Inactive
                 </MenuItem>
-                <MenuItem value={OrganisationStatus.active}>Active</MenuItem>
+                <MenuItem value={OrganisationStatus.Active}>Active</MenuItem>
               </Select>
             </FormControl>
 

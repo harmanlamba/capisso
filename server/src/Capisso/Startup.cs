@@ -39,7 +39,7 @@ namespace Capisso
                         .AllowAnyHeader()
                         .WithExposedHeaders("location"));
             });
-
+            
             services
                 .AddControllers()
                 .AddJsonOptions(options =>

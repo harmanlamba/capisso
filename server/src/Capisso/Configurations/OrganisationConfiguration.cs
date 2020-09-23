@@ -33,7 +33,7 @@ namespace Capisso.Configurations
 
             builder.Property(e => e.Address).IsRequired();
             builder.Property(e => e.Status).IsRequired();
-
+            
             builder.HasData(
                 new Organisation
                 {
@@ -41,7 +41,7 @@ namespace Capisso.Configurations
                     Name = "Topiver",
                     Classifications = new List<string> { "Trading", "C++" },
                     Address = "39 Hunter St, Sydney NSW 2000, Australia",
-                    Status = "Active",
+                    Status = OrganisationStatus.Active,
                     Description =
                         "Topiver is a proprietary trading firm and market maker for various exchange-listed financial instruments. Its name derives from the Dutch optie verhandelaar, or \"option trader\"."
                 },
@@ -51,7 +51,7 @@ namespace Capisso.Configurations
                     Name = "Fletnix",
                     Classifications = new List<string> { "Streaming", "Java", "JavaScript" },
                     Address = "Fletnix Corporate Headquarters 100 Winchester Circle Los Gatos, CA 95032,",
-                    Status = "Active",
+                    Status = OrganisationStatus.Active,
                     Description =
                         "Fletnix, Inc. is an American technology and media services provider and production company headquartered in Los Gatos, California. Fletnix was founded in 1997 by Reed Hastings and Marc Randolph in Scotts Valley, California."
                 },
@@ -61,7 +61,7 @@ namespace Capisso.Configurations
                     Name = "Aslattian",
                     Classifications = new List<string> { "Java", "React", "AWS" },
                     Address = "6/341 George St, Sydney NSW 2000, Australia",
-                    Status = "Inactive",
+                    Status = OrganisationStatus.Inactive,
                     Description =
                         "Aslattian Corporation Plc is an Australian software company that develops products for software developers and project managers."
                 }

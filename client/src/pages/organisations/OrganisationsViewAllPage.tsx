@@ -37,7 +37,10 @@ export const OrganisationsViewAllPage: React.FC<{}> = () => {
       organisation.classifications.some((classification) =>
         classification.toLowerCase().includes(filterTerm.toLowerCase())
       ) ||
-      organisation.status.toLowerCase().startsWith(filterTerm.toLowerCase())
+      organisation.status
+        .toString()
+        .toLowerCase()
+        .startsWith(filterTerm.toLowerCase())
   );
 
   return (
