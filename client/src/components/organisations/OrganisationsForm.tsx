@@ -7,13 +7,11 @@ import {
   Chip,
   makeStyles,
   Box,
-  Select,
   MenuItem,
-  FormControl,
-  InputLabel,
 } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-import { IOrganisationDto, OrganisationStatus } from '../../types/types';
+import { IOrganisationDto } from '../../types/types';
+import { OrganisationStatus } from '../../enums/enums';
 
 const useStyles = makeStyles((theme) => ({
   boxContainer: {
@@ -128,22 +126,21 @@ export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
               required={true}
               error={!!errors.address}
             />
-            <FormControl className={classes.formControl} required={true}>
-              <InputLabel id="Organisation-status">Status</InputLabel>
-              <Select
-                variant="filled"
-                name="status"
-                onChange={handleChange}
-                value={values.status}
-                error={!!errors.status}
-              >
-                <MenuItem value={OrganisationStatus.Inactive}>
-                  Inactive
-                </MenuItem>
-                <MenuItem value={OrganisationStatus.Active}>Active</MenuItem>
-              </Select>
-            </FormControl>
-
+            <TextField
+              className={classes.textField}
+              variant="filled"
+              label="Status"
+              name="status"
+              onChange={handleChange}
+              value={values.status}
+              error={!!errors.status}
+              fullWidth={true}
+              required={true}
+              select={true}
+            >
+              <MenuItem value={OrganisationStatus.Inactive}>Inactive</MenuItem>
+              <MenuItem value={OrganisationStatus.Active}>Active</MenuItem>
+            </TextField>
             <FieldArray
               name="classifications"
               render={(arrayHelpers) => (

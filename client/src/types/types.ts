@@ -1,4 +1,4 @@
-import { ProjectStatus } from '../enums/enums';
+import { OrganisationStatus, ProjectStatus } from '../enums/enums';
 
 export interface ICreatedDto {
   id: number;
@@ -14,10 +14,6 @@ export interface IOrganisationDto {
   projectCount?: number;
 }
 
-export enum OrganisationStatus {
-  Active = 'Active',
-  Inactive = 'Inactive',
-}
 export interface ICourseDto {
   id?: number;
   name: string;

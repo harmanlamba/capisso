@@ -6,27 +6,15 @@ namespace Capisso.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
-            migrationBuilder.UpdateData(
-                table: "Organisations",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Status",
-                value: 0);
-
-            migrationBuilder.UpdateData(
-                table: "Organisations",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "Status",
-                value: 0);
-
-            migrationBuilder.UpdateData(
-                table: "Organisations",
-                keyColumn: "Id",
-                keyValue: 3,
-                column: "Status",
-                value: 1);
+            migrationBuilder.Sql(@"
+    UPDATE capisso.Organisations
+    SET Status =
+        CASE Status
+            WHEN 'Active' THEN 0
+            WHEN 'Inactive' THEN 1
+            ELSE 0
+        END
+    ");
 
             migrationBuilder.AlterColumn<int>(
                 name: "Status",
@@ -45,26 +33,17 @@ namespace Capisso.Migrations
                 nullable: false,
                 oldClrType: typeof(int));
 
-            migrationBuilder.UpdateData(
-                table: "Organisations",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Status",
-                value: "Active");
+            migrationBuilder.Sql(@"
+    UPDATE capisso.Organisations
+    SET Status =
+        CASE Status
+            WHEN 0 THEN 'Active'
+            WHEN 1 THEN 'Inactive'
+            ELSE 'Active'
+        END
+    ");
 
-            migrationBuilder.UpdateData(
-                table: "Organisations",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "Status",
-                value: "Active");
 
-            migrationBuilder.UpdateData(
-                table: "Organisations",
-                keyColumn: "Id",
-                keyValue: 3,
-                column: "Status",
-                value: "Inactive");
         }
     }
 }
