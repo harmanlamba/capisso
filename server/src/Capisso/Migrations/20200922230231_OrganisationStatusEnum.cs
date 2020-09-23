@@ -7,7 +7,7 @@ namespace Capisso.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(@"
-    UPDATE capisso.Organisations
+    UPDATE Organisations
     SET Status =
         CASE Status
             WHEN 'Active' THEN 0
@@ -34,7 +34,7 @@ namespace Capisso.Migrations
                 oldClrType: typeof(int));
 
             migrationBuilder.Sql(@"
-    UPDATE capisso.Organisations
+    UPDATE Organisations
     SET Status =
         CASE Status
             WHEN 0 THEN 'Active'
