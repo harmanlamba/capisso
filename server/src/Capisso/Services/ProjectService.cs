@@ -23,11 +23,11 @@ namespace Capisso.Services
             var project = ProjectMapper.FromDto(projectDto);
 
             // populate organisation
-            project.Organisation = await _unitOfWork.OrganisationRepository.GetByIdAsync(projectDto.OrganisationId) 
+            project.Organisation = await _unitOfWork.OrganisationRepository.GetByIdAsync(projectDto.OrganisationId)
                 ?? throw new EntityNotFoundException($"organisation with id <{projectDto.OrganisationId}> not found"); ;
 
             //populate contact
-            project.Contact = await _unitOfWork.ContactRepository.GetByIdAsync(projectDto.ContactId) 
+            project.Contact = await _unitOfWork.ContactRepository.GetByIdAsync(projectDto.ContactId)
                 ?? throw new EntityNotFoundException($"contact with id <{projectDto.ContactId}> not found");
 
             // create project course links
