@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles, Box, Typography, Button, Grid } from '@material-ui/core';
 
-import { getAllProjects } from '../../common/api/projects';
-import { IProjectDto } from '../../types/types';
 import { ProjectsList } from '../../components/projects/ProjectsList';
+import { useProjects } from '../../common/hooks/apiHooks';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -16,15 +15,7 @@ const useStyles = makeStyles((theme) => ({
 export const ProjectsViewAllPage: React.FC<{}> = () => {
   const classes = useStyles();
 
-  const [projects, setProjects] = useState<IProjectDto[]>([]);
-
-  useEffect(() => {
-    async function getProjects() {
-      const data: IProjectDto[] = await getAllProjects();
-      setProjects(data);
-    }
-    getProjects();
-  }, []);
+  const { projects } = useProjects();
 
   return (
     <div className={classes.content}>
