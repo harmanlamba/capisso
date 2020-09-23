@@ -2,7 +2,9 @@ import React from 'react';
 
 import { getAllOrganisations } from '../api/organisations';
 import { getAllCourses } from '../api/courses';
-import { IOrganisationDto, ICourseDto } from '../../types/types';
+import { getAllProjects } from '../api/projects';
+
+import { IOrganisationDto, ICourseDto, IProjectDto } from '../../types/types';
 
 export const useOrganisations = () => {
   const [error, setError] = React.useState<Error>();
@@ -40,4 +42,22 @@ export const useCourses = () => {
   }, []);
 
   return { courses, loading, error };
+};
+
+export const useProjects = () => {
+  const [error, setError] = React.useState<Error>();
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [projects, setProjects] = React.useState<IProjectDto[]>([]);
+
+  React.useEffect(() => {
+    getAllProjects()
+      .then((data) => setProjects(data))
+      .catch((e) => {
+        console.error(e);
+        setError(e);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  return { projects, loading, error };
 };
