@@ -10,10 +10,12 @@ export const getAllContactsForOrganisation = async (
   return res.data as IContactDto[];
 };
 
-export const addContact = async (course: IContactDto): Promise<ICreatedDto> => {
+export const addContact = async (
+  contact: IContactDto
+): Promise<ICreatedDto> => {
   const res = await axios.post(
     `${process.env.REACT_APP_API_BASE}/contacts`,
-    course
+    contact
   );
 
   return res.data as ICreatedDto;
