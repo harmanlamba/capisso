@@ -20,6 +20,7 @@ import { ProjectsAddPage } from './pages/projects/ProjectsAddPage';
 import { ProjectsViewAllPage } from './pages/projects/ProjectsViewAllPage';
 import { ProjectViewPage } from './pages/projects/ProjectViewPage';
 import { OrganisationsEditPage } from './pages/organisations/OrganisationEditPage';
+import { AddContactPage } from './pages/organisations/contacts/AddContactPage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,6 +55,12 @@ export const App: React.FC<{}> = () => {
               path="/organisations/add"
               exact={true}
               component={OrganisationsAddPage}
+            />
+
+            <Route
+              path="/organisations/:id/contacts/add"
+              exact={true}
+              component={AddContactPage}
             />
 
             <Route
