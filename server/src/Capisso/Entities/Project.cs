@@ -22,5 +22,8 @@ namespace Capisso.Entities
         public virtual List<ProjectCourse> ProjectCourses { get; set; }
         public virtual Organisation Organisation { get; set; }
         public int OrganisationId { get; set; }
+        public virtual Contact Contact {get;set;}
+        public int? ContactId { get; set; }
+
     }
 }

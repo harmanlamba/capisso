@@ -1,4 +1,6 @@
-﻿namespace Capisso.Dto
+﻿using System.Collections.Generic;
+
+namespace Capisso.Dto
 {
     public class ContactDto
     {
@@ -8,5 +10,6 @@
         public string Email { get; set; }
         public string Notes { get; set; }
         public int OrganisationId { get; set; }
+        public IEnumerable<int> ProjectIds { get; set; }
     }
 }

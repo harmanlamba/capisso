@@ -13,5 +13,6 @@ namespace Capisso.Entities
         public string Notes { get; set; }
         public virtual Organisation Organisation { get; set; }
         public int OrganisationId { get; set; }
+        public virtual List<Project> Projects { get; set; }
     }
 }

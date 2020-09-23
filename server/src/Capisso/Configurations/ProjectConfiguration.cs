@@ -20,6 +20,10 @@ namespace Capisso.Configurations
                 .HasOne(e => e.Organisation)
                 .WithMany(e => e.Projects)
                 .HasForeignKey(e => e.OrganisationId);
+            builder
+                .HasOne(e => e.Contact)
+                .WithMany(e => e.Projects)
+                .HasForeignKey(e => e.ContactId);
             builder.HasData(
                 new Project
                 {
@@ -27,7 +31,8 @@ namespace Capisso.Configurations
                     Title = "Organisation and project managment tool",
                     StartDate = new DateTime(2020, 3, 1, 7, 0, 0),
                     OrganisationId = 1,
-                    Status = ProjectStatus.Pending
+                    Status = ProjectStatus.Pending,
+                    ContactId = 1
                 },
                 new Project
                 {
@@ -35,7 +40,8 @@ namespace Capisso.Configurations
                     Title = "Student enrolment tool",
                     StartDate = new DateTime(2019, 2, 3, 9, 0, 0),
                     OrganisationId = 2,
-                    Status = ProjectStatus.CompletedSuccessfully
+                    Status = ProjectStatus.CompletedSuccessfully,
+                    ContactId = 2
                 },
                 new Project
                 {
@@ -43,7 +49,8 @@ namespace Capisso.Configurations
                     Title = "Fletnix app runs on calculator",
                     StartDate = new DateTime(2020, 1, 2, 9, 0, 0),
                     OrganisationId = 2,
-                    Status = ProjectStatus.InProgress
+                    Status = ProjectStatus.InProgress,
+                    ContactId = 3
                 },
                 new Project
                 {
