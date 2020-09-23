@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ICourseDto, ICreatedDto } from '../../types/types';
+import { ICourseDto, ICreatedDto, IProjectDto } from '../../types/types';
 
 export const addCourse = async (course: ICourseDto): Promise<ICreatedDto> => {
   const res = await axios.post(
@@ -28,4 +28,14 @@ export const editCourse = async (course: ICourseDto): Promise<void> => {
 export const getAllCourses = async (): Promise<ICourseDto[]> => {
   const res = await axios.get(`${process.env.REACT_APP_API_BASE}/courses`);
   return res.data as ICourseDto[];
+};
+
+export const getProjectsForCourse = async (
+  courseId: number
+): Promise<IProjectDto[]> => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_BASE}/projects?courseId=${courseId}`
+  );
+
+  return res.data as IProjectDto[];
 };

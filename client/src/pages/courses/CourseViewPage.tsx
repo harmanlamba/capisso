@@ -19,6 +19,7 @@ import {
 import { getCourse } from '../../common/api/courses';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { CourseViewAbout } from '../../components/courses/CoursesViewAbout';
+import { CourseViewProjects } from './CourseViewProjects';
 import { ICourseDto } from '../../types/types';
 
 const useStyles = makeStyles(() => ({
@@ -98,6 +99,11 @@ export const CourseViewPage: React.FC<{}> = () => {
                 path="/courses/:id/about"
                 exact={true}
                 render={() => <CourseViewAbout course={course} />}
+              />
+              <Route
+                path="/courses/:id/projects"
+                exact={true}
+                render={() => <CourseViewProjects />}
               />
               <Route path="/courses/:id/projects" exact={true} />
               <Route path="*">
