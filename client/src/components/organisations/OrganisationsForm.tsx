@@ -65,7 +65,7 @@ export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
         name: '',
         description: '',
         address: '',
-        status: OrganisationStatus.Inactive,
+        status: OrganisationStatus.Active,
         classifications: [] as string[],
         ...initialValues,
       }}
