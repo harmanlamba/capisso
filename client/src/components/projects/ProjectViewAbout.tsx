@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, Paper, Box, Typography } from '@material-ui/core';
-import { IProjectDto } from '../../types/types';
+import { ICourseDto, IProjectDto } from '../../types/types';
 import moment from 'moment';
-import { useOrganisations, useCourses } from '../../common/hooks/apiHooks';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
+import { getOrganisation } from '../../common/api/organisations';
+import { IOrganisationDto } from '../../types/types';
+import { getCourse } from '../../common/api/courses';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -20,14 +22,23 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
   const classes = useStyles();
   const history = useHistory();
 
-  const { courses } = useCourses();
-  const { organisations } = useOrganisations();
-
   const formattedStartDate = moment(project.startDate);
   const formattedEndDate = moment(project.endDate);
-  const projectCourses = courses.filter(({ id }) =>
-    project.courseIds.includes(id!)
-  );
+
+  const [organisation, setOrganisation] = React.useState<IOrganisationDto>();
+  const [courses, setCourses] = React.useState<ICourseDto[]>([]);
+
+  useEffect(() => {
+    getOrganisation(project.organisationId)
+      .then((data) => setOrganisation(data))
+      .catch((error) => console.error(error));
+
+    project.courseIds.forEach((courseId) => {
+      getCourse(courseId)
+        .then((data) => setCourses((courseList) => [...courseList, data]))
+        .catch((error) => console.error(error));
+    });
+  }, [project.organisationId, project.courseIds]);
 
   return (
     <div className={classes.content}>
@@ -95,10 +106,7 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
                     )
                   }
                 >
-                  {
-                    organisations.find((o) => o.id === project.organisationId)
-                      ?.name
-                  }
+                  {organisation && <p>{organisation.name}</p>}
                 </Button>
               </Typography>
             </Box>
@@ -113,12 +121,10 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
                 Courses
               </Typography>
               <ul>
-                {projectCourses.map((course) => (
-                  <div key={course.id}>
-                    <li>
-                      {course.code}: {course.name}
-                    </li>
-                  </div>
+                {courses.map((course) => (
+                  <li key={course.id}>
+                    {course.code}: {course.name}
+                  </li>
                 ))}
               </ul>
             </Box>
