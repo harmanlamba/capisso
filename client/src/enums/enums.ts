@@ -4,3 +4,8 @@ export enum ProjectStatus {
   CompletedSuccessfully = 'CompletedSuccessfully',
   CompletedWithIssues = 'CompletedWithIssues',
 }
+
+export enum OrganisationStatus {
+  Active = 'Active',
+  Inactive = 'Inactive',
+}

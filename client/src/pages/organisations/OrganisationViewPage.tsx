@@ -81,7 +81,7 @@ export const OrganisationViewPage: React.FC<{}> = () => {
               {organisation.name}
             </Typography>
             <Box ml={2} position="relative" top="-0.5em" display="inline">
-              <OrganisationStatusChip status={organisation.status} />{' '}
+              <OrganisationStatusChip status={organisation.status.toString()} />{' '}
               <Link to={`/organisations/${organisation.id}/edit`}>
                 <Button variant="outlined" color="primary">
                   Edit

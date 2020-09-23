@@ -1,9 +1,17 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Formik, FieldArray, Form } from 'formik';
-import { TextField, Button, Chip, makeStyles, Box } from '@material-ui/core';
+import {
+  TextField,
+  Button,
+  Chip,
+  makeStyles,
+  Box,
+  MenuItem,
+} from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { IOrganisationDto } from '../../types/types';
+import { OrganisationStatus } from '../../enums/enums';
 
 const useStyles = makeStyles((theme) => ({
   boxContainer: {
@@ -15,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: '0 5px',
+  },
+  formControl: {
+    minWidth: 120,
+    margin: '12px 0px',
   },
   classificationsContainer: {
     display: 'flex',
@@ -53,7 +65,7 @@ export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
         name: '',
         description: '',
         address: '',
-        status: '',
+        status: OrganisationStatus.Active,
         classifications: [] as string[],
         ...initialValues,
       }}
@@ -117,15 +129,18 @@ export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
             <TextField
               className={classes.textField}
               variant="filled"
-              fullWidth={true}
               label="Status"
               name="status"
               onChange={handleChange}
               value={values.status}
-              required={true}
               error={!!errors.status}
-            />
-
+              fullWidth={true}
+              required={true}
+              select={true}
+            >
+              <MenuItem value={OrganisationStatus.Inactive}>Inactive</MenuItem>
+              <MenuItem value={OrganisationStatus.Active}>Active</MenuItem>
+            </TextField>
             <FieldArray
               name="classifications"
               render={(arrayHelpers) => (

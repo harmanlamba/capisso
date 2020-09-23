@@ -1,4 +1,4 @@
-import { ProjectStatus } from '../enums/enums';
+import { OrganisationStatus, ProjectStatus } from '../enums/enums';
 
 export interface ICreatedDto {
   id: number;
@@ -9,7 +9,7 @@ export interface IOrganisationDto {
   name: string;
   description: string;
   address: string;
-  status: string;
+  status: OrganisationStatus;
   classifications: string[];
   projectCount?: number;
 }

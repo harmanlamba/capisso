@@ -70,7 +70,7 @@ export const OrganisationsList: React.FC<{
               </StyledTableCell>
               <StyledTableCell> {row.projectCount} </StyledTableCell>
               <StyledTableCell>
-                <OrganisationStatusChip status={row.status} />
+                <OrganisationStatusChip status={row.status.toString()} />
               </StyledTableCell>
             </TableRow>
           ))}

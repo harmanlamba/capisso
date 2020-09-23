@@ -3,14 +3,16 @@ using System;
 using Capisso.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Capisso.Migrations
 {
     [DbContext(typeof(CapissoContext))]
-    partial class CapissoContextModelSnapshot : ModelSnapshot
+    [Migration("20200922230231_OrganisationStatusEnum")]
+    partial class OrganisationStatusEnum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -39,7 +39,7 @@ namespace Capisso.Test.Services
                 Name = "Test1",
                 Address = "55 Symonds",
                 Description = "UoA Accomodation",
-                Status = "Adequate",
+                Status = OrganisationStatus.Active,
                 Classifications = new List<string> { "Classficiation", "Classification1" }
             };
 
@@ -63,7 +63,7 @@ namespace Capisso.Test.Services
                 Name = "Test1",
                 Address = "55 Symonds",
                 Description = "UoA Accomodation",
-                Status = "Adequate",
+                Status = OrganisationStatus.Active,
                 Classifications = new List<string> { "Classficiation", "Classification1" }
             };
 
@@ -73,7 +73,7 @@ namespace Capisso.Test.Services
                 Name = "Test12",
                 Address = "55 Symmonds",
                 Description = "UoA Accomodation",
-                Status = "Adequate",
+                Status = OrganisationStatus.Active,
                 Classifications = new List<string> { "Classficiation", "Classification1" }
             };
 
