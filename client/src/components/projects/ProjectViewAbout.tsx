@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
-import { makeStyles, Paper, Box, Typography } from '@material-ui/core';
-import { ICourseDto, IProjectDto } from '../../types/types';
-import moment from 'moment';
+import { Box, makeStyles, Paper, Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import moment from 'moment';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getOrganisation } from '../../common/api/organisations';
-import { IOrganisationDto } from '../../types/types';
 import { getCourse } from '../../common/api/courses';
+import { useOrganisation } from '../../common/hooks/apiHooks';
+import { ICourseDto, IProjectDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -25,14 +24,10 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
   const formattedStartDate = moment(project.startDate);
   const formattedEndDate = moment(project.endDate);
 
-  const [organisation, setOrganisation] = React.useState<IOrganisationDto>();
+  const { organisation } = useOrganisation(project.organisationId);
   const [courses, setCourses] = React.useState<ICourseDto[]>([]);
 
   useEffect(() => {
-    getOrganisation(project.organisationId)
-      .then((data) => setOrganisation(data))
-      .catch((error) => console.error(error));
-
     project.courseIds.forEach((courseId) => {
       getCourse(courseId)
         .then((data) => setCourses((courseList) => [...courseList, data]))

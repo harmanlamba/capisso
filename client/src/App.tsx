@@ -1,3 +1,4 @@
+import { Box, makeStyles } from '@material-ui/core';
 import React from 'react';
 import {
   BrowserRouter as Router,
@@ -6,12 +7,12 @@ import {
   Switch,
 } from 'react-router-dom';
 import { NavigationDrawer } from './components/NavigationDrawer';
-import { makeStyles, Box } from '@material-ui/core';
-
-import { CoursesAddPage } from './pages/courses/CoursesAddPage';
 import { CourseEditPage } from './pages/courses/CourseEditPage';
+import { CoursesAddPage } from './pages/courses/CoursesAddPage';
 import { CoursesViewAllPage } from './pages/courses/CoursesViewAllPage';
 import { CourseViewPage } from './pages/courses/CourseViewPage';
+import { ContactsAddPage } from './pages/organisations/contacts/ContactsAddPage';
+import { OrganisationsEditPage } from './pages/organisations/OrganisationEditPage';
 import { OrganisationsAddPage } from './pages/organisations/OrganisationsAddPage';
 import { OrganisationsViewAllPage } from './pages/organisations/OrganisationsViewAllPage';
 import { OrganisationViewPage } from './pages/organisations/OrganisationViewPage';
@@ -19,7 +20,6 @@ import { ProjectEditPage } from './pages/projects/ProjectEditPage';
 import { ProjectsAddPage } from './pages/projects/ProjectsAddPage';
 import { ProjectsViewAllPage } from './pages/projects/ProjectsViewAllPage';
 import { ProjectViewPage } from './pages/projects/ProjectViewPage';
-import { OrganisationsEditPage } from './pages/organisations/OrganisationEditPage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,6 +54,12 @@ export const App: React.FC<{}> = () => {
               path="/organisations/add"
               exact={true}
               component={OrganisationsAddPage}
+            />
+
+            <Route
+              path="/organisations/:id/contacts/add"
+              exact={true}
+              component={ContactsAddPage}
             />
 
             <Route

@@ -7,7 +7,7 @@ import {
   Tabs,
   Typography,
 } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Link,
   Redirect,
@@ -16,11 +16,11 @@ import {
   useHistory,
   useParams,
 } from 'react-router-dom';
-import { getOrganisation } from '../../common/api/organisations';
+import { useOrganisation } from '../../common/hooks/apiHooks';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { OrganisationStatusChip } from '../../components/organisations/OrganisationStatusChip';
 import { OrganisationViewAbout } from '../../components/organisations/OrganisationViewAbout';
-import { IOrganisationDto } from '../../types/types';
+import { OrganisationViewContacts } from './OrganisationViewContacts';
 import { OrganisationViewProjects } from './OrganisationViewProjects';
 
 const useStyles = makeStyles((theme) => ({
@@ -66,11 +66,7 @@ export const OrganisationViewPage: React.FC<{}> = () => {
     history.push(`/organisations/${id}/${tabIdToName(tab)}`);
   };
 
-  const [organisation, setOrganisation] = useState<IOrganisationDto>();
-
-  useEffect(() => {
-    getOrganisation(id).then((data) => setOrganisation(data));
-  }, [id]);
+  const { organisation } = useOrganisation(id);
 
   return (
     <div className={classes.content}>
@@ -111,7 +107,11 @@ export const OrganisationViewPage: React.FC<{}> = () => {
                 exact={true}
                 render={() => <OrganisationViewProjects />}
               />
-              <Route path="/organisations/:id/contacts" />
+              <Route
+                path="/organisations/:id/contacts"
+                exact={true}
+                render={() => <OrganisationViewContacts />}
+              />
               <Route path="/organisations/:id/communications" exact={true} />
               <Route path="*">
                 <Redirect to={`/organisations/${id}/about`} />
