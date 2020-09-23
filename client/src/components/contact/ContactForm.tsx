@@ -1,11 +1,10 @@
 import { Box, Button, makeStyles, TextField } from '@material-ui/core';
 import { Add, Edit } from '@material-ui/icons';
+import { Autocomplete } from '@material-ui/lab';
 import { Form, Formik } from 'formik';
-import moment from 'moment';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { IProjectDto, ICourseDto, IOrganisationDto } from '../../types/types';
-import { Autocomplete } from '@material-ui/lab';
+import { IContactDto, IOrganisationDto } from '../../types/types';
 
 const useStyles = makeStyles(() => ({
   boxContainer: {
@@ -21,18 +20,16 @@ const useStyles = makeStyles(() => ({
 }));
 
 export interface IContactFormProps {
-  initialValues?: IProjectDto;
-  onSubmit(contact: IProjectDto): Promise<any>;
+  initialValues?: IContactDto;
+  onSubmit(contact: IContactDto): Promise<any>;
   type: 'edit' | 'add';
-  courses: ICourseDto[];
   organisations: IOrganisationDto[];
 }
 
-export const ProjectsForm: React.FC<IContactFormProps> = ({
+export const ContactForm: React.FC<IContactFormProps> = ({
   initialValues,
   onSubmit,
   type,
-  courses,
   organisations,
 }) => {
   const history = useHistory();
@@ -41,19 +38,16 @@ export const ProjectsForm: React.FC<IContactFormProps> = ({
   return (
     <Formik
       initialValues={{
-        title: '',
-        startDate: '',
-        endDate: undefined,
-        notes: undefined,
-        outcome: undefined,
+        name: '',
+        email: undefined,
+        phoneNumber: undefined,
         organisationId: 0,
-        courseIds: [] as number[],
         ...initialValues,
       }}
       onSubmit={async (values) => {
         try {
-          await onSubmit(values as IProjectDto);
-          history.push('/projects');
+          await onSubmit(values as IContactDto);
+          history.push('/organisations');
         } catch (e) {
           console.error(e);
         }
@@ -61,20 +55,12 @@ export const ProjectsForm: React.FC<IContactFormProps> = ({
       validate={(values) => {
         const errors: any = {};
 
-        if (!values.title) {
+        if (!values.name) {
           errors.title = 'Required';
-        }
-
-        if (!values.startDate) {
-          errors.startDate = 'Required';
         }
 
         if (!values.organisationId) {
           errors.organisationId = 'Required';
-        }
-
-        if (!values.courseIds.length) {
-          errors.courseIds = 'Required';
         }
 
         return errors;
@@ -86,66 +72,39 @@ export const ProjectsForm: React.FC<IContactFormProps> = ({
             <TextField
               className={classes.textField}
               variant="filled"
-              label="Title"
-              name="title"
+              label="Name"
+              name="name"
+              autoComplete="name"
               onChange={handleChange}
-              value={values.title}
+              value={values.name}
               required={true}
-              error={!!errors.title}
-              fullWidth={true}
-            />
-            <TextField
-              type="date"
-              className={classes.textField}
-              variant="filled"
-              label="Start Date"
-              name="startDate"
-              onChange={handleChange}
-              value={moment(values.startDate).format('YYYY-MM-DD')}
-              required={true}
-              error={!!errors.startDate}
-              fullWidth={true}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              type="date"
-              className={classes.textField}
-              variant="filled"
-              label="End Date"
-              name="endDate"
-              onChange={handleChange}
-              value={moment(values.endDate).format('YYYY-MM-DD')}
-              fullWidth={true}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              className={classes.textField}
-              variant="filled"
-              label="Notes"
-              name="notes"
-              multiline={true}
-              rows={3}
-              onChange={handleChange}
-              value={values.notes}
-              error={!!errors.notes}
+              error={!!errors.name}
               fullWidth={true}
             />
             <TextField
               className={classes.textField}
               variant="filled"
-              label="Outcome"
-              name="outcome"
-              multiline={true}
-              rows={2}
+              label="Email"
+              type="email"
+              name="email"
+              autoComplete="email"
               onChange={handleChange}
-              value={values.outcome}
+              value={values.email}
+              error={!!errors.email}
               fullWidth={true}
             />
-
+            <TextField
+              className={classes.textField}
+              variant="filled"
+              label="Phone Number"
+              type="tel"
+              name="phoneNumber"
+              autoComplete="tel-national"
+              onChange={handleChange}
+              value={values.phoneNumber}
+              error={!!errors.phoneNumber}
+              fullWidth={true}
+            />
             <Autocomplete
               options={organisations}
               getOptionLabel={(option) => option.name}
@@ -163,33 +122,6 @@ export const ProjectsForm: React.FC<IContactFormProps> = ({
               onChange={(_e, v) => setFieldValue('organisationId', v?.id)}
               value={organisations.find((o) => o.id === values.organisationId)}
             />
-
-            <Autocomplete
-              multiple={true}
-              options={courses}
-              getOptionLabel={(course) => `${course?.code}: ${course?.name}`}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  className={classes.textField}
-                  variant="filled"
-                  label="Courses"
-                  fullWidth={true}
-                  required={true}
-                  error={!!errors.courseIds}
-                />
-              )}
-              onChange={(_e, v) =>
-                setFieldValue(
-                  'courseIds',
-                  v.map((course) => course?.id)
-                )
-              }
-              value={values.courseIds.map((id) =>
-                courses.find((c) => c.id === id)
-              )}
-            />
-
             <Box
               className={classes.textField}
               display="flex"

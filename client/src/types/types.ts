@@ -35,11 +35,11 @@ export interface IProjectDto {
 }
 
 export interface IContactDto {
-  id: number;
+  id?: number;
   name: string;
-  phoneNumber: string;
-  email: string;
-  notes: string;
+  email?: string;
+  phoneNumber?: string;
+  notes?: string;
   organisationId: number;
-  projectIds: number[];
+  projectIds?: number[];
 }
