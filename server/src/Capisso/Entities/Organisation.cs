@@ -4,10 +4,10 @@ namespace Capisso.Entities
 {
     public enum OrganisationStatus
     {
-     Active,
-     Inactive
+        Active,
+        Inactive
     }
-    
+
     public class Organisation : Entity<int>
     {
         public string Name { get; set; }

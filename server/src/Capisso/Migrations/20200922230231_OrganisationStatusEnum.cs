@@ -27,7 +27,7 @@ namespace Capisso.Migrations
                 keyValue: 3,
                 column: "Status",
                 value: 1);
-            
+
             migrationBuilder.AlterColumn<int>(
                 name: "Status",
                 table: "Organisations",

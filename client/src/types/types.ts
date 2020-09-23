@@ -15,8 +15,8 @@ export interface IOrganisationDto {
 }
 
 export enum OrganisationStatus {
-  Active,
-  Inactive,
+  Active = 'Active',
+  Inactive = 'Inactive',
 }
 export interface ICourseDto {
   id?: number;

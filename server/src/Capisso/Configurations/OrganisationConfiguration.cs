@@ -33,7 +33,7 @@ namespace Capisso.Configurations
 
             builder.Property(e => e.Address).IsRequired();
             builder.Property(e => e.Status).IsRequired();
-            
+
             builder.HasData(
                 new Organisation
                 {
