@@ -136,7 +136,7 @@ namespace Capisso.Test.Services
         public async Task TestGetAllProjectsByOrganisation()
         {
             //Arrange
-            int orgId = 1;
+            int organisationId = 1;
             IEnumerable<Project> projects = new List<Project> {
                 new Project
                 {
@@ -147,6 +147,7 @@ namespace Capisso.Test.Services
                     StartDate = new DateTime(),
                     EndDate = new DateTime(),
                     ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                    OrganisationId = 1,
                     Organisation = new Organisation
                     {
                         Id = 1,
@@ -161,6 +162,7 @@ namespace Capisso.Test.Services
                     StartDate = new DateTime(),
                     EndDate = new DateTime(),
                     ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                    OrganisationId = 2,
                     Organisation = new Organisation
                     {
                         Id = 2,
@@ -169,16 +171,87 @@ namespace Capisso.Test.Services
             };
             var expectedProjects = projects.Take(1);
 
-            _mockProjectRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<Func<Project, bool>>>()))
-                .Returns(Task.FromResult(expectedProjects));
+            _mockProjectRepository.Setup(x => x.GetAllAsync()).Returns(Task.FromResult(projects));
 
             //Act
-            var result = await _projectService.GetAllProjects(orgId);
+            var result = await _projectService.GetAllProjects(organisationId: organisationId);
 
             //Assert
             Assert.AreEqual(expectedProjects.Count(), result.Count());
             CollectionAssert.AreEquivalent(expectedProjects.Select(p => p.Id), result.Select(p => p.Id));
-            _mockProjectRepository.Verify(x => x.FindByAsync(It.IsAny<Expression<Func<Project, bool>>>()), Times.Once);
+            _mockProjectRepository.Verify(x => x.GetAllAsync(), Times.Once);
+        }
+
+        [Test]
+        public async Task TestGetAllProjectsByCourse()
+        {
+            //Arrange
+            int courseId = 1;
+            IEnumerable<Project> projects = new List<Project> {
+                new Project
+                {
+                    Id = 1,
+                    Notes = "Test Notes",
+                    Outcome = "Test Outcome",
+                    Title = "Test Tile",
+                    StartDate = new DateTime(),
+                    EndDate = new DateTime(),
+                    ProjectCourses = new List<ProjectCourse>
+                    {
+                        new ProjectCourse
+                        {
+                            CourseId = 1
+                        }
+                    }
+                },
+                new Project
+                {
+                    Id = 2,
+                    Notes = "Test Notes",
+                    Outcome = "Test Outcome",
+                    Title = "Test Tile",
+                    StartDate = new DateTime(),
+                    EndDate = new DateTime(),
+                    ProjectCourses = new List<ProjectCourse>
+                    {
+                        new ProjectCourse
+                        {
+                            CourseId = 1
+                        },
+                        new ProjectCourse
+                        {
+                            CourseId = 2
+                        }
+                    }
+                },
+                new Project
+                {
+                    Id = 3,
+                    Notes = "Test Notes",
+                    Outcome = "Test Outcome",
+                    Title = "Test Tile",
+                    StartDate = new DateTime(),
+                    EndDate = new DateTime(),
+                    ProjectCourses = new List<ProjectCourse>
+                    {
+                        new ProjectCourse
+                        {
+                            CourseId = 2
+                        }
+                    }
+                }
+            };
+            var expectedProjects = projects.Take(2);
+
+            _mockProjectRepository.Setup(x => x.GetAllAsync()).Returns(Task.FromResult(projects));
+
+            //Act
+            var result = await _projectService.GetAllProjects(courseId: courseId);
+
+            //Assert
+            Assert.AreEqual(expectedProjects.Count(), result.Count());
+            CollectionAssert.AreEquivalent(expectedProjects.Select(p => p.Id), result.Select(p => p.Id));
+            _mockProjectRepository.Verify(x => x.GetAllAsync(), Times.Once);
         }
 
         [Test]

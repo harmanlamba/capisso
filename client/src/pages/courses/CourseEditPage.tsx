@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const CoursesEditPage: React.FC<{}> = () => {
+export const CourseEditPage: React.FC<{}> = () => {
   const classes = useStyles();
   const { id } = useParams();
   const [course, setCourse] = React.useState<ICourseDto>();
