@@ -112,6 +112,10 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
           errors.organisationId = 'Required';
         }
 
+        if (!values.contactId) {
+          errors.contactId = 'Required';
+        }
+
         if (!values.courseIds.length) {
           errors.courseIds = 'Required';
         }
@@ -240,7 +244,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                   label="Project Contact"
                   fullWidth={true}
                   required={true}
-                  error={!!errors.organisationId}
+                  error={!!errors.contactId}
                 />
               )}
               onChange={(_e, v) => {
