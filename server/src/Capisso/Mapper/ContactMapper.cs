@@ -30,6 +30,7 @@ namespace Capisso.Mapper
                 Email = contact.Email,
                 PhoneNumber = contact.PhoneNumber,
                 OrganisationId = contact.OrganisationId,
+                ProjectIds = contact.Projects.Select(x => x.Id)
             };
         }
     }

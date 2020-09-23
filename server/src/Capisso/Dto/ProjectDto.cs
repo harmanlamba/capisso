@@ -15,5 +15,6 @@ namespace Capisso.Dto
         public ProjectStatus Status { get; set; }
         public IEnumerable<int> CourseIds { get; set; }
         public int OrganisationId { get; set; }
+        public int? ContactId { get; set; }
     }
 }
