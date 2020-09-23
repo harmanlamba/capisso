@@ -23,11 +23,12 @@ namespace Capisso.Services
             var project = ProjectMapper.FromDto(projectDto);
 
             // populate organisation
-            project.Organisation = await _unitOfWork.OrganisationRepository.GetByIdAsync(projectDto.OrganisationId);
-            if (project.Organisation == null)
-            {
-                throw new EntityNotFoundException($"organisation with id <{projectDto.OrganisationId}> not found");
-            }
+            project.Organisation = await _unitOfWork.OrganisationRepository.GetByIdAsync(projectDto.OrganisationId) 
+                ?? throw new EntityNotFoundException($"organisation with id <{projectDto.OrganisationId}> not found"); ;
+
+            //populate contact
+            project.Contact = await _unitOfWork.ContactRepository.GetByIdAsync(projectDto.ContactId) 
+                ?? throw new EntityNotFoundException($"contact with id <{projectDto.ContactId}> not found");
 
             // create project course links
             var projectCourses = await Task.WhenAll(projectDto.CourseIds.Select(async courseId =>
@@ -83,11 +84,12 @@ namespace Capisso.Services
             var project = ProjectMapper.FromDto(projectDto);
 
             // populate organisation
-            project.Organisation = await _unitOfWork.OrganisationRepository.GetByIdAsync(projectDto.OrganisationId);
-            if (project.Organisation == null)
-            {
-                throw new EntityNotFoundException($"organisation with id <{projectDto.OrganisationId}> not found");
-            }
+            project.Organisation = await _unitOfWork.OrganisationRepository.GetByIdAsync(projectDto.OrganisationId)
+                ?? throw new EntityNotFoundException($"organisation with id <{projectDto.OrganisationId}> not found"); ;
+
+            //populate contact
+            project.Contact = await _unitOfWork.ContactRepository.GetByIdAsync(projectDto.ContactId)
+                ?? throw new EntityNotFoundException($"contact with id <{projectDto.ContactId}> not found");
 
             // update and reinsert join table records
             var existingProjectCourses =

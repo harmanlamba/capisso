@@ -8,10 +8,16 @@ import {
 import { Add, Edit } from '@material-ui/icons';
 import { Form, Formik } from 'formik';
 import moment from 'moment';
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { IProjectDto, ICourseDto, IOrganisationDto } from '../../types/types';
+import {
+  IProjectDto,
+  ICourseDto,
+  IOrganisationDto,
+  IContactDto,
+} from '../../types/types';
 import { Autocomplete } from '@material-ui/lab';
+import { getAllContactsForOrganisation } from '../../common/api/contacts';
 
 const useStyles = makeStyles(() => ({
   boxContainer: {
@@ -63,6 +69,8 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
   const history = useHistory();
   const classes = useStyles();
 
+  const [contacts, setContacts] = useState<IContactDto[]>([]);
+
   return (
     <Formik
       initialValues={{
@@ -74,6 +82,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
         outcome: undefined,
         organisationId: 0,
         courseIds: [] as number[],
+        contactId: 0,
         ...initialValues,
       }}
       onSubmit={async (values) => {
@@ -210,8 +219,34 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                   error={!!errors.organisationId}
                 />
               )}
-              onChange={(_e, v) => setFieldValue('organisationId', v?.id)}
+              onChange={(_e, v) => {
+                setFieldValue('organisationId', v?.id);
+                getAllContactsForOrganisation(v?.id).then((data) => {
+                  setContacts(data);
+                });
+              }}
               value={organisations.find((o) => o.id === values.organisationId)}
+            />
+
+            <Autocomplete
+              options={contacts}
+              getOptionLabel={(option) => option.name}
+              noOptionsText="Please choose an organisation before selecting contact"
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  className={classes.textField}
+                  variant="filled"
+                  label="Project Contact"
+                  fullWidth={true}
+                  required={true}
+                  error={!!errors.organisationId}
+                />
+              )}
+              onChange={(_e, v) => {
+                setFieldValue('contactId', v?.id);
+              }}
+              value={contacts.find((c) => c.id === values.contactId)}
             />
 
             <Autocomplete

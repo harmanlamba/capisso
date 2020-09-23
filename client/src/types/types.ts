@@ -31,4 +31,15 @@ export interface IProjectDto {
   status: ProjectStatus;
   organisationId: number;
   courseIds: number[];
+  contactId?: number;
+}
+
+export interface IContactDto {
+  id: number;
+  name: string;
+  phoneNumber: string;
+  email: string;
+  notes: string;
+  organisationId: number;
+  projectIds: number[];
 }
