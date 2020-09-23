@@ -1,11 +1,10 @@
 import { Box, Button, makeStyles, TextField } from '@material-ui/core';
 import { Add, Edit } from '@material-ui/icons';
-import { Autocomplete } from '@material-ui/lab';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { EMAIL_REGEX, PHONE_NUMBER_REGEX } from '../../constants/constants';
-import { IContactDto, IOrganisationDto } from '../../types/types';
+import { IContactDto } from '../../types/types';
 
 const useStyles = makeStyles(() => ({
   boxContainer: {
@@ -21,17 +20,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 export interface IContactFormProps {
-  initialValues?: IContactDto;
+  initialValues: IContactDto;
   onSubmit(contact: IContactDto): Promise<any>;
   type: 'edit' | 'add';
-  organisations: IOrganisationDto[];
 }
 
 export const ContactForm: React.FC<IContactFormProps> = ({
   initialValues,
   onSubmit,
   type,
-  organisations,
 }) => {
   const history = useHistory();
   const classes = useStyles();
@@ -39,10 +36,8 @@ export const ContactForm: React.FC<IContactFormProps> = ({
   return (
     <Formik
       initialValues={{
-        name: '',
         email: undefined,
         phoneNumber: undefined,
-        organisationId: 0,
         ...initialValues,
       }}
       onSubmit={async (values) => {
@@ -118,23 +113,6 @@ export const ContactForm: React.FC<IContactFormProps> = ({
               error={!!errors.phoneNumber}
               helperText={errors.phoneNumber}
               fullWidth={true}
-            />
-            <Autocomplete
-              options={organisations}
-              getOptionLabel={(option) => option.name}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  className={classes.textField}
-                  variant="filled"
-                  label="Organisation"
-                  fullWidth={true}
-                  required={true}
-                  error={!!errors.organisationId}
-                />
-              )}
-              onChange={(_e, v) => setFieldValue('organisationId', v?.id)}
-              value={organisations.find((o) => o.id === values.organisationId)}
             />
             <Box
               className={classes.textField}

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { addContact } from '../../../common/api/contacts';
 import { useOrganisations } from '../../../common/hooks/apiHooks';
 import { ContactForm } from '../../../components/contact/ContactForm';
+import { LoadingSpinner } from '../../../components/LoadingSpinner';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -14,18 +15,28 @@ const useStyles = makeStyles((theme) => ({
 
 export const ContactsAddPage: React.FC<{}> = () => {
   const classes = useStyles();
-  const { organisations } = useOrganisations();
   const { id } = useParams();
+  const { organisations, loading } = useOrganisations();
+  const organisation = organisations.find((o) => o.id === +id);
 
   return (
     <div className={classes.content}>
-      <Typography variant="h4">Add Contact to Organisation</Typography>
-      <ContactForm
-        onSubmit={addContact}
-        organisations={organisations}
-        type="add"
-        initialValues={{ name: '', organisationId: id }}
-      />
+      {loading ? (
+        <LoadingSpinner />
+      ) : organisation ? (
+        <>
+          <Typography variant="h4">
+            Adding Contact to {organisation.name}
+          </Typography>
+          <ContactForm
+            onSubmit={addContact}
+            type="add"
+            initialValues={{ name: '', organisationId: +id }}
+          />
+        </>
+      ) : (
+        <Typography variant="h4">Organisation not found</Typography>
+      )}
     </div>
   );
 };
