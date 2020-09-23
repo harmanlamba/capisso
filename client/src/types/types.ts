@@ -1,3 +1,5 @@
+import { ProjectStatus } from '../enums/enums';
+
 export interface ICreatedDto {
   id: number;
 }
@@ -26,11 +28,7 @@ export interface IProjectDto {
   outcome?: string;
   startDate: string;
   endDate?: string;
-  status:
-    | 'Pending'
-    | 'InProgress'
-    | 'CompletedSuccessfully'
-    | 'CompletedWithIssues';
+  status: ProjectStatus;
   organisationId: number;
   courseIds: number[];
 }
