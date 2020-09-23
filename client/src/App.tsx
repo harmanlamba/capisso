@@ -9,8 +9,9 @@ import { NavigationDrawer } from './components/NavigationDrawer';
 import { makeStyles, Box } from '@material-ui/core';
 
 import { CoursesAddPage } from './pages/courses/CoursesAddPage';
-import { CoursesEditPage } from './pages/courses/CoursesEditPage';
+import { CourseEditPage } from './pages/courses/CourseEditPage';
 import { CoursesViewAllPage } from './pages/courses/CoursesViewAllPage';
+import { CourseViewPage } from './pages/courses/CourseViewPage';
 import { OrganisationsAddPage } from './pages/organisations/OrganisationsAddPage';
 import { OrganisationsViewAllPage } from './pages/organisations/OrganisationsViewAllPage';
 import { OrganisationViewPage } from './pages/organisations/OrganisationViewPage';
@@ -69,15 +70,21 @@ export const App: React.FC<{}> = () => {
             />
 
             <Route
+              path="/courses/:id/edit"
+              exact={true}
+              component={CourseEditPage}
+            />
+
+            <Route
               path="/courses/add"
               exact={true}
               component={CoursesAddPage}
             />
 
             <Route
-              path="/courses/:id/edit"
+              path="/courses/:id/:page"
               exact={true}
-              component={CoursesEditPage}
+              component={CourseViewPage}
             />
 
             <Route

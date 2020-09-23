@@ -19,9 +19,9 @@ namespace Capisso.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ProjectDto>> GetAllProjects([FromQuery] int? organisationId = null)
+        public async Task<IEnumerable<ProjectDto>> GetAllProjects([FromQuery] int? organisationId = null, [FromQuery] int? courseId = null)
         {
-            return await _projectService.GetAllProjects(organisationId);
+            return await _projectService.GetAllProjects(organisationId, courseId);
         }
 
         [HttpPost]
