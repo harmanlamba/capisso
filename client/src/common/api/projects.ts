@@ -19,6 +19,12 @@ export const getProject = async (projectId: number): Promise<IProjectDto> => {
   return res.data as IProjectDto;
 };
 
+export const getAllProjects = async (): Promise<IProjectDto[]> => {
+  const res = await axios.get(`${process.env.REACT_APP_API_BASE}/projects`);
+
+  return res.data as IProjectDto[];
+};
+
 export const editProject = async (project: IProjectDto): Promise<void> => {
   await axios.put(
     `${process.env.REACT_APP_API_BASE}/projects/${project.id}`,
