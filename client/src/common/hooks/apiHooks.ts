@@ -1,5 +1,11 @@
 import React from 'react';
-import { ICourseDto, IOrganisationDto, IProjectDto } from '../../types/types';
+import {
+  IContactDto,
+  ICourseDto,
+  IOrganisationDto,
+  IProjectDto,
+} from '../../types/types';
+import { getAllContactsForOrganisation } from '../api/contacts';
 import { getAllCourses } from '../api/courses';
 import { getAllOrganisations, getOrganisation } from '../api/organisations';
 import { getAllProjects } from '../api/projects';
@@ -77,4 +83,23 @@ export const useOrganisation = (id: number) => {
   }, [id]);
 
   return { organisation, loading, error };
+};
+
+export const useContactsForOrganisation = (orgId: number) => {
+  const [error, setError] = React.useState<Error>();
+  const [loading, setLoading] = React.useState<boolean>();
+  const [contacts, setContacts] = React.useState<IContactDto[]>([]);
+
+  React.useEffect(() => {
+    setLoading(true);
+    getAllContactsForOrganisation(orgId)
+      .then((data) => setContacts(data))
+      .catch((e) => {
+        console.error(e);
+        setError(e);
+      })
+      .finally(() => setLoading(false));
+  }, [orgId]);
+
+  return { contacts, loading, error };
 };
