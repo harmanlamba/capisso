@@ -9,6 +9,7 @@ using Capisso.Entities;
 using Capisso.Repository;
 using Capisso.Services;
 using Capisso.Test.Repository;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -143,6 +144,52 @@ namespace Capisso.Test.Controllers
             Assert.AreEqual(1, response.Count());
             Assert.AreEqual(1, responseList[0].Id);
             Assert.AreEqual("Ur'Zababa", responseList[0].Name);
+        }
+
+        [Test]
+        public async Task TestGetSingularContact()
+        {
+            //Arrange
+            Contact contact = new Contact
+            {
+                Id = 1,
+                Name = "Ur'Zababa",
+                Email = "test@gmail.com",
+                PhoneNumber = "111",
+                OrganisationId = 69,
+                Projects = new List<Project>
+                {
+                    new Project {
+                        Id = 1,
+                        Title = "HCI Extreme",
+                        Notes = "Notes Test",
+                        Outcome = "Outcome Test",
+                        StartDate = new DateTime(),
+                        EndDate = new DateTime(),
+                        ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                        Organisation = new Organisation
+                        {
+                            Id = 1,
+                        }}
+                }
+            };
+
+            _mockContactRepository.Setup(x => x.GetByIdAsync(1)).Returns(Task.FromResult(contact));
+
+            //Act
+            ActionResult<ContactDto> response = await _contactsController.GetContact(1);
+
+            //Assert
+            Assert.IsInstanceOf<OkObjectResult>(response.Result);
+            OkObjectResult okResult = response.Result as OkObjectResult;
+            Assert.IsInstanceOf<ContactDto>(okResult.Value);
+            ContactDto contactDto = okResult.Value.As<ContactDto>();
+            Assert.AreEqual(200, okResult.StatusCode);
+            Assert.NotNull(okResult.Value);
+            Assert.AreEqual(contact.Id, contactDto.Id);
+            Assert.AreEqual(contact.Name, contactDto.Name);
+
+            _mockContactRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
         }
 
     }
