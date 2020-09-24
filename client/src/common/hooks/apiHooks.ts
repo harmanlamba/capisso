@@ -5,7 +5,7 @@ import {
   IOrganisationDto,
   IProjectDto,
 } from '../../types/types';
-import { getAllContactsForOrganisation } from '../api/contacts';
+import { getAllContactsForOrganisation, getContact } from '../api/contacts';
 import { getAllCourses } from '../api/courses';
 import { getAllOrganisations, getOrganisation } from '../api/organisations';
 import { getAllProjects } from '../api/projects';
@@ -102,4 +102,22 @@ export const useContactsForOrganisation = (orgId: number) => {
   }, [orgId]);
 
   return { contacts, loading, error };
+};
+
+export const useContact = (contactId: number | undefined) => {
+  const [error, setError] = React.useState<Error>();
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [contact, setContact] = React.useState<IContactDto>();
+
+  React.useEffect(() => {
+    getContact(contactId)
+      .then((data) => setContact(data))
+      .catch((e) => {
+        console.error(e);
+        setError(e);
+      })
+      .finally(() => setLoading(false));
+  }, [contactId]);
+
+  return { contact, loading, error };
 };

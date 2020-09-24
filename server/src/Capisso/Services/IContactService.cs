@@ -10,5 +10,6 @@ namespace Capisso.Services
     {
         Task<int> CreateContact(ContactDto contactDto);
         Task<IEnumerable<ContactDto>> GetContacts(int? organisationId);
+        Task<ContactDto> GetContact(int contactId);
     }
 }

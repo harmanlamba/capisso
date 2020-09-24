@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Capisso.Dto;
 using Capisso.Entities;
@@ -83,6 +85,46 @@ namespace Capisso.Test.Services
             Assert.ThrowsAsync<EntityNotFoundException>(async () => await _contactService.CreateContact(contactDto));
             _mockContactRepository.Verify(x => x.InsertAsync(It.IsAny<Contact>()), Times.Never);
             _mockOrganisationRepository.Verify();
+        }
+
+        [Test]
+        public async Task TestGetSingularContact()
+        {
+            //Arrange
+            Contact contact = new Contact
+            {
+                Id = 1,
+                Name = "Ur'Zababa",
+                Email = "test@gmail.com",
+                PhoneNumber = "111",
+                OrganisationId = 69,
+                Projects = new List<Project>
+                {
+                    new Project {
+                        Id = 1,
+                        Title = "HCI Extreme",
+                        Notes = "Notes Test",
+                        Outcome = "Outcome Test",
+                        StartDate = new DateTime(),
+                        EndDate = new DateTime(),
+                        ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                        Organisation = new Organisation
+                        {
+                            Id = 1,
+                        }}
+                }
+            };
+
+            _mockContactRepository.Setup(x => x.GetByIdAsync(It.IsAny<int>()))
+                .Returns(Task.FromResult(contact));
+
+
+            //Act
+            var contactDto = await _contactService.GetContact(1);
+
+            //Assert
+            Assert.AreEqual(1, contactDto.Id);
+            _mockContactRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
         }
     }
 }

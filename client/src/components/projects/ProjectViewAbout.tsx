@@ -4,7 +4,7 @@ import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getCourse } from '../../common/api/courses';
-import { useOrganisation } from '../../common/hooks/apiHooks';
+import { useOrganisation, useContact } from '../../common/hooks/apiHooks';
 import { ICourseDto, IProjectDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +25,7 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
   const formattedEndDate = moment(project.endDate);
 
   const { organisation } = useOrganisation(project.organisationId);
+  const { contact } = useContact(project.contactId);
   const [courses, setCourses] = React.useState<ICourseDto[]>([]);
 
   useEffect(() => {
@@ -118,10 +119,36 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
               <ul>
                 {courses.map((course) => (
                   <li key={course.id}>
-                    {course.code}: {course.name}
+                    <Button
+                      color="primary"
+                      size="large"
+                      onClick={() =>
+                        history.push(`/courses/${course.id}/about`)
+                      }
+                    >
+                      {course.code}: {course.name}
+                    </Button>
                   </li>
                 ))}
               </ul>
+            </Box>
+          </Paper>
+        </Box>
+      )}
+      {project.contactId && (
+        <Box mb={2}>
+          <Paper>
+            <Box p={2}>
+              <Typography variant="h6" color="primary" display="inline">
+                Project Contact Details:
+              </Typography>
+              {contact && (
+                <div>
+                  <p>Name: {contact.name}</p>
+                  {contact.email && <p>Email: {contact.email}</p>}
+                  {contact.phoneNumber && <p>Phone: {contact.phoneNumber}</p>}
+                </div>
+              )}
             </Box>
           </Paper>
         </Box>

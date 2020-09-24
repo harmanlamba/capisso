@@ -53,6 +53,11 @@ namespace Capisso.Services
 
             return contactDtos;
         }
+        public async Task<ContactDto> GetContact(int contactId)
+        {
+            var contact = await _unitOfWork.ContactRepository.GetByIdAsync(contactId) ?? throw new EntityNotFoundException();
 
+            return ContactMapper.ToDto(contact);
+        }
     }
 }
