@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     whiteSpace: 'pre-line',
   },
+  button: {
+    margin: '15px 0',
+  },
 }));
 
 export const OrganisationViewContacts: React.FC<{}> = () => {
@@ -26,6 +29,7 @@ export const OrganisationViewContacts: React.FC<{}> = () => {
         <>
           <ContactsList contacts={contacts} />
           <Button
+            className={classes.button}
             component={Link}
             to={`/organisations/${id}/contacts/add`}
             variant="contained"
