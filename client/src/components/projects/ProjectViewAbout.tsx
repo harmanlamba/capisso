@@ -122,7 +122,15 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
               <ul>
                 {courses.map((course) => (
                   <li key={course.id}>
-                    {course.code}: {course.name}
+                    <Button
+                      color="primary"
+                      size="large"
+                      onClick={() =>
+                        history.push(`/courses/${course.id}/about`)
+                      }
+                    >
+                      {course.code}: {course.name}
+                    </Button>
                   </li>
                 ))}
               </ul>
