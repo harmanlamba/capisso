@@ -39,5 +39,21 @@ namespace Capisso.Controllers
         {
             return await _contactService.GetContacts(organisationId);
         }
+
+        [HttpGet("{contactId:int}")]
+        public async Task<ActionResult<ContactDto>> GetContact(int contactId)
+        {
+            ContactDto contactDto;
+            try
+            {
+                contactDto = await _contactService.GetContact(contactId);
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return Ok(contactDto);
+        }
     }
 }
