@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     whiteSpace: 'pre-line',
   },
+  contactInfo: {
+    fontSize: '18px',
+  },
 }));
 
 export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
@@ -136,10 +139,18 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
                 <Typography variant="h5" color="textPrimary" display="inline">
                   {contact && (
                     <div>
-                      <h6>Name: {contact.name}</h6>
-                      {contact.email && <h6>Email: {contact.email}</h6>}
+                      <p className={classes.contactInfo}>
+                        Name: {contact.name}
+                      </p>
+                      {contact.email && (
+                        <p className={classes.contactInfo}>
+                          Email: {contact.email}
+                        </p>
+                      )}
                       {contact.phoneNumber && (
-                        <h6>Phone: {contact.phoneNumber}</h6>
+                        <p className={classes.contactInfo}>
+                          Phone: {contact.phoneNumber}
+                        </p>
                       )}
                     </div>
                   )}
