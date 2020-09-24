@@ -4,7 +4,7 @@ import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getCourse } from '../../common/api/courses';
-import { useOrganisation } from '../../common/hooks/apiHooks';
+import { useOrganisation, useContact } from '../../common/hooks/apiHooks';
 import { ICourseDto, IProjectDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +25,7 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
   const formattedEndDate = moment(project.endDate);
 
   const { organisation } = useOrganisation(project.organisationId);
+  const { contact } = useContact(project.contactId);
   const [courses, setCourses] = React.useState<ICourseDto[]>([]);
 
   useEffect(() => {
@@ -122,6 +123,28 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
                   </li>
                 ))}
               </ul>
+            </Box>
+          </Paper>
+        </Box>
+      )}
+      {project.contactId && (
+        <Box mb={2}>
+          <Paper>
+            <Box p={2}>
+              <Typography variant="h6" color="primary" display="inline">
+                Project Contact Details:
+                <Typography variant="h5" color="textPrimary" display="inline">
+                  {contact && (
+                    <div>
+                      <h6>Name: {contact.name}</h6>
+                      {contact.email && <h6>Email: {contact.email}</h6>}
+                      {contact.phoneNumber && (
+                        <h6>Phone: {contact.phoneNumber}</h6>
+                      )}
+                    </div>
+                  )}
+                </Typography>
+              </Typography>
             </Box>
           </Paper>
         </Box>

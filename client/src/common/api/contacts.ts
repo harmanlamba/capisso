@@ -20,3 +20,12 @@ export const addContact = async (
 
   return res.data as ICreatedDto;
 };
+
+export const getContact = async (
+  contactId: number | undefined
+): Promise<IContactDto> => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_BASE}/contacts/${contactId}`
+  );
+  return res.data as IContactDto;
+};
