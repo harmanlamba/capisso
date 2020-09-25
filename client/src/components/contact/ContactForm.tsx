@@ -54,7 +54,7 @@ export const ContactForm: React.FC<IContactFormProps> = ({
         const errors: any = {};
 
         if (!values.name) {
-          errors.title = 'Required';
+          errors.name = 'Required';
         }
 
         if (values.email && !EMAIL_REGEX.test(values.email)) {
