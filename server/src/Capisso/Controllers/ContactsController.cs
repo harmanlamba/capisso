@@ -64,7 +64,15 @@ namespace Capisso.Controllers
                 return BadRequest();
             }
 
-            await _contactService.UpdateContact(contactDto);
+            try
+            {
+                await _contactService.UpdateContact(contactDto);
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
+
             return NoContent();
         }
     }
