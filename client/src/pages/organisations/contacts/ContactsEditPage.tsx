@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const ContactsEditPage: React.FC<{}> = () => {
   const classes = useStyles();
-  const { organisationId, id } = useParams();
+  const { id } = useParams();
   const { contact, loading } = useContact(id);
 
   return (
