@@ -59,5 +59,17 @@ namespace Capisso.Services
 
             return ContactMapper.ToDto(contact);
         }
+
+        public async Task UpdateContact(ContactDto contactDto)
+        {
+            var contact = ContactMapper.FromDto(contactDto);
+
+            // check organisation exists
+            contact.Organisation = await _unitOfWork.OrganisationRepository.GetByIdAsync(contactDto.OrganisationId)
+                ?? throw new EntityNotFoundException($"organisation with id <{contactDto.OrganisationId}> not found"); ;
+
+            _unitOfWork.ContactRepository.Update(contact);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }

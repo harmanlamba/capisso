@@ -55,5 +55,25 @@ namespace Capisso.Controllers
 
             return Ok(contactDto);
         }
+
+        [HttpPut("{contactId:int}")]
+        public async Task<ActionResult> UpdateContact([FromBody] ContactDto contactDto, [FromRoute] int contactId)
+        {
+            if (contactDto.Id != contactId)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _contactService.UpdateContact(contactDto);
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }

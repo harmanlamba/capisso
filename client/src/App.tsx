@@ -12,6 +12,7 @@ import { CoursesAddPage } from './pages/courses/CoursesAddPage';
 import { CoursesViewAllPage } from './pages/courses/CoursesViewAllPage';
 import { CourseViewPage } from './pages/courses/CourseViewPage';
 import { ContactsAddPage } from './pages/organisations/contacts/ContactsAddPage';
+import { ContactsEditPage } from './pages/organisations/contacts/ContactsEditPage';
 import { OrganisationsEditPage } from './pages/organisations/OrganisationEditPage';
 import { OrganisationsAddPage } from './pages/organisations/OrganisationsAddPage';
 import { OrganisationsViewAllPage } from './pages/organisations/OrganisationsViewAllPage';
@@ -60,6 +61,12 @@ export const App: React.FC<{}> = () => {
               path="/organisations/:id/contacts/add"
               exact={true}
               component={ContactsAddPage}
+            />
+
+            <Route
+              path="/organisations/:organisationId/contacts/:id/edit"
+              exact={true}
+              component={ContactsEditPage}
             />
 
             <Route

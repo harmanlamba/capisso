@@ -9,8 +9,11 @@ import {
   TableRow,
   withStyles,
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import React from 'react';
 import { IContactDto } from '../../types/types';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -46,6 +49,7 @@ export const ContactsList: React.FC<{
             <StyledTableCell>Name </StyledTableCell>
             <StyledTableCell>Email </StyledTableCell>
             <StyledTableCell>Phone Number </StyledTableCell>
+            <StyledTableCell>Edit </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -54,6 +58,15 @@ export const ContactsList: React.FC<{
               <StyledTableCell> {row.name} </StyledTableCell>
               <StyledTableCell> {row.email} </StyledTableCell>
               <StyledTableCell> {row.phoneNumber} </StyledTableCell>
+              <StyledTableCell>
+                <Link
+                  to={`/organisations/${row.organisationId}/contacts/${row.id}/edit`}
+                >
+                  <IconButton>
+                    <EditIcon />
+                  </IconButton>
+                </Link>
+              </StyledTableCell>
             </TableRow>
           ))}
         </TableBody>
