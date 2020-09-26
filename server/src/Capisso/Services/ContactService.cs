@@ -59,5 +59,12 @@ namespace Capisso.Services
 
             return ContactMapper.ToDto(contact);
         }
+
+        public async Task UpdateContact(ContactDto contactDto)
+        {
+            var contact = ContactMapper.FromDto(contactDto);
+            _unitOfWork.ContactRepository.Update(contact);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }
