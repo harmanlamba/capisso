@@ -126,5 +126,33 @@ namespace Capisso.Test.Services
             Assert.AreEqual(1, contactDto.Id);
             _mockContactRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
         }
+
+        [Test]
+        public async Task TestUpdateContactValidInput()
+        {
+            var contactDto = new ContactDto
+            {
+                Id = 1,
+                Name = "NewName",
+                PhoneNumber = "021111111111",
+                Email = "new@email.com",
+                OrganisationId = 1,
+                ProjectIds = new List<int>(1)
+            };
+
+            var organisation = new Organisation
+            {
+                Id = 1
+            };
+
+            _mockContactRepository.Setup(x => x.Update(It.IsAny<Contact>()));
+            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(organisation);
+
+            // Act
+            await _contactService.UpdateContact(contactDto);
+
+            // Assert
+            _mockContactRepository.Verify();
+        }
     }
 }

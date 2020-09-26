@@ -192,5 +192,59 @@ namespace Capisso.Test.Controllers
             _mockContactRepository.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
         }
 
+        [Test]
+        public async Task TestUpdateContactValidInput()
+        {
+            var contactDto = new ContactDto
+            {
+                Id = 1,
+                Name = "NewName",
+                PhoneNumber = "021111111111",
+                Email = "new@email.com",
+                OrganisationId = 1,
+                ProjectIds = new List<int>(1)
+            };
+
+            var organisation = new Organisation
+            {
+                Id = 1
+            };
+
+            _mockContactRepository.Setup(x => x.Update(It.IsAny<Contact>()));
+            _mockOrganisationRepository.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(organisation);
+
+            // Act
+            ActionResult<NonActionAttribute> response = await _contactsController.UpdateContact(contactDto, 1);
+
+            // Assert
+            Assert.IsInstanceOf<NoContentResult>(response.Result);
+
+            _mockContactRepository.Verify(x => x.Update(It.IsAny<Contact>()), Times.Once);
+        }
+
+        [Test]
+        public async Task TestUpdateContactInvalidInput()
+        {
+            var contactDto = new ContactDto
+            {
+                Id = 69,
+                Name = "NewName",
+                PhoneNumber = "021111111111",
+                Email = "new@email.com",
+                OrganisationId = 1,
+                ProjectIds = new List<int>(1)
+            };
+
+            _mockContactRepository.Setup(x => x.Update(It.IsAny<Contact>()));
+
+            // Act
+            ActionResult<NonActionAttribute> response = await _contactsController.UpdateContact(contactDto, 1);
+
+            // Assert
+            Assert.IsInstanceOf<BadRequestResult>(response.Result);
+
+            _mockContactRepository.Verify(x => x.Update(It.IsAny<Contact>()), Times.Never);
+        }
+
     }
 }
