@@ -60,11 +60,11 @@ namespace Capisso.Controllers
             {
                 await _projectService.UpdateProject(projectDto);
             }
-            catch(EntityNotFoundException)
+            catch (EntityNotFoundException)
             {
                 return NotFound();
             }
-            
+
             return NoContent();
         }
     }
