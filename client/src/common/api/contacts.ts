@@ -29,3 +29,10 @@ export const getContact = async (
   );
   return res.data as IContactDto;
 };
+
+export const editContact = async (contact: IContactDto): Promise<void> => {
+  await axios.put(
+    `${process.env.REACT_APP_API_BASE}/contacts/${contact.id}`,
+    contact
+  );
+};
