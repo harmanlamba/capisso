@@ -5,7 +5,7 @@ import {
   TextField,
   MenuItem,
 } from '@material-ui/core';
-import { Add, Edit, TramRounded } from '@material-ui/icons';
+import { Add, Edit } from '@material-ui/icons';
 import { Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { useState } from 'react';
@@ -18,7 +18,6 @@ import {
 } from '../../types/types';
 import { Autocomplete } from '@material-ui/lab';
 import { getAllContactsForOrganisation } from '../../common/api/contacts';
-import { ContactStatus } from '../../enums/enums';
 
 const useStyles = makeStyles(() => ({
   boxContainer: {
