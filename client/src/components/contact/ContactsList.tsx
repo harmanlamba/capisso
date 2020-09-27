@@ -12,6 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { IContactDto } from '../../types/types';
+import ContactStatusChip from './ContactStatusChip';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -49,6 +50,7 @@ export const ContactsList: React.FC<{
             <StyledTableCell>Name </StyledTableCell>
             <StyledTableCell>Email </StyledTableCell>
             <StyledTableCell>Phone Number </StyledTableCell>
+            <StyledTableCell> Status </StyledTableCell>
             <StyledTableCell>Edit </StyledTableCell>
           </TableRow>
         </TableHead>
@@ -58,6 +60,9 @@ export const ContactsList: React.FC<{
               <StyledTableCell> {row.name} </StyledTableCell>
               <StyledTableCell> {row.email} </StyledTableCell>
               <StyledTableCell> {row.phoneNumber} </StyledTableCell>
+              <StyledTableCell>
+                <ContactStatusChip status={row.status} />
+              </StyledTableCell>
               <StyledTableCell>
                 <Link
                   to={`/organisations/${row.organisationId}/contacts/${row.id}/edit`}

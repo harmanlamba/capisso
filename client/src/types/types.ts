@@ -1,4 +1,8 @@
-import { OrganisationStatus, ProjectStatus } from '../enums/enums';
+import {
+  OrganisationStatus,
+  ProjectStatus,
+  ContactStatus,
+} from '../enums/enums';
 
 export interface ICreatedDto {
   id: number;
@@ -39,7 +43,8 @@ export interface IContactDto {
   name: string;
   email?: string;
   phoneNumber?: string;
-  notes?: string;
+  status: ContactStatus;
   organisationId: number;
   projectIds?: number[];
+  hasActiveProject?: boolean;
 }

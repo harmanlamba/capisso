@@ -106,35 +106,33 @@ namespace Capisso.Test.Controllers
         public async Task TestGetContactsByOrganisations()
         {
             // arrange
-            Contact contact = new Contact
-            {
-                Id = 1,
-                Name = "Ur'Zababa",
-                Email = "test@gmail.com",
-                PhoneNumber = "111",
-                OrganisationId = 69,
-                Projects = new List<Project>
+            IEnumerable<Contact> contacts = new List<Contact> {
+                new Contact
                 {
-                    new Project {
-                        Id = 1,
-                        Title = "HCI Extreme",
-                        Notes = "Notes Test",
-                        Outcome = "Outcome Test",
-                        StartDate = new DateTime(),
-                        EndDate = new DateTime(),
-                        ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
-                        Organisation = new Organisation
-                        {
+                    Id = 1,
+                    Name = "Ur'Zababa",
+                    Email = "test@gmail.com",
+                    PhoneNumber = "111",
+                    OrganisationId = 1,
+                    Projects = new List<Project>
+                    {
+                        new Project {
                             Id = 1,
-                        }}
+                            Title = "HCI Extreme",
+                            Notes = "Notes Test",
+                            Outcome = "Outcome Test",
+                            StartDate = new DateTime(),
+                            EndDate = new DateTime(),
+                            ProjectCourses = Enumerable.Empty<ProjectCourse>().ToList(),
+                            Organisation = new Organisation
+                            {
+                                Id = 1,
+                            }}
+                    }
                 }
             };
 
-            List<Contact> contacts = new List<Contact>();
-            contacts.Add(contact);
-
-
-            _mockContactRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(Task.FromResult((IEnumerable<Contact>)contacts));
+            _mockContactRepository.Setup(x => x.GetAllAsync()).Returns(Task.FromResult(contacts));
 
             // act
             var response = await _contactsController.GetContacts(1);

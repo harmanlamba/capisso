@@ -2,11 +2,16 @@ import axios from 'axios';
 import { IContactDto, ICreatedDto } from '../../types/types';
 
 export const getAllContactsForOrganisation = async (
-  organisationId: number | undefined
+  organisationId: number | undefined,
+  isActive: boolean | undefined = undefined
 ): Promise<IContactDto[]> => {
-  const res = await axios.get(
-    `${process.env.REACT_APP_API_BASE}/contacts?organisationId=${organisationId}`
-  );
+  let endpoint: string = `${process.env.REACT_APP_API_BASE}/contacts?organisationId=${organisationId}`;
+
+  if (isActive !== undefined) {
+    endpoint += `&isActive=${isActive}`;
+  }
+
+  const res = await axios.get(endpoint);
   return res.data as IContactDto[];
 };
 

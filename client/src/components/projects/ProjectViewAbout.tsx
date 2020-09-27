@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { getCourse } from '../../common/api/courses';
 import { useOrganisation, useContact } from '../../common/hooks/apiHooks';
 import { ICourseDto, IProjectDto } from '../../types/types';
+import ContactStatusChip from '../contact/ContactStatusChip';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -92,7 +93,7 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
           <Paper>
             <Box p={2}>
               <Typography variant="h6" color="primary" display="inline">
-                Organisation:
+                Organisation
                 <Button
                   color="primary"
                   size="large"
@@ -140,11 +141,14 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
           <Paper>
             <Box p={2}>
               <Typography variant="h6" color="primary" display="inline">
-                Project Contact Details:
+                Project Contact Details
               </Typography>
               {contact && (
                 <div>
-                  <p>Name: {contact.name}</p>
+                  <p>
+                    Name: {contact.name}{' '}
+                    <ContactStatusChip status={contact.status} />
+                  </p>
                   {contact.email && <p>Email: {contact.email}</p>}
                   {contact.phoneNumber && <p>Phone: {contact.phoneNumber}</p>}
                 </div>
