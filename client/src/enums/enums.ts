@@ -9,3 +9,8 @@ export enum OrganisationStatus {
   Active = 'Active',
   Inactive = 'Inactive',
 }
+
+export enum ContactStatus {
+  Active = 'Active',
+  Inactive = 'Inactive',
+}

@@ -36,22 +36,23 @@ namespace Capisso.Services
             return contact.Id;
         }
 
-        public async Task<IEnumerable<ContactDto>> GetContacts(int? organisationId)
+        public async Task<IEnumerable<ContactDto>> GetContacts(int? organisationId = null, bool? isActive = null)
         {
-            IEnumerable<Contact> contacts;
+            IEnumerable<Contact> contacts = await _unitOfWork.ContactRepository.GetAllAsync();
 
-            if (organisationId == null)
+            if (organisationId.HasValue)
             {
-                contacts = await _unitOfWork.ContactRepository.GetAllAsync();
-            }
-            else
-            {
-                contacts = await _unitOfWork.ContactRepository.FindByAsync(contact => contact.OrganisationId == organisationId);
+                contacts = contacts.Where(c => c.OrganisationId == organisationId);
             }
 
-            var contactDtos = contacts.Select(ContactMapper.ToDto);
+            if (isActive.HasValue)
+            {
+                ContactStatus contactStatus = isActive.Value ? ContactStatus.Active : ContactStatus.Inactive;
 
-            return contactDtos;
+                contacts = contacts.Where(c => c.Status == contactStatus);
+            }
+
+            return contacts.Select(ContactMapper.ToDto);
         }
         public async Task<ContactDto> GetContact(int contactId)
         {

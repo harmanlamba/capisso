@@ -9,7 +9,7 @@ import {
   Box,
   MenuItem,
 } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import { Add, Edit } from '@material-ui/icons';
 import { IOrganisationDto } from '../../types/types';
 import { OrganisationStatus } from '../../enums/enums';
 
@@ -212,7 +212,7 @@ export const OrganisationsForm: React.FC<IOrganisationFormProps> = ({
                 variant="contained"
                 color="primary"
                 onClick={() => handleSubmit()}
-                startIcon={<Add />}
+                startIcon={type === 'add' ? <Add /> : <Edit />}
               >
                 {type}
               </Button>

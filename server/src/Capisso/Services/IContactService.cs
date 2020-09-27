@@ -9,7 +9,7 @@ namespace Capisso.Services
     public interface IContactService
     {
         Task<int> CreateContact(ContactDto contactDto);
-        Task<IEnumerable<ContactDto>> GetContacts(int? organisationId);
+        Task<IEnumerable<ContactDto>> GetContacts(int? organisationId, bool? isActive);
         Task<ContactDto> GetContact(int contactId);
         Task UpdateContact(ContactDto contactDto);
     }

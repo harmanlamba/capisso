@@ -5,6 +5,7 @@ import { addContact } from '../../../common/api/contacts';
 import { useOrganisation } from '../../../common/hooks/apiHooks';
 import { ContactForm } from '../../../components/contact/ContactForm';
 import { LoadingSpinner } from '../../../components/LoadingSpinner';
+import { ContactStatus } from '../../../enums/enums';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -30,7 +31,11 @@ export const ContactsAddPage: React.FC<{}> = () => {
           <ContactForm
             onSubmit={addContact}
             type="add"
-            initialValues={{ name: '', organisationId: +id }}
+            initialValues={{
+              name: '',
+              organisationId: +id,
+              status: ContactStatus.Active,
+            }}
           />
         </>
       ) : (
