@@ -8,11 +8,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ContactStatusChip: React.FC<{ status: ContactStatus }> = ({ status }) => {
+export const ContactStatusChip: React.FC<{ status: ContactStatus }> = ({
+  status,
+}) => {
   const classes = useStyles();
-  const color = status === ContactStatus.Active ? 'secondary' : 'default';
+  const color = status === ContactStatus.Active ? 'primary' : 'default';
 
   return <Chip className={classes.chip} label={status} color={color} />;
 };
-
-export default ContactStatusChip;
