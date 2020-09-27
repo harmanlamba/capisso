@@ -1,22 +1,18 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { Chip, makeStyles } from '@material-ui/core';
+import { OrganisationStatus } from '../../enums/enums';
 
-const useStyles = (isActive: boolean) =>
-  makeStyles((theme) => ({
-    content: {
-      display: 'inline-flex',
-      height: '32px',
-      lineHeight: '30px',
-      borderRadius: '16px',
-      padding: '0 12px',
-      backgroundColor: isActive ? '#28a745' : '#6c757d',
-      color: '#ffffff',
-    },
-  }));
+const useStyles = makeStyles(() => ({
+  chip: {
+    margin: '0 10px',
+  },
+}));
 
-export const OrganisationStatusChip: React.FC<{ status: string }> = ({
-  status,
-}) => {
-  const classes = useStyles(status === 'Active')();
-  return <div className={classes.content}>{status}</div>;
+export const OrganisationStatusChip: React.FC<{
+  status: OrganisationStatus;
+}> = ({ status }) => {
+  const classes = useStyles();
+  const color = status === OrganisationStatus.Active ? 'primary' : 'default';
+
+  return <Chip className={classes.chip} label={status} color={color} />;
 };

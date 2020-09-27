@@ -12,7 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { IContactDto } from '../../types/types';
-import ContactStatusChip from './ContactStatusChip';
+import { ContactStatusChip } from './ContactStatusChip';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 

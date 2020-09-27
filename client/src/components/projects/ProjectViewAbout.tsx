@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { getCourse } from '../../common/api/courses';
 import { useOrganisation, useContact } from '../../common/hooks/apiHooks';
 import { ICourseDto, IProjectDto } from '../../types/types';
-import ContactStatusChip from '../contact/ContactStatusChip';
+import { ContactStatusChip } from '../contact/ContactStatusChip';
 
 const useStyles = makeStyles((theme) => ({
   content: {
