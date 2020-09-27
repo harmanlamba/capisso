@@ -132,7 +132,7 @@ namespace Capisso.Test.Controllers
                 }
             };
 
-            _mockContactRepository.Setup(x => x.GetAllAsync()).Returns(Task.FromResult(contacts));
+            _mockContactRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<System.Func<Capisso.Entities.Contact, bool>>>())).Returns(Task.FromResult(contacts));
 
             // act
             var response = await _contactsController.GetContacts(1);

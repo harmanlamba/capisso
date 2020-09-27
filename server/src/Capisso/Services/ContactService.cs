@@ -38,22 +38,19 @@ namespace Capisso.Services
 
         public async Task<IEnumerable<ContactDto>> GetContacts(int? organisationId = null, bool? isActive = null)
         {
-            IEnumerable<Contact> contacts = await _unitOfWork.ContactRepository.GetAllAsync();
-
-            if (organisationId.HasValue)
-            {
-                contacts = contacts.Where(c => c.OrganisationId == organisationId);
-            }
+            ContactStatus? contactStatus = null;
 
             if (isActive.HasValue)
             {
-                ContactStatus contactStatus = isActive.Value ? ContactStatus.Active : ContactStatus.Inactive;
-
-                contacts = contacts.Where(c => c.Status == contactStatus);
+                contactStatus = isActive.Value ? ContactStatus.Active : ContactStatus.Inactive;
             }
+
+            var contacts = await _unitOfWork.ContactRepository
+                .FindByAsync(c => (!organisationId.HasValue || c.OrganisationId == organisationId) && (!isActive.HasValue || c.Status == contactStatus));
 
             return contacts.Select(ContactMapper.ToDto);
         }
+
         public async Task<ContactDto> GetContact(int contactId)
         {
             var contact = await _unitOfWork.ContactRepository.GetByIdAsync(contactId) ?? throw new EntityNotFoundException();
