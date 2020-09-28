@@ -28,7 +28,7 @@ export const CoursesViewAllPage: React.FC<{}> = () => {
             <Box ml={2} position="relative" top="-0.5em" display="inline">
               <Button
                 component={Link}
-                to="/projects/add"
+                to="/courses/add"
                 variant="contained"
                 color="primary"
               >
