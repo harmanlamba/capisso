@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Capisso.Repository;
 using Capisso.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace Capisso
@@ -52,6 +55,26 @@ namespace Capisso
                         mysqlOptions.ServerVersion(new Version(10, 4), ServerType.MariaDb))
                     .UseLazyLoadingProxies()
             );
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+              .AddJwtBearer(cfg =>
+              {
+                  cfg.RequireHttpsMetadata = false;
+                  cfg.SaveToken = true;
+
+                  cfg.TokenValidationParameters = new TokenValidationParameters()
+                  {
+                      ValidateIssuerSigningKey = true,
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSecret"])),
+                      ValidateIssuer = false,
+                      ValidateAudience = false
+                  };
+              });
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IOrganisationService, OrganisationService>();
