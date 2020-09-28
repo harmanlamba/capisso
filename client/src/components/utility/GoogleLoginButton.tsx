@@ -25,12 +25,10 @@ export const GoogleLoginButton: React.FC<{}> = () => {
       tokenId: response.tokenId,
     };
 
-    setAuthenticatedUser(await postOneTimeToken(tokenBlob));
+    const userDto: IUserDto = await postOneTimeToken(tokenBlob);
+    setAuthenticatedUser(userDto);
 
-    localStorage.setItem(
-      'authenticatedUser',
-      JSON.stringify(authenticatedUser)
-    );
+    localStorage.setItem('authenticatedUser', JSON.stringify(userDto));
   };
 
   const googleFailureResponse = (response: any) => {
