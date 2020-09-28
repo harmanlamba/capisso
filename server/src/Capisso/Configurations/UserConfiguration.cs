@@ -18,7 +18,7 @@ namespace Capisso.Configurations
             builder.Property(e => e.UserRole).IsRequired();
 
             builder.HasData(
-                new User 
+                new User
                 {
                     Id = 1,
                     Email = "hlam132@aucklanduni.ac.nz",

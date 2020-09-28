@@ -43,23 +43,18 @@ namespace Capisso.Controllers
                     FirstName = payload.GivenName,
                     LastName = payload.FamilyName,
                     PictureUri = payload.Picture,
-                    JWTToken = await _userService.CreateToken(payload.Email,_configuration["JwtSecret"])
+                    JWTToken = await _userService.CreateToken(payload.Email, _configuration["JwtSecret"])
                 };
             }
-            catch (AggregateException ae)
+            catch (NonUniqueEmailException)
             {
-                ae.Handle((x) => 
-                {
-                    if (x is NonUniqueEmailException)
-                    {
-                        return true;
-                    }
-
-                    return false;
-                });
-               
                 return new UnauthorizedResult();
             }
+            catch (AggregateException)
+            {
+                return new UnauthorizedResult();
+            }
+
             return Ok(userDto);
         }
     }

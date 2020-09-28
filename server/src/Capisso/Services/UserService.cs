@@ -25,7 +25,7 @@ namespace Capisso.Services
         {
             var users = await _unitOfWork.UserRepository.FindByAsync(u => u.Email == userEmail);
 
-            if(users.Count() > 1)
+            if (users.Count() != 1)
             {
                 throw new NonUniqueEmailException();
             }
