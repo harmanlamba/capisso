@@ -36,6 +36,9 @@ namespace Capisso.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrganisationId");
@@ -48,21 +51,24 @@ namespace Capisso.Migrations
                             Id = 1,
                             Email = "nwae@metric.com",
                             Name = "Nwae Emperot",
-                            OrganisationId = 1
+                            OrganisationId = 1,
+                            Status = 0
                         },
                         new
                         {
                             Id = 2,
                             Email = "nwae@metric.com",
                             Name = "Raicg Thurlandes",
-                            OrganisationId = 2
+                            OrganisationId = 2,
+                            Status = 0
                         },
                         new
                         {
                             Id = 3,
                             Name = "Eklly Incoleb",
                             OrganisationId = 2,
-                            PhoneNumber = "+64 21 123 456"
+                            PhoneNumber = "+64 21 123 456",
+                            Status = 0
                         },
                         new
                         {
@@ -70,7 +76,8 @@ namespace Capisso.Migrations
                             Email = "nwae@metric.com",
                             Name = "Ibll Tages",
                             OrganisationId = 3,
-                            PhoneNumber = "+64 21 123 456"
+                            PhoneNumber = "+64 21 123 456",
+                            Status = 0
                         });
                 });
 
