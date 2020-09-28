@@ -20,7 +20,7 @@ export const ProjectEditPage: React.FC<{}> = () => {
   const [project, setProject] = useState<IProjectDto>();
   const [loading, setLoading] = useState<boolean>(true);
 
-  const { organisations } = useOrganisations();
+  const organisations = useOrganisations();
   const { courses } = useCourses();
 
   useEffect(() => {

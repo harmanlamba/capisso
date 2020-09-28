@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
 export const ProjectsAddPage: React.FC<{}> = () => {
   const classes = useStyles();
 
-  const { organisations } = useOrganisations();
+  const organisations = useOrganisations();
   const { courses } = useCourses();
 
   return (
