@@ -40,7 +40,7 @@ namespace Capisso.Controllers
 
                 userDto = new UserDto
                 {
-                    FirstName = payload.Name,
+                    FirstName = payload.GivenName,
                     LastName = payload.FamilyName,
                     PictureUri = payload.Picture,
                     JWTToken = await _userService.CreateToken(payload.Email,_configuration["JwtSecret"])

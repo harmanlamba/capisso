@@ -3,16 +3,19 @@ import Button from '@material-ui/core/Button';
 import { GoogleLogin } from 'react-google-login';
 import GoogleIcon from '../../assets/GoogleIcon';
 
+import { ITokenBlob, IUserDto } from '../../types/types';
+import { postOneTimeToken } from '../../common/api/userAuth';
+
 export const GoogleLoginButton: React.FC<{}> = () => {
   const GOOGLE_CLIENT_ID: string = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`;
 
-  const googleSuccessfulResponse = (response: any) => {
-    const tokenBlob = {
+  const googleSuccessfulResponse = async (response: any) => {
+    const tokenBlob: ITokenBlob = {
       tokenId: response.tokenId,
     };
 
-    // Dispatch received token to send to backend to receive jwt token
-    // dispatch(sendTokenAndLogin(tokenBlob));
+    const userDto: IUserDto = await postOneTimeToken(tokenBlob);
+    localStorage.setItem('authenticatedUser', JSON.stringify(userDto));
   };
 
   const googleFailureResponse = (response: any) => {
