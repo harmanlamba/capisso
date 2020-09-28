@@ -255,7 +255,6 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                     variant="filled"
                     label="Project Contact"
                     fullWidth={true}
-                    required={true}
                     error={!!errors.contactId}
                   />
                 )}
