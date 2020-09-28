@@ -48,7 +48,7 @@ namespace Capisso.Test.Services
                 .Returns(Task.FromResult(users))
                 .Verifiable();
 
-            const string email = "urzababa@aucklanduni.ac.nz"; // user doesn't exist
+            const string email = "urzababa@aucklanduni.ac.nz"; // user exists
             const string secret = "evKsNMn9EK13T3uyoTlmEa6MVvNFzl0D"; // random secret
 
             // act
