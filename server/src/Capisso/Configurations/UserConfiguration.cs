@@ -12,7 +12,7 @@ namespace Capisso.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasIndex(e => e.Email);
+            builder.HasIndex(e => e.Email).IsUnique();
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Email).IsRequired();
             builder.Property(e => e.UserRole).IsRequired();
