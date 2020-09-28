@@ -52,7 +52,7 @@ export interface IContactDto {
 export interface IUserDto {
   firstName: string;
   lastName: string;
-  pictureURI: string;
+  pictureUri: string;
   jwtToken: string;
 }
 
