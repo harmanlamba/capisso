@@ -46,7 +46,7 @@ namespace Capisso.Controllers
                     JWTToken = await _userService.CreateToken(payload.Email, _configuration["JwtSecret"])
                 };
             }
-            catch (NonUniqueEmailException)
+            catch (EntityNotFoundException)
             {
                 return new UnauthorizedResult();
             }

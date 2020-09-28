@@ -27,10 +27,10 @@ namespace Capisso.Services
 
             if (users.Count() != 1)
             {
-                throw new NonUniqueEmailException();
+                throw new EntityNotFoundException();
             }
 
-            var user = (users.ToList())[0];
+            var user = users.First();
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
 
