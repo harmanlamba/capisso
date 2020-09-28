@@ -15,6 +15,7 @@ namespace Capisso.Repository
         public DbSet<Course> Courses { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +24,7 @@ namespace Capisso.Repository
             modelBuilder.ApplyConfiguration(new ProjectConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectCourseConfiguration());
             modelBuilder.ApplyConfiguration(new ContactConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
     }
 }
