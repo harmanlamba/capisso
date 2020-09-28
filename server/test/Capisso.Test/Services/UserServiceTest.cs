@@ -1,5 +1,4 @@
-﻿using Capisso.Dto;
-using Capisso.Entities;
+﻿using Capisso.Entities;
 using Capisso.Exceptions;
 using Capisso.Repository;
 using Capisso.Services;
@@ -8,8 +7,9 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Capisso.Test.Services
@@ -35,7 +35,8 @@ namespace Capisso.Test.Services
         public async Task TestValidEmailToken()
         {
             // arrange
-            IEnumerable<User> users = new List<User> {
+            IEnumerable<User> users = new List<User>
+            {
                 new User
                 {
                     Id = 1,
@@ -43,37 +44,43 @@ namespace Capisso.Test.Services
                     UserRole = UserRole.Admin
                 }
             };
-            _mockUserRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<System.Func<Capisso.Entities.User, bool>>>())).Returns(Task.FromResult(users));
+            _mockUserRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(Task.FromResult(users))
+                .Verifiable();
 
+            const string email = "urzababa@aucklanduni.ac.nz"; // user doesn't exist
+            const string secret = "evKsNMn9EK13T3uyoTlmEa6MVvNFzl0D"; // random secret
 
             // act
-            var token = await _userService.CreateToken("urzababa@aucklanduni.ac.nz", "evKsNMn9EK13T3uyoTlmEa6MVvNFzl0D"); //Random Jwt secret
+            var token = await _userService.CreateToken(email, secret);
 
-            //assert
+            // assert
+            Assert.IsNotNull(token);
             Assert.IsNotEmpty(token);
+
+            var handler = new JwtSecurityTokenHandler();
+            var decodedToken = handler.ReadJwtToken(token);
+
+            Assert.True(decodedToken.Claims.Any(x => x.Value == UserRole.Admin.ToString()));
+            _mockUserRepository.Verify();
         }
 
         [Test]
-        public async Task TestNotValidEmailToken()
+        public void TestNotValidEmailToken()
         {
             // arrange
-            IEnumerable<User> users = new List<User>
-            {
+            var users = Enumerable.Empty<User>();
+            _mockUserRepository
+                .Setup(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(Task.FromResult(users))
+                .Verifiable();
 
-            };
-            _mockUserRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<System.Func<Capisso.Entities.User, bool>>>())).Returns(Task.FromResult(users));
+            const string email = "babs@aucklanduni.ac.nz"; // user doesn't exist
+            const string secret = "evKsNMn9EK13T3uyoTlmEa6MVvNFzl0D"; // random secret
 
-            // act
-            try
-            {
-                var token = await _userService.CreateToken("babs@aucklanduni.ac.nz", "evKsNMn9EK13T3uyoTlmEa6MVvNFzl0D"); //Random Jwt secret
-            }
-            catch (EntityNotFoundException)
-            {
-                Assert.Pass();
-
-            }
-            Assert.Fail();
+            // act and assert
+            Assert.ThrowsAsync<EntityNotFoundException>(() => _userService.CreateToken(email, secret));
+            _mockUserRepository.Verify();
         }
     }
 }
