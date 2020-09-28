@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles, Box, Typography, Button, Grid } from '@material-ui/core';
+import {
+  makeStyles,
+  Box,
+  Typography,
+  Button,
+  Grid,
+  TextField,
+} from '@material-ui/core';
 
 import { ProjectsList } from '../../components/projects/ProjectsList';
 import { useProjects } from '../../common/hooks/apiHooks';
@@ -16,6 +23,16 @@ export const ProjectsViewAllPage: React.FC<{}> = () => {
   const classes = useStyles();
 
   const { projects } = useProjects();
+
+  const [filterTerm, setFilterTerm] = useState<string>();
+
+  const filteredProjects = projects.filter(
+    (project) =>
+      !filterTerm ||
+      project.title.toLowerCase().includes(filterTerm.toLowerCase()) ||
+      project.status.toLowerCase().startsWith(filterTerm.toLowerCase()) ||
+      project.startDate.startsWith(filterTerm)
+  );
 
   return (
     <div className={classes.content}>
@@ -36,10 +53,19 @@ export const ProjectsViewAllPage: React.FC<{}> = () => {
               </Button>
             </Box>
           </Box>
+          <Box mt={0.3}>
+            <TextField
+              id="filter-field"
+              onChange={(event) => setFilterTerm(event.target.value)}
+              label="Filter"
+              variant="outlined"
+              size="small"
+            />
+          </Box>
         </Grid>
       </Box>
 
-      <ProjectsList projects={projects} />
+      <ProjectsList projects={filteredProjects} />
     </div>
   );
 };
