@@ -5,7 +5,7 @@ export const postOneTimeToken = async (
   tokenBlob: ITokenBlob
 ): Promise<IUserDto> => {
   const res = await axios.post(
-    `${process.env.REACT_APP_API_BASE}/user/login`,
+    `${process.env.REACT_APP_API_BASE}/users/login`,
     tokenBlob
   );
 

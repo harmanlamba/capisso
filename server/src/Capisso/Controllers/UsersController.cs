@@ -17,12 +17,12 @@ namespace Capisso.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
 
-        public UserController(IConfiguration configuration, IUserService userService)
+        public UsersController(IConfiguration configuration, IUserService userService)
         {
             _configuration = configuration;
             _userService = userService;
