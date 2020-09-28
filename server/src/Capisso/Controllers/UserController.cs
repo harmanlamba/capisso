@@ -20,9 +20,12 @@ namespace Capisso.Controllers
     public class UserController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        public UserController(IConfiguration configuration)
+        private readonly IUserService _userService;
+
+        public UserController(IConfiguration configuration, IUserService userService)
         {
             _configuration = configuration;
+            _userService = userService;
         }
 
         [HttpPost]
@@ -40,7 +43,7 @@ namespace Capisso.Controllers
                     FirstName = payload.Name,
                     LastName = payload.FamilyName,
                     PictureUri = payload.Picture,
-                    JWTToken = CreateToken(payload.Email)
+                    JWTToken = await _userService.CreateToken(payload.Email,_configuration["JwtSecret"])
                 };
             }
             catch (Exception)
@@ -51,26 +54,7 @@ namespace Capisso.Controllers
             return Ok(userDto);
         }
 
-        private string CreateToken(string userEmail)
-        {
-            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-
-            byte[] key = Encoding.ASCII.GetBytes(_configuration["JwtSecret"]);
-
-            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, userEmail)
-                    //TODO: Add secondary claim based on user role when checked with whitelist
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return tokenHandler.WriteToken(token);
-        }
+        
 
     }
 }
