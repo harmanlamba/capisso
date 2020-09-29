@@ -10,7 +10,6 @@ import {
   withStyles,
 } from '@material-ui/core';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { IUserDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
