@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ICreatedDto, IProjectDto } from '../../types/types';
+import { getAxiosConfig } from '../auth/userAuth';
 
 export const addProject = async (
   project: IProjectDto
@@ -14,13 +15,17 @@ export const addProject = async (
 
 export const getProject = async (projectId: number): Promise<IProjectDto> => {
   const res = await axios.get(
-    `${process.env.REACT_APP_API_BASE}/projects/${projectId}`
+    `${process.env.REACT_APP_API_BASE}/projects/${projectId}`,
+    getAxiosConfig()
   );
   return res.data as IProjectDto;
 };
 
 export const getAllProjects = async (): Promise<IProjectDto[]> => {
-  const res = await axios.get(`${process.env.REACT_APP_API_BASE}/projects`);
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_BASE}/projects`,
+    getAxiosConfig()
+  );
 
   return res.data as IProjectDto[];
 };
@@ -28,6 +33,7 @@ export const getAllProjects = async (): Promise<IProjectDto[]> => {
 export const editProject = async (project: IProjectDto): Promise<void> => {
   await axios.put(
     `${process.env.REACT_APP_API_BASE}/projects/${project.id}`,
-    project
+    project,
+    getAxiosConfig()
   );
 };

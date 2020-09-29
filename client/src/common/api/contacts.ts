@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { IContactDto, ICreatedDto } from '../../types/types';
+import { getAxiosConfig } from '../auth/userAuth';
 
 export const getAllContactsForOrganisation = async (
   organisationId: number | undefined,
@@ -11,7 +12,7 @@ export const getAllContactsForOrganisation = async (
     endpoint += `&isActive=${isActive}`;
   }
 
-  const res = await axios.get(endpoint);
+  const res = await axios.get(endpoint, getAxiosConfig());
   return res.data as IContactDto[];
 };
 
@@ -20,7 +21,8 @@ export const addContact = async (
 ): Promise<ICreatedDto> => {
   const res = await axios.post(
     `${process.env.REACT_APP_API_BASE}/contacts`,
-    contact
+    contact,
+    getAxiosConfig()
   );
 
   return res.data as ICreatedDto;
@@ -30,7 +32,8 @@ export const getContact = async (
   contactId: number | undefined
 ): Promise<IContactDto> => {
   const res = await axios.get(
-    `${process.env.REACT_APP_API_BASE}/contacts/${contactId}`
+    `${process.env.REACT_APP_API_BASE}/contacts/${contactId}`,
+    getAxiosConfig()
   );
   return res.data as IContactDto;
 };
@@ -38,6 +41,7 @@ export const getContact = async (
 export const editContact = async (contact: IContactDto): Promise<void> => {
   await axios.put(
     `${process.env.REACT_APP_API_BASE}/contacts/${contact.id}`,
-    contact
+    contact,
+    getAxiosConfig()
   );
 };

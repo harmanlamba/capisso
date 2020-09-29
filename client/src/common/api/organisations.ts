@@ -7,7 +7,8 @@ export const addOrganisation = async (
 ): Promise<ICreatedDto> => {
   const res = await axios.post(
     `${process.env.REACT_APP_API_BASE}/organisations`,
-    organisation
+    organisation,
+    getAxiosConfig()
   );
 
   return res.data as ICreatedDto;
@@ -26,7 +27,8 @@ export const getOrganisation = async (
   organisationId: number
 ): Promise<IOrganisationDto> => {
   const res = await axios.get(
-    `${process.env.REACT_APP_API_BASE}/organisations/${organisationId}`
+    `${process.env.REACT_APP_API_BASE}/organisations/${organisationId}`,
+    getAxiosConfig()
   );
 
   return res.data as IOrganisationDto;
@@ -37,7 +39,8 @@ export const editOrganisation = async (
 ): Promise<void> => {
   await axios.put(
     `${process.env.REACT_APP_API_BASE}/organisations/${organisation.id}`,
-    organisation
+    organisation,
+    getAxiosConfig()
   );
 };
 
@@ -45,7 +48,8 @@ export const getProjectsForOrganisation = async (
   organisationId: number
 ): Promise<IProjectDto[]> => {
   const res = await axios.get(
-    `${process.env.REACT_APP_API_BASE}/projects?organisationId=${organisationId}`
+    `${process.env.REACT_APP_API_BASE}/projects?organisationId=${organisationId}`,
+    getAxiosConfig()
   );
 
   return res.data as IProjectDto[];
