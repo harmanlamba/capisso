@@ -18,6 +18,7 @@ import {
 } from '../../types/types';
 import { Autocomplete } from '@material-ui/lab';
 import { SnackbarMessage } from '../utility/SnackbarMessage';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const useStyles = makeStyles(() => ({
   boxContainer: {
@@ -29,6 +30,9 @@ const useStyles = makeStyles(() => ({
   },
   button: {
     margin: '0 5px',
+  },
+  skeleton: {
+    margin: '9px 0',
   },
 }));
 
@@ -246,7 +250,14 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                 )}
               />
 
-              {!contactsLoading && (
+              {contactsLoading ? (
+                <Skeleton
+                  className={classes.skeleton}
+                  variant="rect"
+                  width={800}
+                  height={59}
+                />
+              ) : (
                 <Autocomplete
                   options={contacts}
                   getOptionLabel={(option) => option.name}
