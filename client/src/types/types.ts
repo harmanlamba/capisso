@@ -2,6 +2,7 @@ import {
   OrganisationStatus,
   ProjectStatus,
   ContactStatus,
+  UserRole,
 } from '../enums/enums';
 
 export interface ICreatedDto {
@@ -58,4 +59,10 @@ export interface ILoginDto {
 
 export interface ITokenBlob {
   tokenId: string;
+}
+
+export interface IUserDto {
+  id?: number;
+  email: string;
+  userRole: UserRole;
 }

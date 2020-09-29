@@ -14,3 +14,8 @@ export enum ContactStatus {
   Active = 'Active',
   Inactive = 'Inactive',
 }
+
+export enum UserRole {
+  User = 'User',
+  Admin = 'Admin',
+}
