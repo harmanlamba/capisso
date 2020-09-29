@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Capisso.Dto
 {
-    public class UserDto
+    public class LoginDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
