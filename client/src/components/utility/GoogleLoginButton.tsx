@@ -32,6 +32,7 @@ export const GoogleLoginButton: React.FC<{}> = () => {
   };
 
   const googleFailureResponse = (response: any) => {
+    console.error(response);
     // Do not need to do anything in case of failure
     // The button auto-resets and allows the user to login in again
   };

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ICreatedDto, IOrganisationDto, IProjectDto } from '../../types/types';
+import { getAxiosConfig } from '../auth/userAuth';
 
 export const addOrganisation = async (
   organisation: IOrganisationDto
@@ -14,7 +15,8 @@ export const addOrganisation = async (
 
 export const getAllOrganisations = async (): Promise<IOrganisationDto[]> => {
   const res = await axios.get(
-    `${process.env.REACT_APP_API_BASE}/organisations`
+    `${process.env.REACT_APP_API_BASE}/organisations`,
+    getAxiosConfig()
   );
 
   return res.data as IOrganisationDto[];

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
+import { GoogleLogout } from 'react-google-login';
 import {
   Drawer,
   List,
@@ -10,6 +11,9 @@ import {
 } from '@material-ui/core';
 
 import { DRAWER_WIDTH } from '../constants/constants';
+import { Button } from '@material-ui/core';
+import GoogleIcon from '../assets/GoogleIcon';
+import { onSignOut } from '../common/auth/userAuth';
 
 const routes = [
   {
@@ -40,6 +44,8 @@ export const NavigationDrawer: React.FC<{}> = () => {
   const history = useHistory();
   const classes = useStyles();
 
+  const GOOGLE_CLIENT_ID: string = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`;
+
   return (
     <Drawer
       container={window.document.body}
@@ -63,6 +69,15 @@ export const NavigationDrawer: React.FC<{}> = () => {
           </ListItem>
         ))}
       </List>
+      <GoogleLogout
+        render={(renderProps) => (
+          <Button onClick={renderProps.onClick} startIcon={<GoogleIcon />}>
+            Sign Out
+          </Button>
+        )}
+        clientId={GOOGLE_CLIENT_ID}
+        onLogoutSuccess={onSignOut}
+      />
     </Drawer>
   );
 };
