@@ -36,8 +36,6 @@ const tabIdToName = (id: number) => {
       return 'projects';
     case 2:
       return 'contacts';
-    case 3:
-      return 'communications';
     default:
       return 'about';
   }
@@ -49,8 +47,6 @@ const tabNameToId = (name: string) => {
       return 1;
     case 'contacts':
       return 2;
-    case 'communications':
-      return 3;
     default:
       return 0;
   }
@@ -90,7 +86,6 @@ export const OrganisationViewPage: React.FC<{}> = () => {
               <Tab label="About" />
               <Tab label="Projects" />
               <Tab label="Contacts" />
-              <Tab label="Communications" />
             </Tabs>
           </AppBar>
           <Box pt={2}>
@@ -112,7 +107,6 @@ export const OrganisationViewPage: React.FC<{}> = () => {
                 exact={true}
                 render={() => <OrganisationViewContacts />}
               />
-              <Route path="/organisations/:id/communications" exact={true} />
               <Route path="*">
                 <Redirect to={`/organisations/${id}/about`} />
               </Route>
