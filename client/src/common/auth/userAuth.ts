@@ -1,13 +1,13 @@
 import { AxiosRequestConfig } from 'axios';
-import { IUserDto } from '../../types/types';
+import { ILoginDto } from '../../types/types';
 
-export const getAuthUser: () => IUserDto | undefined = () => {
+export const getAuthUser: () => ILoginDto | undefined = () => {
   const user = localStorage.getItem('authenticatedUser');
   if (!user) {
     return undefined;
   } else {
     try {
-      return JSON.parse(user) as IUserDto;
+      return JSON.parse(user) as ILoginDto;
     } catch (e) {
       return undefined;
     }

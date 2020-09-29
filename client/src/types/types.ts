@@ -49,7 +49,7 @@ export interface IContactDto {
   hasActiveProject?: boolean;
 }
 
-export interface IUserDto {
+export interface ILoginDto {
   firstName: string;
   lastName: string;
   pictureUri: string;

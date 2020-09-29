@@ -3,7 +3,7 @@ import { Button, Avatar, Typography, Box } from '@material-ui/core';
 import { GoogleLogin } from 'react-google-login';
 import GoogleIcon from '../../assets/GoogleIcon';
 
-import { ITokenBlob, IUserDto } from '../../types/types';
+import { ITokenBlob, ILoginDto } from '../../types/types';
 import { postOneTimeToken } from '../../common/api/userAuth';
 import { Dialog } from '@material-ui/core';
 import { DialogTitle } from '@material-ui/core';
@@ -12,13 +12,13 @@ import { DialogContentText } from '@material-ui/core';
 import { DialogActions } from '@material-ui/core';
 
 export const GoogleLoginButton: React.FC<{}> = () => {
-  const [authenticatedUser, setAuthenticatedUser] = React.useState<IUserDto>();
+  const [authenticatedUser, setAuthenticatedUser] = React.useState<ILoginDto>();
   const [errorMessage, setErrorMessage] = React.useState<string>('');
 
   const GOOGLE_CLIENT_ID: string = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`;
 
   React.useEffect(() => {
-    const foundUser: IUserDto = JSON.parse(
+    const foundUser: ILoginDto = JSON.parse(
       localStorage.getItem('authenticatedUser') || '{}'
     );
 
@@ -33,7 +33,7 @@ export const GoogleLoginButton: React.FC<{}> = () => {
     };
 
     try {
-      const userDto: IUserDto = await postOneTimeToken(tokenBlob);
+      const userDto: ILoginDto = await postOneTimeToken(tokenBlob);
       setAuthenticatedUser(userDto);
 
       localStorage.setItem('authenticatedUser', JSON.stringify(userDto));
