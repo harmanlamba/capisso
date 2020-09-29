@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Capisso.Exceptions;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Capisso.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,User")]
     public class ContactsController : ControllerBase
     {
         private readonly IContactService _contactService;

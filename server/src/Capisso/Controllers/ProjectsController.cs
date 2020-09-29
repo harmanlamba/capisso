@@ -3,12 +3,14 @@ using System.Threading.Tasks;
 using Capisso.Dto;
 using Capisso.Exceptions;
 using Capisso.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Capisso.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,User")]
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectService _projectService;
