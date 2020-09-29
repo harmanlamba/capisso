@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles, Box, Typography, Button, Grid } from '@material-ui/core';
+import {
+  makeStyles,
+  Box,
+  Typography,
+  Button,
+  Grid,
+  TextField,
+} from '@material-ui/core';
 
 import { CoursesList } from '../../components/courses/CoursesList';
 import { useCourses } from '../../common/hooks/apiHooks';
@@ -16,6 +23,15 @@ export const CoursesViewAllPage: React.FC<{}> = () => {
   const classes = useStyles();
 
   const { courses } = useCourses();
+
+  const [filterTerm, setFilterTerm] = useState<string>();
+
+  const filteredCourses = courses.filter(
+    (course) =>
+      !filterTerm ||
+      course.name.toLowerCase().includes(filterTerm.toLowerCase()) ||
+      course.code.toLowerCase().includes(filterTerm.toLowerCase())
+  );
 
   return (
     <div className={classes.content}>
@@ -36,10 +52,19 @@ export const CoursesViewAllPage: React.FC<{}> = () => {
               </Button>
             </Box>
           </Box>
+          <Box mt={0.3}>
+            <TextField
+              id="filter-field"
+              onChange={(event) => setFilterTerm(event.target.value)}
+              label="Filter"
+              variant="outlined"
+              size="small"
+            />
+          </Box>
         </Grid>
       </Box>
 
-      <CoursesList courses={courses} />
+      <CoursesList courses={filteredCourses} />
     </div>
   );
 };

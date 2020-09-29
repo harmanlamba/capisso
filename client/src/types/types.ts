@@ -48,3 +48,14 @@ export interface IContactDto {
   projectIds?: number[];
   hasActiveProject?: boolean;
 }
+
+export interface IUserDto {
+  firstName: string;
+  lastName: string;
+  pictureUri: string;
+  jwtToken: string;
+}
+
+export interface ITokenBlob {
+  tokenId: string;
+}
