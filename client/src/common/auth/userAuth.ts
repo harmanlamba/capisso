@@ -29,5 +29,6 @@ export const getAxiosConfig = () => {
 
 export const onSignOut = () => {
   localStorage.removeItem('authenticatedUser');
+  // Force React to reload so it picks up the (now empty) user localstorage state
   window.location.href = '/';
 };

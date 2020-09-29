@@ -38,6 +38,7 @@ export const GoogleLoginButton: React.FC<{}> = () => {
 
       localStorage.setItem('authenticatedUser', JSON.stringify(userDto));
 
+      // Force React to reload so it picks up the new user localstorage state
       window.location.href = '/organisations';
     } catch (e) {
       setErrorMessage(
