@@ -13,24 +13,28 @@ import {
 import { DRAWER_WIDTH } from '../constants/constants';
 import { Button } from '@material-ui/core';
 import GoogleIcon from '../assets/GoogleIcon';
-import { onSignOut } from '../common/auth/userAuth';
+import { getAuthUserJWTData, onSignOut } from '../common/auth/userAuth';
 
 const routes = [
   {
     name: 'Organisations',
     location: '/organisations',
+    admin: false,
   },
   {
     name: 'Courses',
     location: '/courses',
+    admin: false,
   },
   {
     name: 'Projects',
     location: '/projects',
+    admin: false,
   },
   {
     name: 'Users',
     location: '/users',
+    admin: true,
   },
 ];
 
@@ -50,6 +54,12 @@ export const NavigationDrawer: React.FC<{}> = () => {
 
   const GOOGLE_CLIENT_ID: string = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`;
 
+  const userJWTData = getAuthUserJWTData();
+
+  const filterdRoutes = routes.filter(
+    (route) => !route.admin || userJWTData?.role === 'Admin'
+  );
+
   return (
     <Drawer
       container={window.document.body}
@@ -62,7 +72,7 @@ export const NavigationDrawer: React.FC<{}> = () => {
         Capisso
       </Typography>
       <List>
-        {routes.map((route, index) => (
+        {filterdRoutes.map((route, index) => (
           <ListItem
             button={true}
             key={index}

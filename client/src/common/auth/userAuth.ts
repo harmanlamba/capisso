@@ -1,5 +1,6 @@
+import jwt_decode from 'jwt-decode';
 import { AxiosRequestConfig } from 'axios';
-import { ILoginDto } from '../../types/types';
+import { ILoginDto, IUserJWT } from '../../types/types';
 
 export const getAuthUser: () => ILoginDto | undefined = () => {
   const user = localStorage.getItem('authenticatedUser');
@@ -9,8 +10,25 @@ export const getAuthUser: () => ILoginDto | undefined = () => {
     try {
       return JSON.parse(user) as ILoginDto;
     } catch (e) {
+      console.error(e);
       return undefined;
     }
+  }
+};
+
+export const getAuthUserJWTData = (): IUserJWT | undefined => {
+  const user = getAuthUser();
+  if (!user) {
+    return undefined;
+  }
+
+  try {
+    const token = user.jwtToken;
+    const tokenData = jwt_decode(token);
+    return tokenData as IUserJWT;
+  } catch (e) {
+    console.error(e);
+    return undefined;
   }
 };
 

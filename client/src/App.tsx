@@ -21,7 +21,7 @@ import { ProjectEditPage } from './pages/projects/ProjectEditPage';
 import { ProjectsAddPage } from './pages/projects/ProjectsAddPage';
 import { ProjectsViewAllPage } from './pages/projects/ProjectsViewAllPage';
 import { ProjectViewPage } from './pages/projects/ProjectViewPage';
-import { getAuthUser } from './common/auth/userAuth';
+import { getAuthUser, getAuthUserJWTData } from './common/auth/userAuth';
 import { LoginPage } from './pages/login/LoginPage';
 import { UsersViewAllPage } from './pages/users/UsersViewAllPage';
 
@@ -37,6 +37,7 @@ export const App: React.FC<{}> = () => {
   const classes = useStyles();
 
   const user = getAuthUser();
+  const userJWTData = getAuthUserJWTData();
 
   return (
     <div className={classes.root}>
@@ -140,11 +141,13 @@ export const App: React.FC<{}> = () => {
                   component={ProjectViewPage}
                 />
 
-                <Route
-                  path="/users"
-                  exact={true}
-                  component={UsersViewAllPage}
-                />
+                {userJWTData?.role === 'Admin' && (
+                  <Route
+                    path="/users"
+                    exact={true}
+                    component={UsersViewAllPage}
+                  />
+                )}
 
                 <Route path="*">
                   <Redirect to="/organisations" />

@@ -66,3 +66,8 @@ export interface IUserDto {
   email: string;
   userRole: UserRole;
 }
+
+export interface IUserJWT {
+  nameid: string;
+  role: 'Admin' | 'User';
+}
