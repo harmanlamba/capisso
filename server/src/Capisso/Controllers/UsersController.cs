@@ -3,14 +3,10 @@ using Capisso.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Capisso.Exceptions;
-using System.Collections;
-using System.Collections.Generic;
 using Google.Apis.Auth;
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 
 namespace Capisso.Controllers
@@ -30,15 +26,16 @@ namespace Capisso.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<UserDto>> GoogleLogin([FromBody] OneTimeTokenDto onetimeToken)
+        public async Task<ActionResult<LoginDto>> GoogleLogin([FromBody] OneTimeTokenDto onetimeToken)
         {
-            UserDto userDto;
+            LoginDto loginDto;
 
             try
             {
-                GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(onetimeToken.TokenId, new GoogleJsonWebSignature.ValidationSettings());
+                var payload = await GoogleJsonWebSignature.ValidateAsync(onetimeToken.TokenId,
+                    new GoogleJsonWebSignature.ValidationSettings());
 
-                userDto = new UserDto
+                loginDto = new LoginDto
                 {
                     FirstName = payload.GivenName,
                     LastName = payload.FamilyName,
@@ -55,7 +52,16 @@ namespace Capisso.Controllers
                 return new UnauthorizedResult();
             }
 
-            return Ok(userDto);
+            return Ok(loginDto);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
+        {
+            var users = await _userService.GetAllUsers();
+
+            return Ok(users);
         }
     }
 }

@@ -4,11 +4,13 @@ import {
   ICourseDto,
   IOrganisationDto,
   IProjectDto,
+  IUserDto,
 } from '../../types/types';
 import { getAllContactsForOrganisation, getContact } from '../api/contacts';
 import { getAllCourses } from '../api/courses';
 import { getAllOrganisations, getOrganisation } from '../api/organisations';
 import { getAllProjects, getProject } from '../api/projects';
+import { getAllUsers } from '../api/users';
 
 export const useOrganisations = () => {
   const [error, setError] = React.useState<Error>();
@@ -140,4 +142,22 @@ export const useContact = (contactId: number | undefined) => {
   }, [contactId]);
 
   return { contact, loading, error };
+};
+
+export const useUsers = () => {
+  const [error, setError] = React.useState<Error>();
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [users, setUsers] = React.useState<IUserDto[]>([]);
+
+  React.useEffect(() => {
+    getAllUsers()
+      .then((data) => setUsers(data))
+      .catch((e) => {
+        console.error(e);
+        setError(e);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  return { users, loading, error };
 };

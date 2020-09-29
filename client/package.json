@@ -16,6 +16,7 @@
     "@types/react-dom": "^16.9.0",
     "axios": "^0.20.0",
     "formik": "^2.1.5",
+    "jwt-decode": "^3.0.0-beta.2",
     "moment": "^2.27.0",
     "query-string": "^6.13.4",
     "react": "^16.13.1",
@@ -61,6 +62,7 @@
   },
   "devDependencies": {
     "@material-ui/types": "^5.1.0",
+    "@types/jwt-decode": "^2.2.1",
     "@types/react-router-dom": "^5.1.5",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
