@@ -8,7 +8,7 @@ import {
 import { getAllContactsForOrganisation, getContact } from '../api/contacts';
 import { getAllCourses } from '../api/courses';
 import { getAllOrganisations, getOrganisation } from '../api/organisations';
-import { getAllProjects } from '../api/projects';
+import { getAllProjects, getProject } from '../api/projects';
 
 export const useOrganisations = () => {
   const [error, setError] = React.useState<Error>();
@@ -66,6 +66,25 @@ export const useProjects = () => {
   return { projects, loading, error };
 };
 
+export const useProject = (id: number) => {
+  const [error, setError] = React.useState<Error>();
+  const [loading, setLoading] = React.useState<boolean>();
+  const [project, setProject] = React.useState<IProjectDto>();
+
+  React.useEffect(() => {
+    setLoading(true);
+    getProject(id)
+      .then((data) => setProject(data))
+      .catch((e) => {
+        console.error(e);
+        setError(e);
+      })
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  return { project, loading, error };
+};
+
 export const useOrganisation = (id: number) => {
   const [error, setError] = React.useState<Error>();
   const [loading, setLoading] = React.useState<boolean>();
@@ -85,7 +104,7 @@ export const useOrganisation = (id: number) => {
   return { organisation, loading, error };
 };
 
-export const useContactsForOrganisation = (orgId: number) => {
+export const useContactsForOrganisation = (orgId: number | undefined) => {
   const [error, setError] = React.useState<Error>();
   const [loading, setLoading] = React.useState<boolean>();
   const [contacts, setContacts] = React.useState<IContactDto[]>([]);

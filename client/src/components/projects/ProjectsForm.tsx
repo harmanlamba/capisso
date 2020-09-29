@@ -17,7 +17,6 @@ import {
   IContactDto,
 } from '../../types/types';
 import { Autocomplete } from '@material-ui/lab';
-import { getAllContactsForOrganisation } from '../../common/api/contacts';
 import { SnackbarMessage } from '../utility/SnackbarMessage';
 
 const useStyles = makeStyles(() => ({
@@ -58,6 +57,8 @@ export interface IProjectsFormProps {
   type: 'edit' | 'add';
   courses: ICourseDto[];
   organisations: IOrganisationDto[];
+  setOrganisationId: (organisationId: number) => void;
+  contacts: IContactDto[];
 }
 
 export const ProjectsForm: React.FC<IProjectsFormProps> = ({
@@ -66,12 +67,13 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
   type,
   courses,
   organisations,
+  setOrganisationId,
+  contacts,
 }) => {
   const history = useHistory();
   const classes = useStyles();
 
   const [isConfirmationOpen, setConfirmationOpen] = React.useState(false);
-  const [contacts, setContacts] = useState<IContactDto[]>([]);
 
   return (
     <React.Fragment>
@@ -235,9 +237,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                 )}
                 onChange={(_e, v) => {
                   setFieldValue('organisationId', v?.id);
-                  getAllContactsForOrganisation(v?.id, true).then((data) => {
-                    setContacts(data);
-                  });
+                  setOrganisationId(v?.id!);
                 }}
                 value={organisations.find(
                   (o) => o.id === values.organisationId

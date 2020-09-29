@@ -1,11 +1,15 @@
 import { makeStyles, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { editProject, getProject } from '../../common/api/projects';
-import { useCourses, useOrganisations } from '../../common/hooks/apiHooks';
+import { editProject } from '../../common/api/projects';
+import {
+  useContactsForOrganisation,
+  useCourses,
+  useOrganisations,
+  useProject,
+} from '../../common/hooks/apiHooks';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { ProjectsForm } from '../../components/projects/ProjectsForm';
-import { IProjectDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -17,32 +21,30 @@ const useStyles = makeStyles((theme) => ({
 export const ProjectEditPage: React.FC<{}> = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [project, setProject] = useState<IProjectDto>();
-  const [loading, setLoading] = useState<boolean>(true);
+  const [organisationId, setOrganisationId] = useState<number>(id);
 
-  const { organisations } = useOrganisations();
-  const { courses } = useCourses();
-
-  useEffect(() => {
-    setLoading(true);
-    getProject(id)
-      .then((data) => setProject(data))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }, [id]);
+  const project = useProject(organisationId);
+  const organisations = useOrganisations();
+  const contactsForOrganisation = useContactsForOrganisation(organisationId);
+  const courses = useCourses();
 
   return (
     <div className={classes.content}>
       <Typography variant="h4">Edit project</Typography>
-      {loading ? (
+      {project.loading ||
+      organisations.loading ||
+      contactsForOrganisation.loading ||
+      courses.loading ? (
         <LoadingSpinner />
       ) : (
         <ProjectsForm
           onSubmit={editProject}
-          initialValues={project}
+          initialValues={project.project}
           type="edit"
-          courses={courses}
-          organisations={organisations}
+          courses={courses.courses}
+          organisations={organisations.organisations}
+          setOrganisationId={setOrganisationId}
+          contacts={contactsForOrganisation.contacts}
         />
       )}
     </div>
