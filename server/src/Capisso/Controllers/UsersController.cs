@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Capisso.Exceptions;
 using Google.Apis.Auth;
 using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 
 namespace Capisso.Controllers
@@ -51,6 +53,15 @@ namespace Capisso.Controllers
             }
 
             return Ok(loginDto);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
+        {
+            var users = await _userService.GetAllUsers();
+
+            return Ok(users);
         }
     }
 }
