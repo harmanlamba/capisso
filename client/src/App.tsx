@@ -23,6 +23,7 @@ import { ProjectsViewAllPage } from './pages/projects/ProjectsViewAllPage';
 import { ProjectViewPage } from './pages/projects/ProjectViewPage';
 import { getAuthUser } from './common/auth/userAuth';
 import { LoginPage } from './pages/login/LoginPage';
+import { UsersViewAllPage } from './pages/users/UsersViewAllPage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -137,6 +138,12 @@ export const App: React.FC<{}> = () => {
                   path="/projects/:id/:page"
                   exact={true}
                   component={ProjectViewPage}
+                />
+
+                <Route
+                  path="/users"
+                  exact={true}
+                  component={UsersViewAllPage}
                 />
 
                 <Route path="*">

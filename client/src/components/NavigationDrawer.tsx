@@ -28,6 +28,10 @@ const routes = [
     name: 'Projects',
     location: '/projects',
   },
+  {
+    name: 'Users',
+    location: '/users',
+  },
 ];
 
 const useStyles = makeStyles(() => ({
