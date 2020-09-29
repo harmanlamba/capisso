@@ -82,5 +82,45 @@ namespace Capisso.Test.Services
             Assert.ThrowsAsync<EntityNotFoundException>(() => _userService.CreateToken(email, secret));
             _mockUserRepository.Verify();
         }
+
+        [Test]
+        public async Task TestGetAllUsers()
+        {
+            // arrange
+            IEnumerable<User> users = new List<User>
+            {
+                new User
+                {
+                    Id = 1,
+                    Email = "123@gmail.com",
+                    UserRole = UserRole.User,
+                },
+                new User
+                {
+                    Id = 2,
+                    Email = "456@gmail.com",
+                    UserRole = UserRole.Admin,
+                }
+            };
+            _mockUserRepository
+                .Setup(x => x.GetAllAsync())
+                .Returns(Task.FromResult(users))
+                .Verifiable();
+
+            // act
+            var result = await _userService.GetAllUsers();
+
+            var resultList = result.ToList();
+
+            // assert
+            Assert.NotNull(result);
+            Assert.AreEqual(2, resultList.Count);
+            Assert.AreEqual(1, resultList[0].Id);
+            Assert.AreEqual("123@gmail.com", resultList[0].Email);
+            Assert.AreEqual(UserRole.User, resultList[0].UserRole);
+            Assert.AreEqual(2, resultList[1].Id);
+            Assert.AreEqual("456@gmail.com", resultList[1].Email);
+            Assert.AreEqual(UserRole.Admin, resultList[1].UserRole);
+        }
     }
 }
