@@ -10,6 +10,7 @@ namespace Capisso.Repository
         IProjectRepository ProjectRepository { get; }
         IProjectCourseRepository ProjectCourseRepository { get; }
         IContactRepository ContactRepository { get; }
+        IUserRepository UserRepository { get; }
         Task SaveAsync();
     }
 }

@@ -7,6 +7,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import { NavigationDrawer } from './components/NavigationDrawer';
+import { LoginHeader } from './components/LoginHeader';
 import { CourseEditPage } from './pages/courses/CourseEditPage';
 import { CoursesAddPage } from './pages/courses/CoursesAddPage';
 import { CoursesViewAllPage } from './pages/courses/CoursesViewAllPage';
@@ -39,6 +40,8 @@ export const App: React.FC<{}> = () => {
         <NavigationDrawer />
 
         <Box width="100%" padding="1em">
+          <LoginHeader />
+
           <Switch>
             <Route
               path="/organisations"
