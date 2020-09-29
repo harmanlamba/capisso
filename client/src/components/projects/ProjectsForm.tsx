@@ -87,7 +87,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
       setContacts([]);
       setContactsLoading(false);
     }
-  }, [initialValues?.organisationId]);
+  }, [initialValues, initialValues?.organisationId]);
 
   return (
     <React.Fragment>
