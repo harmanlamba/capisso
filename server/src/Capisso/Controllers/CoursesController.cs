@@ -6,12 +6,14 @@ using Capisso.Dto;
 using Capisso.Entities;
 using Capisso.Exceptions;
 using Capisso.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Capisso.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,User")]
     public class CoursesController : ControllerBase
     {
         private readonly ICourseService _courseService;

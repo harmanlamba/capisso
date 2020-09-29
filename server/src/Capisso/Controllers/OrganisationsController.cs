@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Capisso.Dto;
+using Capisso.Entities;
 using Capisso.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Capisso.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,User")]
     public class OrganisationsController : ControllerBase
     {
         private readonly IOrganisationService _organisationService;
