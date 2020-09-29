@@ -33,8 +33,6 @@ const tabIdToName = (id: number) => {
   switch (id) {
     case 0:
       return 'about';
-    case 1:
-      return 'communications';
     default:
       return 'about';
   }
@@ -44,8 +42,6 @@ const tabNameToId = (name: string) => {
   switch (name) {
     case 'about':
       return 0;
-    case 'communications':
-      return 1;
     default:
       return 0;
   }
@@ -91,7 +87,6 @@ export const ProjectViewPage: React.FC<{}> = () => {
           <AppBar position="static">
             <Tabs value={value} onChange={handleChange} aria-label="">
               <Tab label="About" />
-              <Tab label="Communications" />
             </Tabs>
           </AppBar>
           <Box pt={2}>
@@ -101,7 +96,6 @@ export const ProjectViewPage: React.FC<{}> = () => {
                 exact={true}
                 render={() => <ProjectViewAbout project={project} />}
               />
-              <Route path="/projects/:id/communications" exact={true} />
               <Route path="*">
                 <Redirect to={`/projects/${id}/about`} />
               </Route>
