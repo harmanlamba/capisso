@@ -5,9 +5,16 @@ import GoogleIcon from '../../assets/GoogleIcon';
 
 import { ITokenBlob, IUserDto } from '../../types/types';
 import { postOneTimeToken } from '../../common/api/userAuth';
+import { Dialog } from '@material-ui/core';
+import { DialogTitle } from '@material-ui/core';
+import { DialogContent } from '@material-ui/core';
+import { DialogContentText } from '@material-ui/core';
+import { DialogActions } from '@material-ui/core';
 
 export const GoogleLoginButton: React.FC<{}> = () => {
   const [authenticatedUser, setAuthenticatedUser] = React.useState<IUserDto>();
+  const [errorMessage, setErrorMessage] = React.useState<string>('');
+
   const GOOGLE_CLIENT_ID: string = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`;
 
   React.useEffect(() => {
@@ -25,20 +32,44 @@ export const GoogleLoginButton: React.FC<{}> = () => {
       tokenId: response.tokenId,
     };
 
-    const userDto: IUserDto = await postOneTimeToken(tokenBlob);
-    setAuthenticatedUser(userDto);
+    try {
+      const userDto: IUserDto = await postOneTimeToken(tokenBlob);
+      setAuthenticatedUser(userDto);
 
-    localStorage.setItem('authenticatedUser', JSON.stringify(userDto));
+      localStorage.setItem('authenticatedUser', JSON.stringify(userDto));
+
+      window.location.href = '/organisations';
+    } catch (e) {
+      setErrorMessage(
+        'Google Account rejected, make sure your account is enabled in Capisso.'
+      );
+    }
   };
 
   const googleFailureResponse = (response: any) => {
-    console.error(response);
-    // Do not need to do anything in case of failure
-    // The button auto-resets and allows the user to login in again
+    const error = response.details ?? response.error;
+    setErrorMessage(error);
   };
 
   return (
     <React.Fragment>
+      <Dialog open={errorMessage.length > 0}>
+        <DialogTitle id="alert-dialog-title">{'Login Error'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {errorMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setErrorMessage('')}
+            color="primary"
+            autoFocus={true}
+          >
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
       {authenticatedUser ? (
         <Box display="flex" alignItems="center" flexDirection="row">
           <Box>
