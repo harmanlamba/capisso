@@ -54,8 +54,8 @@ export const GoogleLoginButton: React.FC<{}> = () => {
 
   return (
     <React.Fragment>
-      <Dialog open={errorMessage.length > 0}>
-        <DialogTitle id="alert-dialog-title">{'Login Error'}</DialogTitle>
+      <Dialog open={!!errorMessage}>
+        <DialogTitle id="alert-dialog-title">Login Error</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {errorMessage}
