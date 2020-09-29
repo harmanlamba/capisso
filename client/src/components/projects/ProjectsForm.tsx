@@ -79,7 +79,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
         initialValues={{
           title: '',
           startDate: '',
-          endDate: undefined,
+          endDate: '',
           status: 'Pending',
           notes: undefined,
           outcome: undefined,
@@ -90,7 +90,11 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
         }}
         onSubmit={async (values) => {
           try {
-            await onSubmit(values as IProjectDto);
+            await onSubmit({
+              ...values,
+              contactId: values.contactId > 0 ? values.contactId : undefined,
+              endDate: values.endDate ? values.endDate : undefined,
+            } as IProjectDto);
             history.push('/projects');
           } catch (e) {
             console.error(e);
@@ -113,10 +117,6 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
 
           if (!values.organisationId) {
             errors.organisationId = 'Required';
-          }
-
-          if (!values.contactId) {
-            errors.contactId = 'Required';
           }
 
           if (!values.courseIds.length) {
@@ -255,7 +255,6 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                     variant="filled"
                     label="Project Contact"
                     fullWidth={true}
-                    required={true}
                     error={!!errors.contactId}
                   />
                 )}
