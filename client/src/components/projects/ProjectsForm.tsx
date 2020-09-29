@@ -8,7 +8,7 @@ import {
 import { Add, Edit } from '@material-ui/icons';
 import { Form, Formik } from 'formik';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   IProjectDto,
@@ -17,8 +17,8 @@ import {
   IContactDto,
 } from '../../types/types';
 import { Autocomplete } from '@material-ui/lab';
-import { getAllContactsForOrganisation } from '../../common/api/contacts';
 import { SnackbarMessage } from '../utility/SnackbarMessage';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const useStyles = makeStyles(() => ({
   boxContainer: {
@@ -30,6 +30,9 @@ const useStyles = makeStyles(() => ({
   },
   button: {
     margin: '0 5px',
+  },
+  skeleton: {
+    margin: '9px 0',
   },
 }));
 
@@ -58,6 +61,9 @@ export interface IProjectsFormProps {
   type: 'edit' | 'add';
   courses: ICourseDto[];
   organisations: IOrganisationDto[];
+  setOrganisationId: (organisationId: number) => void;
+  contacts: IContactDto[];
+  contactsLoading: boolean;
 }
 
 export const ProjectsForm: React.FC<IProjectsFormProps> = ({
@@ -66,12 +72,14 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
   type,
   courses,
   organisations,
+  setOrganisationId,
+  contacts,
+  contactsLoading,
 }) => {
   const history = useHistory();
   const classes = useStyles();
 
   const [isConfirmationOpen, setConfirmationOpen] = React.useState(false);
-  const [contacts, setContacts] = useState<IContactDto[]>([]);
 
   return (
     <React.Fragment>
@@ -235,34 +243,41 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                 )}
                 onChange={(_e, v) => {
                   setFieldValue('organisationId', v?.id);
-                  getAllContactsForOrganisation(v?.id, true).then((data) => {
-                    setContacts(data);
-                  });
+                  setOrganisationId(v?.id!);
                 }}
                 value={organisations.find(
                   (o) => o.id === values.organisationId
                 )}
               />
 
-              <Autocomplete
-                options={contacts}
-                getOptionLabel={(option) => option.name}
-                noOptionsText="Please choose an organisation before selecting contact"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    className={classes.textField}
-                    variant="filled"
-                    label="Project Contact"
-                    fullWidth={true}
-                    error={!!errors.contactId}
-                  />
-                )}
-                onChange={(_e, v) => {
-                  setFieldValue('contactId', v?.id);
-                }}
-                value={contacts.find((c) => c.id === values.contactId)}
-              />
+              {contactsLoading ? (
+                <Skeleton
+                  className={classes.skeleton}
+                  variant="rect"
+                  width={800}
+                  height={59}
+                />
+              ) : (
+                <Autocomplete
+                  options={contacts}
+                  getOptionLabel={(option) => option.name}
+                  noOptionsText="Please choose an organisation before selecting contact"
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      className={classes.textField}
+                      variant="filled"
+                      label="Project Contact"
+                      fullWidth={true}
+                      error={!!errors.contactId}
+                    />
+                  )}
+                  onChange={(_e, v) => {
+                    setFieldValue('contactId', v?.id);
+                  }}
+                  value={contacts.find((c) => c.id === values.contactId)}
+                />
+              )}
 
               <Autocomplete
                 multiple={true}

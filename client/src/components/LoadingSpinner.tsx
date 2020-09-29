@@ -13,10 +13,8 @@ export const LoadingSpinner: React.FC<{}> = () => {
   const classes = useStyles();
 
   return (
-    <CircularProgress
-      className={classes.progressRing}
-      size={60}
-      thickness={6}
-    />
+    <div className={classes.progressRing}>
+      <CircularProgress size={60} thickness={6} />
+    </div>
   );
 };
