@@ -16,6 +16,8 @@ namespace Capisso.Repository
             ProjectRepository = new ProjectRepository(_dbContext);
             ProjectCourseRepository = new ProjectCourseRepository(_dbContext);
             ContactRepository = new ContactRepository(_dbContext);
+            UserRepository = new UserRepository(_dbContext);
+
         }
 
         public IOrganisationRepository OrganisationRepository { get; }
@@ -23,6 +25,7 @@ namespace Capisso.Repository
         public IProjectRepository ProjectRepository { get; }
         public IProjectCourseRepository ProjectCourseRepository { get; }
         public IContactRepository ContactRepository { get; }
+        public IUserRepository UserRepository { get; }
 
         public async Task SaveAsync()
         {
