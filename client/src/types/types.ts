@@ -69,5 +69,5 @@ export interface IUserDto {
 
 export interface IUserJWT {
   nameid: string;
-  role: 'Admin' | 'User';
+  role: UserRole;
 }
