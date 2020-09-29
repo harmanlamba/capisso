@@ -103,7 +103,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
               contactId: values.contactId > 0 ? values.contactId : undefined,
               endDate: values.endDate ? values.endDate : undefined,
             } as IProjectDto);
-            history.push('/projects');
+            history.goBack();
           } catch (e) {
             console.error(e);
           }
