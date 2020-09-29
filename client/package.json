@@ -17,6 +17,7 @@
     "axios": "^0.20.0",
     "formik": "^2.1.5",
     "moment": "^2.27.0",
+    "query-string": "^6.13.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-google-login": "^5.1.21",

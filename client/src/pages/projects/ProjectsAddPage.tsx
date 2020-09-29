@@ -1,5 +1,7 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 import { addProject } from '../../common/api/projects';
 import { ProjectsForm } from '../../components/projects/ProjectsForm';
 import {
@@ -8,6 +10,8 @@ import {
   useCourses,
 } from '../../common/hooks/apiHooks';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
+import { IProjectDto } from '../../types/types';
+import { ProjectStatus } from '../../enums/enums';
 
 const useStyles = makeStyles(() => ({
   content: {
@@ -18,11 +22,26 @@ const useStyles = makeStyles(() => ({
 
 export const ProjectsAddPage: React.FC<{}> = () => {
   const classes = useStyles();
-  const [organisationId, setOrganisationId] = useState<number>(0);
+  const location = useLocation();
+  const { initialOrganisation, initialCourse } = queryString.parse(
+    location.search
+  );
 
+  const [organisationId, setOrganisationId] = useState<number>(
+    initialOrganisation ? +initialOrganisation : 0
+  );
   const organisations = useOrganisations();
   const contactsForOrganisation = useContactsForOrganisation(organisationId);
   const courses = useCourses();
+
+  const initialValues: IProjectDto = {
+    title: '',
+    startDate: '',
+    endDate: '',
+    status: ProjectStatus.Pending,
+    organisationId: initialOrganisation ? +initialOrganisation : 0,
+    courseIds: initialCourse ? [+initialCourse] : [],
+  };
 
   return (
     <div className={classes.content}>
@@ -33,6 +52,7 @@ export const ProjectsAddPage: React.FC<{}> = () => {
         <ProjectsForm
           onSubmit={addProject}
           type="add"
+          initialValues={initialValues}
           courses={courses.courses}
           organisations={organisations.organisations}
           setOrganisationId={setOrganisationId}
