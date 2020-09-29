@@ -27,9 +27,7 @@ export const ProjectsAddPage: React.FC<{}> = () => {
   return (
     <div className={classes.content}>
       <Typography variant="h4">Add project</Typography>
-      {organisations.loading ||
-      contactsForOrganisation.loading ||
-      courses.loading ? (
+      {organisations.loading || courses.loading ? (
         <LoadingSpinner />
       ) : (
         <ProjectsForm
@@ -39,6 +37,7 @@ export const ProjectsAddPage: React.FC<{}> = () => {
           organisations={organisations.organisations}
           setOrganisationId={setOrganisationId}
           contacts={contactsForOrganisation.contacts}
+          contactsLoading={contactsForOrganisation.loading}
         />
       )}
     </div>

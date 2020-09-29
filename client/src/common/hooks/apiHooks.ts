@@ -106,7 +106,7 @@ export const useOrganisation = (id: number) => {
 
 export const useContactsForOrganisation = (orgId: number | undefined) => {
   const [error, setError] = React.useState<Error>();
-  const [loading, setLoading] = React.useState<boolean>();
+  const [loading, setLoading] = React.useState<boolean>(true);
   const [contacts, setContacts] = React.useState<IContactDto[]>([]);
 
   React.useEffect(() => {
@@ -129,6 +129,7 @@ export const useContact = (contactId: number | undefined) => {
   const [contact, setContact] = React.useState<IContactDto>();
 
   React.useEffect(() => {
+    setLoading(true);
     getContact(contactId)
       .then((data) => setContact(data))
       .catch((e) => {

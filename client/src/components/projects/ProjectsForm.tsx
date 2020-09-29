@@ -8,7 +8,7 @@ import {
 import { Add, Edit } from '@material-ui/icons';
 import { Form, Formik } from 'formik';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   IProjectDto,
@@ -59,6 +59,7 @@ export interface IProjectsFormProps {
   organisations: IOrganisationDto[];
   setOrganisationId: (organisationId: number) => void;
   contacts: IContactDto[];
+  contactsLoading: boolean;
 }
 
 export const ProjectsForm: React.FC<IProjectsFormProps> = ({
@@ -69,6 +70,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
   organisations,
   setOrganisationId,
   contacts,
+  contactsLoading,
 }) => {
   const history = useHistory();
   const classes = useStyles();
@@ -244,25 +246,27 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                 )}
               />
 
-              <Autocomplete
-                options={contacts}
-                getOptionLabel={(option) => option.name}
-                noOptionsText="Please choose an organisation before selecting contact"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    className={classes.textField}
-                    variant="filled"
-                    label="Project Contact"
-                    fullWidth={true}
-                    error={!!errors.contactId}
-                  />
-                )}
-                onChange={(_e, v) => {
-                  setFieldValue('contactId', v?.id);
-                }}
-                value={contacts.find((c) => c.id === values.contactId)}
-              />
+              {!contactsLoading && (
+                <Autocomplete
+                  options={contacts}
+                  getOptionLabel={(option) => option.name}
+                  noOptionsText="Please choose an organisation before selecting contact"
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      className={classes.textField}
+                      variant="filled"
+                      label="Project Contact"
+                      fullWidth={true}
+                      error={!!errors.contactId}
+                    />
+                  )}
+                  onChange={(_e, v) => {
+                    setFieldValue('contactId', v?.id);
+                  }}
+                  value={contacts.find((c) => c.id === values.contactId)}
+                />
+              )}
 
               <Autocomplete
                 multiple={true}

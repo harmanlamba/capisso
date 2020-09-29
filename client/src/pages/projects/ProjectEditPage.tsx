@@ -21,20 +21,21 @@ const useStyles = makeStyles((theme) => ({
 export const ProjectEditPage: React.FC<{}> = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [organisationId, setOrganisationId] = useState<number>(id);
+  const [organisationId, setOrganisationId] = useState<number>();
 
-  const project = useProject(organisationId);
+  const project = useProject(id);
   const organisations = useOrganisations();
-  const contactsForOrganisation = useContactsForOrganisation(organisationId);
+  const contactsForOrganisation = useContactsForOrganisation(
+    organisationId === undefined
+      ? project.project?.organisationId
+      : organisationId
+  );
   const courses = useCourses();
 
   return (
     <div className={classes.content}>
       <Typography variant="h4">Edit project</Typography>
-      {project.loading ||
-      organisations.loading ||
-      contactsForOrganisation.loading ||
-      courses.loading ? (
+      {project.loading || organisations.loading || courses.loading ? (
         <LoadingSpinner />
       ) : (
         <ProjectsForm
@@ -45,6 +46,7 @@ export const ProjectEditPage: React.FC<{}> = () => {
           organisations={organisations.organisations}
           setOrganisationId={setOrganisationId}
           contacts={contactsForOrganisation.contacts}
+          contactsLoading={contactsForOrganisation.loading}
         />
       )}
     </div>
