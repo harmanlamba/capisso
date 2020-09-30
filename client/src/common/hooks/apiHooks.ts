@@ -112,14 +112,16 @@ export const useContactsForOrganisation = (orgId: number | undefined) => {
   const [contacts, setContacts] = React.useState<IContactDto[]>([]);
 
   React.useEffect(() => {
-    setLoading(true);
-    getAllContactsForOrganisation(orgId)
-      .then((data) => setContacts(data))
-      .catch((e) => {
-        console.error(e);
-        setError(e);
-      })
-      .finally(() => setLoading(false));
+    if (orgId !== undefined) {
+      setLoading(true);
+      getAllContactsForOrganisation(orgId)
+        .then((data) => setContacts(data))
+        .catch((e) => {
+          console.error(e);
+          setError(e);
+        })
+        .finally(() => setLoading(false));
+    }
   }, [orgId]);
 
   return { contacts, loading, error };
