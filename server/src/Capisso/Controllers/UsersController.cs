@@ -63,5 +63,22 @@ namespace Capisso.Controllers
 
             return Ok(users);
         }
+
+        [HttpDelete]
+        [Route("{userId:int}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> DeleteUser(int userId)
+        {
+            try
+            {
+                await _userService.DeleteUser(userId);
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }

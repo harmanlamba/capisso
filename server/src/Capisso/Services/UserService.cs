@@ -60,5 +60,14 @@ namespace Capisso.Services
 
             return users.Select(UserMapper.ToDto);
         }
+
+        public async Task DeleteUser(int id)
+        {
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(id) ??
+                       throw new EntityNotFoundException($"User with id <{id}> not found");
+
+            _unitOfWork.UserRepository.Delete(user);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }

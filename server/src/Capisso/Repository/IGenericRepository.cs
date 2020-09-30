@@ -14,6 +14,5 @@ namespace Capisso.Repository
         Task InsertAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
-        Task DeleteByIdAsync(object id);
     }
 }
