@@ -26,15 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 16,
-  },
-}))(TableCell);
+const StyledTableCell = withStyles((theme) => ({}))(TableCell);
 
 export const ProjectsList: React.FC<{
   projects: IProjectDto[];
@@ -42,7 +34,7 @@ export const ProjectsList: React.FC<{
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>

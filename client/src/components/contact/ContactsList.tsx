@@ -27,15 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 16,
-  },
-}))(TableCell);
+const StyledTableCell = withStyles((theme) => ({}))(TableCell);
 
 export const ContactsList: React.FC<{
   contacts: IContactDto[];
@@ -43,7 +35,7 @@ export const ContactsList: React.FC<{
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
@@ -57,7 +49,7 @@ export const ContactsList: React.FC<{
         <TableBody>
           {contacts.map((row) => (
             <TableRow key={row.id}>
-              <StyledTableCell> {row.name} </StyledTableCell>
+              <StyledTableCell>{row.name}</StyledTableCell>
               <StyledTableCell> {row.email} </StyledTableCell>
               <StyledTableCell> {row.phoneNumber} </StyledTableCell>
               <StyledTableCell>

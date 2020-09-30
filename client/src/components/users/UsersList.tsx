@@ -27,15 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 16,
-  },
-}))(TableCell);
+const StyledTableCell = withStyles((theme) => ({}))(TableCell);
 
 export const UsersList: React.FC<{
   users: IUserDto[];
@@ -58,7 +50,7 @@ export const UsersList: React.FC<{
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>

@@ -24,15 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 16,
-  },
-}))(TableCell);
+const StyledTableCell = withStyles((theme) => ({}))(TableCell);
 
 export const CoursesList: React.FC<{
   courses: ICourseDto[];
@@ -40,7 +32,7 @@ export const CoursesList: React.FC<{
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>

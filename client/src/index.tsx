@@ -16,28 +16,63 @@ const theme = createMuiTheme({
 });
 
 const capissoTheme = createMuiTheme({
-  palette: {},
+  palette: {
+    primary: {
+      main: '#e2ebfc',
+      contrastText: '#5c90f7',
+    },
+    secondary: {
+      main: '#ffdbcc',
+      contrastText: '#727272',
+    },
+  },
   overrides: {
+    // Button
     MuiButton: {
       root: {
-        borderRadius: 20, // square corners
-        textTransform: 'none', // removes uppercase transformation
+        borderRadius: 10,
+        textTransform: 'none',
       },
       containedPrimary: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.primary.contrastText,
-
         '&:hover': {
-          // changes colors for hover state
           backgroundColor: theme.palette.primary.contrastText,
           color: theme.palette.primary.main,
         },
       },
     },
+
+    // Table
+    MuiTableHead: {
+      root: {
+        backgroundColor: theme.palette.common.white,
+        borderRadius: '20px !important',
+        boxShadow: '0px 3px 3px rgba(0,0,0,0.2)',
+      },
+    },
+    MuiTableRow: {
+      root: {
+        background: 'rgba(255,255,255,0)',
+      },
+    },
+    MuiTableCell: {
+      root: {
+        borderBottom: '2px solid rgba(224,224,224,1)',
+        height: 32,
+      },
+      head: {
+        borderBottom: '0',
+        borderRadius: '20px !important',
+      },
+    },
   },
   typography: {
-    body2: { fontSize: 20 },
     fontFamily: ['Signika', 'sans-serif'].join(','),
+    body1: {
+      fontSize: 18,
+    },
+    body2: {
+      fontSize: 15,
+    },
   },
 });
 

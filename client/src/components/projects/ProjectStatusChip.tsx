@@ -21,8 +21,13 @@ export const ProjectStatusChip: React.FC<{ status: ProjectStatus }> = ({
 }) => {
   const classes = useStyles();
   const label = statusLabels[status];
-  const color =
-    status === ProjectStatus.CompletedWithIssues ? 'secondary' : 'default';
+  let color: 'default' | 'secondary' | 'primary' = 'default';
+
+  if (status === ProjectStatus.CompletedWithIssues) {
+    color = 'secondary';
+  } else if (status === ProjectStatus.CompletedSuccessfully) {
+    color = 'primary';
+  }
 
   return <Chip className={classes.chip} label={label} color={color} />;
 };
