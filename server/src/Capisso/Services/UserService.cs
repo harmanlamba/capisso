@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Capisso.Dto;
 using Capisso.Mapper;
 using System.Text.RegularExpressions;
+using Capisso.Entities;
 
 namespace Capisso.Services
 {
@@ -94,6 +95,25 @@ namespace Capisso.Services
             await _unitOfWork.SaveAsync();
 
             return user.Id;
+        }
+
+        public async Task UpdateUser(UserDto userDto)
+        {
+            var user = UserMapper.FromDto(userDto);
+
+            if (user.UserRole.Equals(UserRole.User))
+            {
+                var remainingAdminList = await _unitOfWork.UserRepository
+                    .FindByAsync(u => u.UserRole.Equals(UserRole.Admin) && !String.Equals(user.Email.ToLower(), u.Email.ToLower()));
+
+                if (!remainingAdminList.Any())
+                {
+                    throw new NoAdminExistsException();
+                }
+            }
+
+            _unitOfWork.UserRepository.Update(user);
+            await _unitOfWork.SaveAsync();
         }
     }
 }
