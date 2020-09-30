@@ -79,5 +79,50 @@ namespace Capisso.Test.Controllers
             Assert.AreEqual("456@gmail.com", resultList[1].Email);
             Assert.AreEqual(UserRole.Admin, resultList[1].UserRole);
         }
+
+        [Test]
+        public async Task TestDeleteExistingUser()
+        {
+            // arrange
+            var user = new User
+            {
+                Id = 1,
+                Email = "123@gmail.com",
+                UserRole = UserRole.User,
+            };
+
+            _mockUserRepository
+                .Setup(x => x.GetByIdAsync(1))
+                .Returns(Task.FromResult(user))
+                .Verifiable();
+
+            _mockUserRepository.Setup(x => x.Delete(user))
+                .Verifiable();
+
+            // act
+            var response = await _usersController.DeleteUser(1);
+
+            // assert
+            Assert.IsInstanceOf<NoContentResult>(response);
+            _mockUserRepository.Verify();
+        }
+
+        [Test]
+        public async Task TestDeleteNonExistingUser()
+        {
+            // arrange
+            _mockUserRepository
+                .Setup(x => x.GetByIdAsync(1))
+                .Returns(Task.FromResult<User>(null))
+                .Verifiable();
+
+            // act
+            var response = await _usersController.DeleteUser(1);
+
+            // assert
+            Assert.IsInstanceOf<NotFoundResult>(response);
+            _mockUserRepository.Verify();
+            _mockUserRepository.Verify(x => x.Delete(It.IsAny<User>()), Times.Never);
+        }
     }
 }
