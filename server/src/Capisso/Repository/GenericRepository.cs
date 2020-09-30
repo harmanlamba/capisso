@@ -12,6 +12,7 @@ namespace Capisso.Repository
     {
         protected readonly DbSet<T> _dbSet;
         protected readonly DbContext _dbContext;
+
         public GenericRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
@@ -47,12 +48,6 @@ namespace Capisso.Repository
         public void Delete(T entity)
         {
             _dbSet.Remove(entity);
-        }
-
-        public virtual async Task DeleteByIdAsync(object id)
-        {
-            T existing = await _dbSet.FindAsync(id);
-            _dbSet.Remove(existing);
         }
     }
 }

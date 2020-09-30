@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 export const UsersViewAllPage: React.FC<{}> = () => {
   const classes = useStyles();
 
-  const { users } = useUsers();
+  const { users, refetch } = useUsers();
 
   const [filterTerm, setFilterTerm] = useState<string>();
 
@@ -64,7 +64,7 @@ export const UsersViewAllPage: React.FC<{}> = () => {
         </Grid>
       </Box>
 
-      <UsersList users={filteredUsers} />
+      <UsersList users={filteredUsers} onDelete={refetch} />
     </div>
   );
 };

@@ -8,5 +8,6 @@ namespace Capisso.Services
     {
         Task<string> CreateToken(string userEmail, string jwtSecret);
         Task<IEnumerable<UserDto>> GetAllUsers();
+        Task DeleteUser(int id);
     }
 }

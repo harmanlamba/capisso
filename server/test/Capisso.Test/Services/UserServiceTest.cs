@@ -122,5 +122,47 @@ namespace Capisso.Test.Services
             Assert.AreEqual("456@gmail.com", resultList[1].Email);
             Assert.AreEqual(UserRole.Admin, resultList[1].UserRole);
         }
+
+        [Test]
+        public async Task TestDeleteExistingUser()
+        {
+            // arrange
+            var user = new User
+            {
+                Id = 1,
+                Email = "123@gmail.com",
+                UserRole = UserRole.User,
+            };
+
+            _mockUserRepository
+                .Setup(x => x.GetByIdAsync(1))
+                .Returns(Task.FromResult(user))
+                .Verifiable();
+
+            _mockUserRepository.Setup(x => x.Delete(user))
+                .Verifiable();
+
+            // act
+            await _userService.DeleteUser(1);
+
+            // assert
+            _mockUserRepository.Verify();
+        }
+
+        [Test]
+        public void TestDeleteNonExistingUser()
+        {
+            // arrange
+            _mockUserRepository
+                .Setup(x => x.GetByIdAsync(1))
+                .Returns(Task.FromResult<User>(null))
+                .Verifiable();
+
+            // act and assert
+            Assert.ThrowsAsync<EntityNotFoundException>(() => _userService.DeleteUser(1));
+
+            _mockUserRepository.Verify();
+            _mockUserRepository.Verify(x => x.Delete(It.IsAny<User>()), Times.Never);
+        }
     }
 }
