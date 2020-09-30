@@ -80,5 +80,23 @@ namespace Capisso.Controllers
 
             return NoContent();
         }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> AddUser(UserDto userDto)
+        {
+            int userId;
+
+            try
+            {
+                userId = await _userService.AddUser(userDto);
+            }
+            catch (InvalidEmailException)
+            {
+                return BadRequest();
+            }
+
+            return Created($"/users/{userId}", new CreatedDto { Id = userId});
+        }
     }
 }
