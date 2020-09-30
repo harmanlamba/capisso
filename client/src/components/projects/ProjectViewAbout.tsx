@@ -92,24 +92,18 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
         <Box mb={2}>
           <Paper>
             <Box p={2}>
-              <Typography variant="h6" color="primary" display="inline">
+              <Typography variant="h6" color="textSecondary">
                 Organisation
-                <Button
-                  color="primary"
-                  size="large"
-                  onClick={() =>
-                    history.push(
-                      `/organisations/${project.organisationId}/about`
-                    )
-                  }
-                >
-                  {organisation && (
-                    <Typography variant="subtitle1">
-                      {organisation.name}
-                    </Typography>
-                  )}
-                </Button>
               </Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() =>
+                  history.push(`/organisations/${project.organisationId}/about`)
+                }
+              >
+                {organisation && <Typography>{organisation.name}</Typography>}
+              </Button>
             </Box>
           </Paper>
         </Box>
@@ -118,24 +112,20 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
         <Box mb={2}>
           <Paper>
             <Box p={2}>
-              <Typography variant="h6" color="primary" display="inline">
+              <Typography variant="h6" color="textSecondary">
                 Courses
               </Typography>
-              <ul>
-                {courses.map((course) => (
-                  <li key={course.id}>
-                    <Button
-                      color="primary"
-                      size="large"
-                      onClick={() =>
-                        history.push(`/courses/${course.id}/about`)
-                      }
-                    >
-                      {course.code}: {course.name}
-                    </Button>
-                  </li>
-                ))}
-              </ul>
+              {courses.map((course) => (
+                <Button
+                  key={course.id}
+                  variant="contained"
+                  color="primary"
+                  style={{ marginRight: 10 }}
+                  onClick={() => history.push(`/courses/${course.id}/about`)}
+                >
+                  {course.code}: {course.name}
+                </Button>
+              ))}
             </Box>
           </Paper>
         </Box>
@@ -144,7 +134,7 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
         <Box mb={2}>
           <Paper>
             <Box p={2}>
-              <Typography variant="h6" color="primary" display="inline">
+              <Typography variant="h6" color="textSecondary" display="inline">
                 Project Contact Details
               </Typography>
               {contact && (

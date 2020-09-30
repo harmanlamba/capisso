@@ -67,6 +67,22 @@ const capissoTheme = createMuiTheme({
         borderRadius: '20px !important',
       },
     },
+
+    // Tabs
+    MuiTabs: {
+      root: {
+        fontWeight: 500,
+        display: 'flex',
+        justifyContent: 'center',
+      },
+      indicator: {
+        backgroundColor: '#5c90f7',
+        height: 3,
+        maxWidth: 100,
+        marginLeft: 30,
+        marginRight: 30,
+      },
+    },
   },
   typography: {
     fontFamily: ['Signika', 'sans-serif'].join(','),

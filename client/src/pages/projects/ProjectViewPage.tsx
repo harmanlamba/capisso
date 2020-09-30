@@ -1,5 +1,4 @@
 import {
-  AppBar,
   Box,
   Button,
   makeStyles,
@@ -89,11 +88,14 @@ export const ProjectViewPage: React.FC<{}> = () => {
               </Button>
             </Box>
           </Box>
-          <AppBar position="static">
-            <Tabs value={value} onChange={handleChange} aria-label="">
-              <Tab label="About" />
-            </Tabs>
-          </AppBar>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            aria-label=""
+          >
+            <Tab label="About" disableRipple={true} />
+          </Tabs>
           <Box pt={2}>
             <Switch>
               <Route

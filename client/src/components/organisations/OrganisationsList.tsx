@@ -1,6 +1,5 @@
 import {
   makeStyles,
-  Paper,
   Table,
   TableBody,
   TableCell,
