@@ -41,7 +41,7 @@ export const ProjectEditPage: React.FC<{}> = () => {
         <ProjectsForm
           onSubmit={editProject}
           initialValues={project.project}
-          type="edit"
+          type="Edit"
           courses={courses.courses}
           organisations={organisations.organisations}
           setOrganisationId={setOrganisationId}

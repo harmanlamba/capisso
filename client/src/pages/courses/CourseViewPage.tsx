@@ -80,11 +80,14 @@ export const CourseViewPage: React.FC<{}> = () => {
               {course.name}
             </Typography>
             <Box ml={2} position="relative" top="-0.5em" display="inline">
-              <Link to={`/courses/${course.id}/edit`}>
-                <Button variant="outlined" color="primary">
-                  Edit
-                </Button>
-              </Link>
+              <Button
+                variant="contained"
+                color="primary"
+                component={Link}
+                to={`/courses/${course.id}/edit`}
+              >
+                Edit
+              </Button>
             </Box>
           </Box>
           <AppBar position="static">

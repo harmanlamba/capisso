@@ -74,11 +74,14 @@ export const OrganisationViewPage: React.FC<{}> = () => {
             </Typography>
             <Box ml={2} position="relative" top="-0.5em" display="inline">
               <OrganisationStatusChip status={organisation.status} />{' '}
-              <Link to={`/organisations/${organisation.id}/edit`}>
-                <Button variant="outlined" color="primary">
-                  Edit
-                </Button>
-              </Link>
+              <Button
+                variant="contained"
+                color="primary"
+                component={Link}
+                to={`/organisations/${organisation.id}/edit`}
+              >
+                Edit
+              </Button>
             </Box>
           </Box>
           <AppBar position="static">

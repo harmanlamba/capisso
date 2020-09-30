@@ -27,7 +27,7 @@ export const OrganisationsEditPage: React.FC<{}> = () => {
         <OrganisationsForm
           initialValues={organisation}
           onSubmit={editOrganisation}
-          type="edit"
+          type="Edit"
         />
       )}
     </div>

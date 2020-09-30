@@ -51,8 +51,8 @@ export const ProjectsAddPage: React.FC<{}> = () => {
       ) : (
         <ProjectsForm
           onSubmit={addProject}
-          type="add"
           initialValues={initialValues}
+          type="Add"
           courses={courses.courses}
           organisations={organisations.organisations}
           setOrganisationId={setOrganisationId}
