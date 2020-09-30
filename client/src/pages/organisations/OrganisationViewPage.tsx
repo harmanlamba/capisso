@@ -22,6 +22,7 @@ import { OrganisationStatusChip } from '../../components/organisations/Organisat
 import { OrganisationViewAbout } from '../../components/organisations/OrganisationViewAbout';
 import { OrganisationViewContacts } from './OrganisationViewContacts';
 import { OrganisationViewProjects } from './OrganisationViewProjects';
+import { Edit } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -76,6 +77,7 @@ export const OrganisationViewPage: React.FC<{}> = () => {
               <OrganisationStatusChip status={organisation.status} />{' '}
               <Button
                 variant="contained"
+                startIcon={<Edit />}
                 color="primary"
                 component={Link}
                 to={`/organisations/${organisation.id}/edit`}

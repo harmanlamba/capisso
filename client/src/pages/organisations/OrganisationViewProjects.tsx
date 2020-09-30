@@ -5,6 +5,7 @@ import { getProjectsForOrganisation } from '../../common/api/organisations';
 import { ProjectsList } from '../../components/projects/ProjectsList';
 import { IProjectDto } from '../../types/types';
 import { Button } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -32,6 +33,7 @@ export const OrganisationViewProjects: React.FC<{}> = () => {
       <ProjectsList projects={projects} />
       <Button
         className={classes.button}
+        startIcon={<Add />}
         component={Link}
         to={`/projects/add?initialOrganisation=${id}`}
         variant="contained"

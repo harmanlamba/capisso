@@ -21,6 +21,7 @@ import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { ProjectViewAbout } from '../../components/projects/ProjectViewAbout';
 import { IProjectDto } from '../../types/types';
 import { ProjectStatusChip } from '../../components/projects/ProjectStatusChip';
+import { Edit } from '@material-ui/icons';
 
 const useStyles = makeStyles(() => ({
   content: {
@@ -79,6 +80,7 @@ export const ProjectViewPage: React.FC<{}> = () => {
               <ProjectStatusChip status={project.status} />
               <Button
                 variant="contained"
+                startIcon={<Edit />}
                 color="primary"
                 component={Link}
                 to={`/projects/${project.id}/edit`}

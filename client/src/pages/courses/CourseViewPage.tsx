@@ -21,6 +21,7 @@ import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { CourseViewAbout } from '../../components/courses/CoursesViewAbout';
 import { CourseViewProjects } from './CourseViewProjects';
 import { ICourseDto } from '../../types/types';
+import { Edit } from '@material-ui/icons';
 
 const useStyles = makeStyles(() => ({
   content: {
@@ -81,6 +82,7 @@ export const CourseViewPage: React.FC<{}> = () => {
             </Typography>
             <Box ml={2} position="relative" top="-0.5em" display="inline">
               <Button
+                startIcon={<Edit />}
                 variant="contained"
                 color="primary"
                 component={Link}

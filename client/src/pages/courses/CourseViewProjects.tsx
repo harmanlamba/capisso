@@ -5,6 +5,7 @@ import { getProjectsForCourse } from '../../common/api/courses';
 import { ProjectsList } from '../../components/projects/ProjectsList';
 import { IProjectDto } from '../../types/types';
 import { Button } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -32,6 +33,7 @@ export const CourseViewProjects: React.FC<{}> = () => {
       <ProjectsList projects={projects} />
       <Button
         className={classes.button}
+        startIcon={<Add />}
         component={Link}
         to={`/projects/add?initialCourse=${id}`}
         variant="contained"
