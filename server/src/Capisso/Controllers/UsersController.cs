@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Capisso.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {

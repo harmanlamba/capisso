@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Capisso.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "Admin,User")]
     public class OrganisationsController : ControllerBase
