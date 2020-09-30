@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Capisso.Exceptions
 {
     [Serializable]
-    internal class NoAdminExistsException : Exception
+    public class NoAdminExistsException : Exception
     {
         public NoAdminExistsException()
         {

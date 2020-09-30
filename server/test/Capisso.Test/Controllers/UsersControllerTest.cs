@@ -124,5 +124,79 @@ namespace Capisso.Test.Controllers
             _mockUserRepository.Verify();
             _mockUserRepository.Verify(x => x.Delete(It.IsAny<User>()), Times.Never);
         }
+
+        [Test]
+        public async Task TestUpdateUserInvalidInput()
+        {
+            var userDto = new UserDto
+            {
+                Id = 2,
+                Email = "erc@aucklanduni.ac.nz",
+                UserRole = UserRole.User
+            };
+
+            _mockUserRepository.Setup(x => x.Update(It.IsAny<User>()));
+
+            // Act
+            ActionResult<NonActionAttribute> response = await _usersController.UpdateUser(userDto, 1);
+
+            // Assert
+            Assert.IsInstanceOf<BadRequestResult>(response.Result);
+
+            _mockUserRepository.Verify(x => x.Update(It.IsAny<User>()), Times.Never);
+        }
+
+        [Test]
+        public async Task TestUpdateUserValidInput()
+        {
+            var userDto = new UserDto
+            {
+                Id = 1,
+                Email = "p1@aucklanduni.ac.nz",
+                UserRole = UserRole.User
+            };
+
+            var remainingAdmins = new List<User>
+            {
+                new User { }
+            };
+
+            _mockUserRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>())).Returns(Task.FromResult(remainingAdmins.AsEnumerable()));
+            _mockUserRepository.Setup(x => x.Update(It.IsAny<User>()));
+
+            // Act
+            ActionResult<NonActionAttribute> response = await _usersController.UpdateUser(userDto, 1);
+
+            // Assert
+            Assert.IsInstanceOf<NoContentResult>(response.Result);
+
+            _mockUserRepository.Verify(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>()), Times.Once);
+            _mockUserRepository.Verify(x => x.Update(It.IsAny<User>()), Times.Once);
+        }
+
+        [Test]
+        public async Task TestUpdateUserWithNoRemainingAdmins()
+        {
+            var userDto = new UserDto
+            {
+                Id = 1,
+                Email = "p1@aucklanduni.ac.nz",
+                UserRole = UserRole.User
+            };
+
+            var remainingAdmins = new List<User> { };
+
+            _mockUserRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>())).Returns(Task.FromResult(remainingAdmins.AsEnumerable()));
+            _mockUserRepository.Setup(x => x.Update(It.IsAny<User>()));
+
+            // Act
+            ActionResult<NonActionAttribute> response = await _usersController.UpdateUser(userDto, 1);
+
+            // Assert
+            Assert.IsInstanceOf<BadRequestResult>(response.Result);
+
+            _mockUserRepository.Verify(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>()), Times.Once);
+            _mockUserRepository.Verify(x => x.Update(It.IsAny<User>()), Times.Never);
+        }
     }
 }
