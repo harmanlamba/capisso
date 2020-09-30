@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   withStyles,
 } from '@material-ui/core';
 import React from 'react';
@@ -50,7 +51,11 @@ export const CoursesList: React.FC<{
                 root: 'no-underline',
               }}
             >
-              <StyledTableCell> {row.name} </StyledTableCell>
+              <StyledTableCell>
+                <Typography color="textSecondary" style={{ fontWeight: 500 }}>
+                  {row.name}
+                </Typography>
+              </StyledTableCell>
               <StyledTableCell> {row.code} </StyledTableCell>
             </TableRow>
           ))}

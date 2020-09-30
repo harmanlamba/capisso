@@ -91,12 +91,7 @@ export const CourseViewPage: React.FC<{}> = () => {
               </Button>
             </Box>
           </Box>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            aria-label=""
-          >
+          <Tabs value={value} onChange={handleChange} indicatorColor="primary">
             <Tab label="About" disableRipple={true} />
             <Tab label="Projects" disableRipple={true} />
           </Tabs>

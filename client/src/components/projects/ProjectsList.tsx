@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   withStyles,
 } from '@material-ui/core';
 import moment from 'moment';
@@ -53,7 +54,11 @@ export const ProjectsList: React.FC<{
                 root: 'no-underline',
               }}
             >
-              <StyledTableCell> {row.title} </StyledTableCell>
+              <StyledTableCell>
+                <Typography color="textSecondary" style={{ fontWeight: 500 }}>
+                  {row.title}
+                </Typography>
+              </StyledTableCell>
               <StyledTableCell>
                 {moment(row.startDate).format('YYYY-MM-DD')}
               </StyledTableCell>

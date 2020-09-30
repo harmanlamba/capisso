@@ -20,7 +20,7 @@ export const OrganisationViewAbout: React.FC<{
         <Paper>
           <Box p={2}>
             <Typography variant="h6" display="inline" color="textSecondary">
-              Organization Description
+              Organisation Description
             </Typography>
             <Typography variant="subtitle1">
               {organisation.description}

@@ -68,6 +68,14 @@ const capissoTheme = createMuiTheme({
       },
     },
 
+    // Chip
+    MuiChip: {
+      colorPrimary: {
+        backgroundColor: '#deffde',
+        color: '#212121',
+      },
+    },
+
     // Tabs
     MuiTabs: {
       root: {

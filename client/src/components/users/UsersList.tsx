@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   withStyles,
   IconButton,
 } from '@material-ui/core';
@@ -67,7 +68,11 @@ export const UsersList: React.FC<{
                   root: 'no-underline',
                 }}
               >
-                <StyledTableCell>{user.email}</StyledTableCell>
+                <StyledTableCell>
+                  <Typography color="textSecondary" style={{ fontWeight: 500 }}>
+                    {user.email}
+                  </Typography>
+                </StyledTableCell>
                 <StyledTableCell>{user.userRole}</StyledTableCell>
                 <StyledTableCell>
                   <IconButton

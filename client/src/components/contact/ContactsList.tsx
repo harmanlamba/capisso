@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   withStyles,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -48,7 +49,11 @@ export const ContactsList: React.FC<{
         <TableBody>
           {contacts.map((row) => (
             <TableRow key={row.id}>
-              <StyledTableCell>{row.name}</StyledTableCell>
+              <StyledTableCell>
+                <Typography color="textSecondary" style={{ fontWeight: 500 }}>
+                  {row.name}
+                </Typography>
+              </StyledTableCell>
               <StyledTableCell> {row.email} </StyledTableCell>
               <StyledTableCell> {row.phoneNumber} </StyledTableCell>
               <StyledTableCell>

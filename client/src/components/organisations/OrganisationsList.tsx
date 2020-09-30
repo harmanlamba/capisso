@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   withStyles,
 } from '@material-ui/core';
 import React from 'react';
@@ -38,7 +39,7 @@ export const OrganisationsList: React.FC<{
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <StyledTableCell> Organization Name </StyledTableCell>
+            <StyledTableCell> Organisation Name </StyledTableCell>
             <StyledTableCell> Classifications </StyledTableCell>
             <StyledTableCell> Number of Projects </StyledTableCell>
             <StyledTableCell> Status </StyledTableCell>
@@ -55,7 +56,11 @@ export const OrganisationsList: React.FC<{
                 root: 'no-underline',
               }}
             >
-              <StyledTableCell> {row.name} </StyledTableCell>
+              <StyledTableCell>
+                <Typography color="textSecondary" style={{ fontWeight: 500 }}>
+                  {row.name}
+                </Typography>
+              </StyledTableCell>
               <StyledTableCell>
                 {row.classifications.join(', ')}
               </StyledTableCell>
