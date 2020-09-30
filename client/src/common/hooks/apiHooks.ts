@@ -7,7 +7,7 @@ import {
   IUserDto,
 } from '../../types/types';
 import { getAllContactsForOrganisation, getContact } from '../api/contacts';
-import { getAllCourses } from '../api/courses';
+import { getAllCourses, getCourse } from '../api/courses';
 import { getAllOrganisations, getOrganisation } from '../api/organisations';
 import { getAllProjects, getProject } from '../api/projects';
 import { getAllUsers } from '../api/users';
@@ -48,6 +48,25 @@ export const useCourses = () => {
   }, []);
 
   return { courses, loading, error };
+};
+
+export const useCourse = (id: number) => {
+  const [error, setError] = React.useState<Error>();
+  const [course, setCourse] = React.useState<ICourseDto>();
+  const [loading, setLoading] = React.useState<boolean>(true);
+
+  React.useEffect(() => {
+    setLoading(true);
+    getCourse(id)
+      .then((data) => setCourse(data))
+      .catch((e) => {
+        console.error(e);
+        setError(e);
+      })
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  return { course, loading, error };
 };
 
 export const useProjects = () => {
