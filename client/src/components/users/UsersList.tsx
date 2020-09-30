@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import React from 'react';
+import { deleteUser } from '../../common/api/users';
 import { IUserDto } from '../../types/types';
 import { UserDeleteConfirmation } from './UserDeleteConfirmation';
 
@@ -38,11 +39,22 @@ const StyledTableCell = withStyles((theme) => ({
 
 export const UsersList: React.FC<{
   users: IUserDto[];
-}> = ({ users }) => {
+  onDelete(): void;
+}> = ({ users, onDelete }) => {
   const classes = useStyles();
 
   const [confirmOpen, setConfirmOpen] = React.useState<boolean>(false);
   const [selectedUser, setSelectedUser] = React.useState<IUserDto>();
+
+  const handleDelete = async () => {
+    if (!selectedUser?.id) {
+      return;
+    }
+
+    await deleteUser(selectedUser.id);
+    setConfirmOpen(false);
+    onDelete();
+  };
 
   return (
     <>
@@ -88,7 +100,7 @@ export const UsersList: React.FC<{
         open={confirmOpen}
         user={selectedUser}
         onClose={() => setConfirmOpen(false)}
-        onConfirm={() => setConfirmOpen(false)}
+        onConfirm={handleDelete}
       />
     </>
   );

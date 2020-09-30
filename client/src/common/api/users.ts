@@ -10,3 +10,10 @@ export const getAllUsers = async (): Promise<IUserDto[]> => {
 
   return res.data as IUserDto[];
 };
+
+export const deleteUser = async (userId: number): Promise<void> => {
+  await axios.delete(
+    `${process.env.REACT_APP_API_BASE}/users/${userId}`,
+    getAxiosConfig()
+  );
+};

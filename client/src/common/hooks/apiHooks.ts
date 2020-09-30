@@ -149,7 +149,7 @@ export const useUsers = () => {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [users, setUsers] = React.useState<IUserDto[]>([]);
 
-  React.useEffect(() => {
+  const fetchUsers = () => {
     getAllUsers()
       .then((data) => setUsers(data))
       .catch((e) => {
@@ -157,7 +157,11 @@ export const useUsers = () => {
         setError(e);
       })
       .finally(() => setLoading(false));
+  };
+
+  React.useEffect(() => {
+    fetchUsers();
   }, []);
 
-  return { users, loading, error };
+  return { users, loading, error, refetch: fetchUsers };
 };
