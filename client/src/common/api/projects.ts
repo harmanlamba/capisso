@@ -7,7 +7,8 @@ export const addProject = async (
 ): Promise<ICreatedDto> => {
   const res = await axios.post(
     `${process.env.REACT_APP_API_BASE}/projects`,
-    project
+    project,
+    getAxiosConfig()
   );
 
   return res.data as ICreatedDto;
