@@ -3,6 +3,7 @@
 
 # Prod config
 appsettings.Production.json
+appsettings.Development.json
 
 # User-specific files
 *.suo

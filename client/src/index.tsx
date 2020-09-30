@@ -35,6 +35,10 @@ const capissoTheme = createMuiTheme({
       },
     },
   },
+  typography: {
+    body2: { fontSize: 20 },
+    fontFamily: ['Signika', 'sans-serif'].join(','),
+  },
 });
 
 ReactDOM.render(
