@@ -25,6 +25,9 @@ const capissoTheme = createMuiTheme({
       main: '#ffdbcc',
       contrastText: '#727272',
     },
+    text: {
+      secondary: '#5c90f7',
+    },
   },
   overrides: {
     // Button

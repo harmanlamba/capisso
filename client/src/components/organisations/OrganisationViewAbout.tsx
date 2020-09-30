@@ -19,29 +19,33 @@ export const OrganisationViewAbout: React.FC<{
       <Box mb={2}>
         <Paper>
           <Box p={2}>
-            <Typography variant="h6" color="primary" display="inline">
+            <Typography variant="h6" display="inline" color="textSecondary">
               Organization Description
             </Typography>
-            <p>{organisation.description}</p>
+            <Typography variant="subtitle1">
+              {organisation.description}
+            </Typography>
           </Box>
         </Paper>
       </Box>
       <Box mb={2}>
         <Paper>
           <Box p={2}>
-            <Typography variant="h6" color="primary" display="inline">
+            <Typography variant="h6" display="inline" color="textSecondary">
               Address
             </Typography>
-            <p>{organisation.address}</p>
+            <Typography variant="subtitle1">{organisation.address}</Typography>
           </Box>
         </Paper>
       </Box>
       <Paper>
         <Box p={2}>
-          <Typography variant="h6" color="primary" display="inline">
+          <Typography variant="h6" display="inline" color="textSecondary">
             Classifications
           </Typography>
-          <p>{organisation.classifications.join(', ')}</p>
+          <Typography variant="subtitle1">
+            {organisation.classifications.join(', ')}
+          </Typography>
         </Box>
       </Paper>
     </div>
