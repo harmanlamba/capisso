@@ -83,6 +83,13 @@ namespace Capisso.Services
                 throw new InvalidEmailException();
             }
 
+            var dbUser = await _unitOfWork.UserRepository.FindByAsync(u => String.Equals(u.Email.ToLower(), user.Email.ToLower()));
+
+            if (dbUser != null)
+            {
+                throw new DuplicateEmailException();
+            }
+
             await _unitOfWork.UserRepository.InsertAsync(user);
             await _unitOfWork.SaveAsync();
 

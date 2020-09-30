@@ -95,6 +95,10 @@ namespace Capisso.Controllers
             {
                 return BadRequest();
             }
+            catch (DuplicateEmailException)
+            {
+                return BadRequest();
+            }
 
             return Created($"/users/{userId}", new CreatedDto { Id = userId });
         }
