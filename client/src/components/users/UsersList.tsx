@@ -1,6 +1,7 @@
 import {
   makeStyles,
   Paper,
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -9,8 +10,10 @@ import {
   TableRow,
   withStyles,
 } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 import React from 'react';
 import { IUserDto } from '../../types/types';
+import { UserDeleteConfirmation } from './UserDeleteConfirmation';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -38,30 +41,55 @@ export const UsersList: React.FC<{
 }> = ({ users }) => {
   const classes = useStyles();
 
+  const [confirmOpen, setConfirmOpen] = React.useState<boolean>(false);
+  const [selectedUser, setSelectedUser] = React.useState<IUserDto>();
+
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>User Email</StyledTableCell>
-            <StyledTableCell>User Role</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {users.map((user) => (
-            <TableRow
-              key={user.id}
-              hover={true}
-              classes={{
-                root: 'no-underline',
-              }}
-            >
-              <StyledTableCell>{user.email}</StyledTableCell>
-              <StyledTableCell>{user.userRole}</StyledTableCell>
+    <>
+      <TableContainer component={Paper}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>User Email</StyledTableCell>
+              <StyledTableCell>User Role</StyledTableCell>
+              <StyledTableCell>User Actions</StyledTableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {users.map((user) => (
+              <TableRow
+                key={user.id}
+                hover={true}
+                classes={{
+                  root: 'no-underline',
+                }}
+              >
+                <StyledTableCell>{user.email}</StyledTableCell>
+                <StyledTableCell>{user.userRole}</StyledTableCell>
+                <StyledTableCell>
+                  <Button
+                    variant="contained"
+                    startIcon={<Delete />}
+                    onClick={() => {
+                      setSelectedUser(user);
+                      setConfirmOpen(true);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </StyledTableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <UserDeleteConfirmation
+        open={confirmOpen}
+        user={selectedUser}
+        onClose={() => setConfirmOpen(false)}
+        onConfirm={() => setConfirmOpen(false)}
+      />
+    </>
   );
 };
