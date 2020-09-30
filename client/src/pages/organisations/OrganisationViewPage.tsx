@@ -22,6 +22,7 @@ import { OrganisationStatusChip } from '../../components/organisations/Organisat
 import { OrganisationViewAbout } from '../../components/organisations/OrganisationViewAbout';
 import { OrganisationViewContacts } from './OrganisationViewContacts';
 import { OrganisationViewProjects } from './OrganisationViewProjects';
+import { Edit } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -74,11 +75,15 @@ export const OrganisationViewPage: React.FC<{}> = () => {
             </Typography>
             <Box ml={2} position="relative" top="-0.5em" display="inline">
               <OrganisationStatusChip status={organisation.status} />{' '}
-              <Link to={`/organisations/${organisation.id}/edit`}>
-                <Button variant="outlined" color="primary">
-                  Edit
-                </Button>
-              </Link>
+              <Button
+                variant="contained"
+                startIcon={<Edit />}
+                color="primary"
+                component={Link}
+                to={`/organisations/${organisation.id}/edit`}
+              >
+                Edit
+              </Button>
             </Box>
           </Box>
           <AppBar position="static">

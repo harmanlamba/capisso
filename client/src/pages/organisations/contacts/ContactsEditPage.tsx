@@ -28,7 +28,7 @@ export const ContactsEditPage: React.FC<{}> = () => {
           <ContactForm
             initialValues={contact}
             onSubmit={editContact}
-            type="edit"
+            type="Edit"
           />
         )
       )}

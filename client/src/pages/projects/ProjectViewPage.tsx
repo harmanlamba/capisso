@@ -21,6 +21,7 @@ import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { ProjectViewAbout } from '../../components/projects/ProjectViewAbout';
 import { IProjectDto } from '../../types/types';
 import { ProjectStatusChip } from '../../components/projects/ProjectStatusChip';
+import { Edit } from '@material-ui/icons';
 
 const useStyles = makeStyles(() => ({
   content: {
@@ -77,11 +78,15 @@ export const ProjectViewPage: React.FC<{}> = () => {
             </Typography>
             <Box ml={2} position="relative" top="-0.5em" display="inline">
               <ProjectStatusChip status={project.status} />
-              <Link to={`/projects/${project.id}/edit`}>
-                <Button variant="outlined" color="primary">
-                  Edit
-                </Button>
-              </Link>
+              <Button
+                variant="contained"
+                startIcon={<Edit />}
+                color="primary"
+                component={Link}
+                to={`/projects/${project.id}/edit`}
+              >
+                Edit
+              </Button>
             </Box>
           </Box>
           <AppBar position="static">

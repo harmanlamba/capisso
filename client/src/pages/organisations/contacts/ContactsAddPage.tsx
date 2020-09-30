@@ -30,7 +30,7 @@ export const ContactsAddPage: React.FC<{}> = () => {
           </Typography>
           <ContactForm
             onSubmit={addContact}
-            type="add"
+            type="Add"
             initialValues={{
               name: '',
               organisationId: +id,

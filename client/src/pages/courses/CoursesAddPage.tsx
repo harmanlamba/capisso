@@ -15,7 +15,7 @@ export const CoursesAddPage: React.FC<{}> = () => {
   return (
     <div className={classes.content}>
       <Typography variant="h4">Add Course</Typography>
-      <CoursesForm onSubmit={addCourse} type="add" />
+      <CoursesForm onSubmit={addCourse} type="Add" />
     </div>
   );
 };

@@ -33,7 +33,7 @@ export const CourseEditPage: React.FC<{}> = () => {
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <CoursesForm initialValues={course} onSubmit={editCourse} type="edit" />
+        <CoursesForm initialValues={course} onSubmit={editCourse} type="Edit" />
       )}
     </div>
   );

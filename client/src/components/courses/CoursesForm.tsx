@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 export interface ICourseFormProps {
   initialValues?: ICourseDto;
   onSubmit(course: ICourseDto): Promise<any>;
-  type: 'add' | 'edit';
+  type: 'Add' | 'Edit';
 }
 export const CoursesForm: React.FC<ICourseFormProps> = ({
   initialValues,
@@ -120,7 +120,7 @@ export const CoursesForm: React.FC<ICourseFormProps> = ({
                 variant="contained"
                 color="primary"
                 onClick={() => handleSubmit()}
-                startIcon={type === 'add' ? <Add /> : <Edit />}
+                startIcon={type === 'Add' ? <Add /> : <Edit />}
               >
                 {type}
               </Button>

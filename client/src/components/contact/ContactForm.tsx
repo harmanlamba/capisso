@@ -41,7 +41,7 @@ const contactStatusOptions = [
 export interface IContactFormProps {
   initialValues: IContactDto;
   onSubmit(contact: IContactDto): Promise<any>;
-  type: 'edit' | 'add';
+  type: 'Edit' | 'Add';
 }
 
 export const ContactForm: React.FC<IContactFormProps> = ({
@@ -99,7 +99,7 @@ export const ContactForm: React.FC<IContactFormProps> = ({
           }
 
           if (
-            type === 'edit' &&
+            type === 'Edit' &&
             values.status === ContactStatus.Inactive &&
             initialValues.hasActiveProject
           ) {
@@ -189,7 +189,7 @@ export const ContactForm: React.FC<IContactFormProps> = ({
                   variant="contained"
                   color="primary"
                   onClick={() => handleSubmit()}
-                  startIcon={type === 'add' ? <Add /> : <Edit />}
+                  startIcon={type === 'Add' ? <Add /> : <Edit />}
                 >
                   {type}
                 </Button>

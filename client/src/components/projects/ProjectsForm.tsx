@@ -58,7 +58,7 @@ const projectStatusOptions = [
 export interface IProjectsFormProps {
   initialValues?: IProjectDto;
   onSubmit(project: IProjectDto): Promise<any>;
-  type: 'edit' | 'add';
+  type: 'Edit' | 'Add';
   courses: ICourseDto[];
   organisations: IOrganisationDto[];
   setOrganisationId: (organisationId: number) => void;
@@ -326,7 +326,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                   variant="contained"
                   color="primary"
                   onClick={() => handleSubmit()}
-                  startIcon={type === 'add' ? <Add /> : <Edit />}
+                  startIcon={type === 'Add' ? <Add /> : <Edit />}
                 >
                   {type}
                 </Button>
