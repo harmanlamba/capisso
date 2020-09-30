@@ -7,28 +7,27 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@material-ui/core';
-import { IUserDto } from '../../types/types';
 
-interface UserDeleteConfirmationProps {
+interface ConfirmationDialogProps {
   open: boolean;
   onConfirm(): void;
   onClose(): void;
-  user?: IUserDto;
+  title: string;
+  content: string;
 }
 
-export const UserDeleteConfirmation: React.FC<UserDeleteConfirmationProps> = ({
+export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   open,
   onConfirm,
   onClose,
-  user,
+  title,
+  content,
 }) => {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Confirm User Deletion</DialogTitle>
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Are you sure you want to delete user with email {user?.email}?
-        </DialogContentText>
+        <DialogContentText>{content}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button variant="contained" color="default" onClick={onClose}>

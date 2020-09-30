@@ -14,7 +14,7 @@ import { Delete } from '@material-ui/icons';
 import React from 'react';
 import { deleteUser } from '../../common/api/users';
 import { IUserDto } from '../../types/types';
-import { UserDeleteConfirmation } from './UserDeleteConfirmation';
+import { ConfirmationDialog } from '../ConfirmationDialog';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -94,11 +94,12 @@ export const UsersList: React.FC<{
         </Table>
       </TableContainer>
 
-      <UserDeleteConfirmation
+      <ConfirmationDialog
         open={confirmOpen}
-        user={selectedUser}
         onClose={() => setConfirmOpen(false)}
         onConfirm={handleDelete}
+        title="Confirm User Deletion"
+        content={`Are you sure you want to delete the user with email ${selectedUser?.email}?`}
       />
     </>
   );
