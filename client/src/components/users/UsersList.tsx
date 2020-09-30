@@ -1,7 +1,6 @@
 import {
   makeStyles,
   Paper,
-  Button,
   Table,
   TableBody,
   TableCell,
@@ -9,6 +8,7 @@ import {
   TableHead,
   TableRow,
   withStyles,
+  IconButton,
 } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import React from 'react';
@@ -79,16 +79,14 @@ export const UsersList: React.FC<{
                 <StyledTableCell>{user.email}</StyledTableCell>
                 <StyledTableCell>{user.userRole}</StyledTableCell>
                 <StyledTableCell>
-                  <Button
-                    variant="contained"
-                    startIcon={<Delete />}
+                  <IconButton
                     onClick={() => {
                       setSelectedUser(user);
                       setConfirmOpen(true);
                     }}
                   >
-                    Delete
-                  </Button>
+                    <Delete />
+                  </IconButton>
                 </StyledTableCell>
               </TableRow>
             ))}
