@@ -1,0 +1,9 @@
+client/node_modules
+.git
+**/.gitignore
+.vscode
+.github
+**/bin/
+**/obj/
+Dockerfile
+**/build
