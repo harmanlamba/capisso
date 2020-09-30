@@ -29,3 +29,6 @@ GRANT ALL PRIVILEGES ON `capisso`.* TO 'efcoreuser'@'localhost';
 OR in the Package Manager console: `PM> Add-Migration <MigrationName>`
 1. Restart the server or manually apply the migration using: `dotnet ef database update`  
 OR in the Package Manager console: `PM> Update-Database`
+
+## Deploy the Application
+1. See [here](./DEPLOYMENT.md) for instructions
