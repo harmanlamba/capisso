@@ -46,7 +46,6 @@ export const UsersViewAllPage: React.FC<{}> = () => {
                 to="/users/add"
                 variant="contained"
                 color="primary"
-                disabled={true}
               >
                 + Add
               </Button>

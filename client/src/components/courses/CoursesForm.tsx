@@ -55,7 +55,7 @@ export const CoursesForm: React.FC<ICourseFormProps> = ({
           errors.name = 'Required';
         }
         if (!values.code) {
-          errors.name = 'Required';
+          errors.code = 'Required';
         }
 
         return errors;
