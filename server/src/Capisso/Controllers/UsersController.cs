@@ -96,7 +96,7 @@ namespace Capisso.Controllers
                 return BadRequest();
             }
 
-            return Created($"/users/{userId}", new CreatedDto { Id = userId});
+            return Created($"/users/{userId}", new CreatedDto { Id = userId });
         }
     }
 }
