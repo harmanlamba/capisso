@@ -63,7 +63,7 @@ export const ContactsList: React.FC<{
                 <Link
                   to={`/organisations/${row.organisationId}/contacts/${row.id}/edit`}
                 >
-                  <IconButton>
+                  <IconButton size="small">
                     <EditIcon />
                   </IconButton>
                 </Link>

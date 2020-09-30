@@ -12,6 +12,10 @@ const theme = createMuiTheme({
       main: '#e2ebfc',
       contrastText: '#5c90f7',
     },
+    secondary: {
+      main: '#ffdbcc',
+      contrastText: '#727272',
+    },
   },
 });
 
@@ -42,6 +46,12 @@ const capissoTheme = createMuiTheme({
           color: theme.palette.primary.main,
         },
       },
+      containedSecondary: {
+        '&:hover': {
+          backgroundColor: '#fcb292',
+          color: '#fff',
+        },
+      },
     },
 
     // Table
@@ -61,6 +71,7 @@ const capissoTheme = createMuiTheme({
       root: {
         borderBottom: '2px solid rgba(224,224,224,1)',
         height: 32,
+        padding: 12,
       },
       head: {
         borderBottom: '0',
@@ -85,10 +96,16 @@ const capissoTheme = createMuiTheme({
       },
       indicator: {
         backgroundColor: '#5c90f7',
-        height: 3,
+        height: 4,
         maxWidth: 100,
-        marginLeft: 30,
         marginRight: 30,
+        marginLeft: 30,
+      },
+    },
+    MuiTab: {
+      root: {
+        fontWeight: 500,
+        fontSize: 16,
       },
     },
   },

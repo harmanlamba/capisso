@@ -16,7 +16,7 @@ import { OrganisationStatusChip } from './OrganisationStatusChip';
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    width: `100%`,
+    width: '100%',
     flexGrow: 1,
   },
   table: {

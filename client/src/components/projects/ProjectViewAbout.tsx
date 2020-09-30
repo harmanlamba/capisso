@@ -10,7 +10,8 @@ import { ContactStatusChip } from '../contact/ContactStatusChip';
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    width: '100%',
+    width: '75%',
+    paddingLeft: '2em',
     flexGrow: 1,
     whiteSpace: 'pre-line',
   },

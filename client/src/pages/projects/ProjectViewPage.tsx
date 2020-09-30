@@ -82,6 +82,7 @@ export const ProjectViewPage: React.FC<{}> = () => {
                 startIcon={<Edit />}
                 color="primary"
                 component={Link}
+                style={{ marginLeft: 20 }}
                 to={`/projects/${project.id}/edit`}
               >
                 Edit

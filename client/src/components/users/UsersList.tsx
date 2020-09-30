@@ -76,6 +76,7 @@ export const UsersList: React.FC<{
                 <StyledTableCell>{user.userRole}</StyledTableCell>
                 <StyledTableCell>
                   <IconButton
+                    size="small"
                     onClick={() => {
                       setSelectedUser(user);
                       setConfirmOpen(true);
