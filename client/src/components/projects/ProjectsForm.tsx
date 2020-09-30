@@ -4,6 +4,9 @@ import {
   makeStyles,
   TextField,
   MenuItem,
+  Dialog,
+  DialogContent,
+  DialogTitle,
 } from '@material-ui/core';
 import { Add, Edit } from '@material-ui/icons';
 import { Form, Formik } from 'formik';
@@ -20,6 +23,8 @@ import { ProjectStatus } from '../../enums/enums';
 import { Autocomplete } from '@material-ui/lab';
 import { SnackbarMessage } from '../utility/SnackbarMessage';
 import Skeleton from '@material-ui/lab/Skeleton';
+import { addCourse, getAllCourses } from '../../common/api/courses';
+import { CoursesForm } from '../courses/CoursesForm';
 
 const useStyles = makeStyles(() => ({
   boxContainer: {
@@ -34,6 +39,9 @@ const useStyles = makeStyles(() => ({
   },
   skeleton: {
     margin: '12px 0',
+  },
+  modalContent: {
+    margin: '-50px -40px  -30px -40px',
   },
 }));
 
@@ -81,6 +89,32 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
   const classes = useStyles();
 
   const [isConfirmationOpen, setConfirmationOpen] = React.useState(false);
+  const [openCourseModal, setOpenCourseModal] = React.useState(false);
+
+  const [courseList, setCourseList] = React.useState<ICourseDto[]>(courses);
+  const [coursesLoading, setCoursesLoading] = React.useState(false);
+
+  const handleClickAddCourse = () => {
+    setOpenCourseModal(true);
+  };
+
+  const closeCourseModal = () => {
+    setOpenCourseModal(false);
+  };
+
+  const handleAddCourseSuccess = () => {
+    closeCourseModal();
+
+    setCoursesLoading(true);
+    getAllCourses()
+      .then((data) => {
+        setCourseList(data);
+      })
+      .catch((e) => console.error(e))
+      .finally(() => {
+        setCoursesLoading(false);
+      });
+  };
 
   return (
     <React.Fragment>
@@ -280,31 +314,66 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                 />
               )}
 
-              <Autocomplete
-                multiple={true}
-                options={courses}
-                getOptionLabel={(course) => `${course?.code}: ${course?.name}`}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    className={classes.textField}
-                    variant="filled"
-                    label="Courses"
-                    fullWidth={true}
-                    required={true}
-                    error={!!errors.courseIds}
-                  />
-                )}
-                onChange={(_e, v) =>
-                  setFieldValue(
-                    'courseIds',
-                    v.map((course) => course?.id)
-                  )
-                }
-                value={values.courseIds.map((id) =>
-                  courses.find((c) => c.id === id)
-                )}
-              />
+              {coursesLoading ? (
+                <Skeleton
+                  className={classes.skeleton}
+                  variant="rect"
+                  width={800}
+                  height={59}
+                />
+              ) : (
+                <Autocomplete
+                  multiple={true}
+                  options={courseList}
+                  getOptionLabel={(course) =>
+                    `${course?.code}: ${course?.name}`
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      className={classes.textField}
+                      variant="filled"
+                      label="Courses"
+                      fullWidth={true}
+                      required={true}
+                      error={!!errors.courseIds}
+                    />
+                  )}
+                  onChange={(_e, v) =>
+                    setFieldValue(
+                      'courseIds',
+                      v.map((course) => course?.id)
+                    )
+                  }
+                  value={values.courseIds.map((id) =>
+                    courseList.find((c) => c.id === id)
+                  )}
+                />
+              )}
+
+              <Button
+                className={classes.button}
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={handleClickAddCourse}
+              >
+                + Add new course
+              </Button>
+
+              <Dialog open={openCourseModal} onClose={closeCourseModal}>
+                <DialogTitle>Add new course</DialogTitle>
+                <DialogContent>
+                  <div className={classes.modalContent}>
+                    <CoursesForm
+                      type="Add"
+                      onSubmit={addCourse}
+                      handleCancel={() => closeCourseModal()}
+                      handleSubmitSuccess={() => handleAddCourseSuccess()}
+                    />
+                  </div>
+                </DialogContent>
+              </Dialog>
 
               <Box
                 className={classes.textField}
