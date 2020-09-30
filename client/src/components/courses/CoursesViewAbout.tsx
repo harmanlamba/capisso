@@ -4,7 +4,8 @@ import { ICourseDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    width: '100%',
+    width: '75%',
+    paddingLeft: '2em',
     flexGrow: 1,
     whiteSpace: 'pre-line',
   },
@@ -20,10 +21,10 @@ export const CourseViewAbout: React.FC<{ course: ICourseDto }> = ({
       <Box mb={2}>
         <Paper>
           <Box p={2}>
-            <Typography variant="h6" color="primary" display="inline">
+            <Typography variant="h6" display="inline" color="textSecondary">
               Course Name
             </Typography>
-            <p>{course.name}</p>
+            <Typography variant="subtitle1">{course.name}</Typography>
           </Box>
         </Paper>
       </Box>
@@ -32,10 +33,10 @@ export const CourseViewAbout: React.FC<{ course: ICourseDto }> = ({
         <Box mb={2}>
           <Paper>
             <Box p={2}>
-              <Typography variant="h6" color="primary" display="inline">
+              <Typography variant="h6" display="inline" color="textSecondary">
                 Course Code
               </Typography>
-              <p>{course.code}</p>
+              <Typography variant="subtitle1">{course.code}</Typography>
             </Box>
           </Paper>
         </Box>
@@ -45,10 +46,10 @@ export const CourseViewAbout: React.FC<{ course: ICourseDto }> = ({
         <Box mb={2}>
           <Paper>
             <Box p={2}>
-              <Typography variant="h6" color="primary" display="inline">
+              <Typography variant="h6" display="inline" color="textSecondary">
                 Course Description
               </Typography>
-              <p>{course.description}</p>
+              <Typography variant="subtitle1">{course.description}</Typography>
             </Box>
           </Paper>
         </Box>

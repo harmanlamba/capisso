@@ -1,12 +1,12 @@
 import {
   makeStyles,
-  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   withStyles,
 } from '@material-ui/core';
 import React from 'react';
@@ -16,7 +16,7 @@ import { OrganisationStatusChip } from './OrganisationStatusChip';
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    width: `100%`,
+    width: '100%',
     flexGrow: 1,
   },
   table: {
@@ -25,15 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 16,
-  },
-}))(TableCell);
+const StyledTableCell = withStyles((theme) => ({}))(TableCell);
 
 export const OrganisationsList: React.FC<{
   organisations: IOrganisationDto[];
@@ -43,11 +35,11 @@ export const OrganisationsList: React.FC<{
   const organisations = props.organisations;
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <StyledTableCell> Organization Name </StyledTableCell>
+            <StyledTableCell> Organisation Name </StyledTableCell>
             <StyledTableCell> Classifications </StyledTableCell>
             <StyledTableCell> Number of Projects </StyledTableCell>
             <StyledTableCell> Status </StyledTableCell>
@@ -64,7 +56,11 @@ export const OrganisationsList: React.FC<{
                 root: 'no-underline',
               }}
             >
-              <StyledTableCell> {row.name} </StyledTableCell>
+              <StyledTableCell>
+                <Typography color="textSecondary" style={{ fontWeight: 500 }}>
+                  {row.name}
+                </Typography>
+              </StyledTableCell>
               <StyledTableCell>
                 {row.classifications.join(', ')}
               </StyledTableCell>

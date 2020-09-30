@@ -1,5 +1,4 @@
 import {
-  AppBar,
   Box,
   Button,
   makeStyles,
@@ -74,25 +73,24 @@ export const OrganisationViewPage: React.FC<{}> = () => {
               {organisation.name}
             </Typography>
             <Box ml={2} position="relative" top="-0.5em" display="inline">
-              <OrganisationStatusChip status={organisation.status} />{' '}
+              <OrganisationStatusChip status={organisation.status} />
               <Button
                 variant="contained"
                 startIcon={<Edit />}
                 color="primary"
                 component={Link}
+                style={{ marginLeft: 20 }}
                 to={`/organisations/${organisation.id}/edit`}
               >
                 Edit
               </Button>
             </Box>
           </Box>
-          <AppBar position="static">
-            <Tabs value={value} onChange={handleChange} aria-label="">
-              <Tab label="About" />
-              <Tab label="Projects" />
-              <Tab label="Contacts" />
-            </Tabs>
-          </AppBar>
+          <Tabs value={value} onChange={handleChange} indicatorColor="primary">
+            <Tab label="About" disableRipple={true} />
+            <Tab label="Projects" disableRipple={true} />
+            <Tab label="Contacts" disableRipple={true} />
+          </Tabs>
           <Box pt={2}>
             <Switch>
               <Route

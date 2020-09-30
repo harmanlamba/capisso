@@ -1,12 +1,12 @@
 import {
   makeStyles,
-  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   withStyles,
 } from '@material-ui/core';
 import React from 'react';
@@ -24,15 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 16,
-  },
-}))(TableCell);
+const StyledTableCell = withStyles((theme) => ({}))(TableCell);
 
 export const CoursesList: React.FC<{
   courses: ICourseDto[];
@@ -40,7 +32,7 @@ export const CoursesList: React.FC<{
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
@@ -59,7 +51,11 @@ export const CoursesList: React.FC<{
                 root: 'no-underline',
               }}
             >
-              <StyledTableCell> {row.name} </StyledTableCell>
+              <StyledTableCell>
+                <Typography color="textSecondary" style={{ fontWeight: 500 }}>
+                  {row.name}
+                </Typography>
+              </StyledTableCell>
               <StyledTableCell> {row.code} </StyledTableCell>
             </TableRow>
           ))}

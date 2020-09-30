@@ -1,12 +1,12 @@
 import {
   makeStyles,
-  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   withStyles,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -27,15 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 16,
-  },
-}))(TableCell);
+const StyledTableCell = withStyles((theme) => ({}))(TableCell);
 
 export const ContactsList: React.FC<{
   contacts: IContactDto[];
@@ -43,7 +35,7 @@ export const ContactsList: React.FC<{
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
@@ -57,7 +49,11 @@ export const ContactsList: React.FC<{
         <TableBody>
           {contacts.map((row) => (
             <TableRow key={row.id}>
-              <StyledTableCell> {row.name} </StyledTableCell>
+              <StyledTableCell>
+                <Typography color="textSecondary" style={{ fontWeight: 500 }}>
+                  {row.name}
+                </Typography>
+              </StyledTableCell>
               <StyledTableCell> {row.email} </StyledTableCell>
               <StyledTableCell> {row.phoneNumber} </StyledTableCell>
               <StyledTableCell>
@@ -67,7 +63,7 @@ export const ContactsList: React.FC<{
                 <Link
                   to={`/organisations/${row.organisationId}/contacts/${row.id}/edit`}
                 >
-                  <IconButton>
+                  <IconButton size="small">
                     <EditIcon />
                   </IconButton>
                 </Link>

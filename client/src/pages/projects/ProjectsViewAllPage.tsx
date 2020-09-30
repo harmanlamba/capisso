@@ -8,6 +8,7 @@ import {
   Grid,
   TextField,
 } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 
 import { ProjectsList } from '../../components/projects/ProjectsList';
 import { useProjects } from '../../common/hooks/apiHooks';
@@ -45,11 +46,12 @@ export const ProjectsViewAllPage: React.FC<{}> = () => {
             <Box ml={2} position="relative" top="-0.5em" display="inline">
               <Button
                 component={Link}
+                startIcon={<Add />}
                 to="/projects/add"
                 variant="contained"
                 color="primary"
               >
-                + Add
+                Add
               </Button>
             </Box>
           </Box>
