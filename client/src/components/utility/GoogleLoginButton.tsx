@@ -16,6 +16,8 @@ export const GoogleLoginButton: React.FC<{}> = () => {
   const [errorMessage, setErrorMessage] = React.useState<string>('');
 
   const GOOGLE_CLIENT_ID: string = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`;
+  const GOOGLE_HOSTED_DOMAIN: string | undefined =
+    process.env.REACT_APP_GOOGLE_HOSTED_DOMAIN;
 
   React.useEffect(() => {
     const foundUser: ILoginDto = JSON.parse(
@@ -92,6 +94,7 @@ export const GoogleLoginButton: React.FC<{}> = () => {
           clientId={GOOGLE_CLIENT_ID}
           onSuccess={googleSuccessfulResponse}
           onFailure={googleFailureResponse}
+          hostedDomain={GOOGLE_HOSTED_DOMAIN}
         />
       )}
     </React.Fragment>
