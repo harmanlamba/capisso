@@ -77,6 +77,10 @@ namespace Capisso.Controllers
             {
                 return NotFound();
             }
+            catch (NoAdminExistsException)
+            {
+                return BadRequest();
+            }
 
             return NoContent();
         }
@@ -101,6 +105,28 @@ namespace Capisso.Controllers
             }
 
             return Created($"/users/{userId}", new CreatedDto { Id = userId });
+        }
+
+        [HttpPut]
+        [Route("{userId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> UpdateUser([FromBody] UserDto userDto, [FromRoute] int userId)
+        {
+            if (userDto.Id != userId)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _userService.UpdateUser(userDto);
+            }
+            catch (NoAdminExistsException)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
         }
     }
 }

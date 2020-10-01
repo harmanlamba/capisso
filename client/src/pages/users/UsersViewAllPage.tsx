@@ -66,7 +66,11 @@ export const UsersViewAllPage: React.FC<{}> = () => {
         </Grid>
       </Box>
 
-      <UsersList users={filteredUsers} onDelete={refetch} />
+      <UsersList
+        users={filteredUsers}
+        onDelete={refetch}
+        onRoleChange={refetch}
+      />
     </div>
   );
 };
