@@ -91,7 +91,7 @@ namespace Capisso.Services
 
             var dbUser = await _unitOfWork.UserRepository.FindByAsync(u => String.Equals(u.Email.ToLower(), user.Email.ToLower()));
 
-            if (dbUser != null)
+            if (dbUser.Any())
             {
                 throw new DuplicateEmailException();
             }
