@@ -164,7 +164,7 @@ namespace Capisso.Test.Services
         }
 
         [Test]
-        public async Task TestDeleteExistingUserWithNoRemainingAdmins()
+        public void TestDeleteExistingUserWithNoRemainingAdmins()
         {
             // arrange
             var user = new User
@@ -237,7 +237,7 @@ namespace Capisso.Test.Services
         }
 
         [Test]
-        public async Task TestUpdateUserWithNoRemainingAdmins()
+        public void TestUpdateUserWithNoRemainingAdmins()
         {
             var userDto = new UserDto
             {
