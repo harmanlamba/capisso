@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Capisso.Exceptions
 {
     [Serializable]
-    internal class DuplicateEmailException : Exception
+    public class DuplicateEmailException : Exception
     {
         public DuplicateEmailException()
         {

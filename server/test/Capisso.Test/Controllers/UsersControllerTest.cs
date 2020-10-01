@@ -11,6 +11,7 @@ using Capisso.Exceptions;
 using Capisso.Repository;
 using Capisso.Services;
 using Capisso.Test.Repository;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -78,6 +79,74 @@ namespace Capisso.Test.Controllers
             Assert.AreEqual(2, resultList[1].Id);
             Assert.AreEqual("456@gmail.com", resultList[1].Email);
             Assert.AreEqual(UserRole.Admin, resultList[1].UserRole);
+        }
+
+        [Test]
+        public async Task TestAddValidEmailUser()
+        {
+            // arrange
+            var userDto = new UserDto { Email = "test@aucklanduni.ac.nz", UserRole = UserRole.User };
+
+            _mockUserRepository
+                .Setup(x => x.InsertAsync(It.IsAny<User>()))
+                .Returns(Task.FromResult(1));
+
+            _mockUserRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<System.Func<Capisso.Entities.User, bool>>>())).Returns(Task.FromResult(Enumerable.Empty<User>()));
+
+            // act
+            ActionResult<CreatedDto> response = await _usersController.AddUser(userDto);
+
+            // assert
+            Assert.IsInstanceOf<CreatedResult>(response.Result);
+            CreatedResult createdResult = response.Result as CreatedResult;
+            Assert.AreEqual(201, createdResult.StatusCode);
+
+            CreatedDto value = createdResult.Value.As<CreatedDto>();
+            Assert.IsNotNull(value);
+            Assert.AreEqual(0, value.Id);
+
+            _mockUserRepository.Verify(x => x.InsertAsync(It.IsAny<User>()), Times.Once);
+        }
+
+        [Test]
+        public async Task TestAddInvalidEmailUser()
+        {
+            // arrange
+            var userDto = new UserDto { Email = "test@gmail.com", UserRole = UserRole.User };
+
+            // act
+            ActionResult<CreatedDto> response = await _usersController.AddUser(userDto);
+
+            // assert
+            Assert.IsInstanceOf<BadRequestResult>(response.Result);
+
+            _mockUserRepository.Verify(x => x.InsertAsync(It.IsAny<User>()), Times.Never);
+        }
+
+        [Test]
+        public async Task TestAddDuplicatedUser()
+        {
+            // arrange
+            var userDto = new UserDto { Email = "test@aucklanduni.ac.nz", UserRole = UserRole.User };
+            IEnumerable<User> users = new List<User>
+            {
+                new User
+                {
+                    Id = 1,
+                    Email = "test@aucklanduni.ac.nz",
+                    UserRole = UserRole.User,
+                },
+            };
+
+            _mockUserRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<System.Func<Capisso.Entities.User, bool>>>())).Returns(Task.FromResult(users));
+
+            // act
+            ActionResult<CreatedDto> response = await _usersController.AddUser(userDto);
+
+            // assert
+            Assert.IsInstanceOf<BadRequestResult>(response.Result);
+
+            _mockUserRepository.Verify(x => x.InsertAsync(It.IsAny<User>()), Times.Never);
         }
 
         [Test]
