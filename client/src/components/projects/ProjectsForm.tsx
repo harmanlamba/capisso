@@ -100,11 +100,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
       .then((data) => {
         // Add the newly added course to the course field
         setCourseList(data);
-        setFieldValue(
-          'courseIds',
-          [...courseIds, data[data.length - 1].id!],
-          false
-        );
+        setFieldValue('courseIds', [...courseIds, data[data.length - 1].id!]);
       })
       .catch((e) => console.error(e))
       .finally(() => {
