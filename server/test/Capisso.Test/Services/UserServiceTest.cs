@@ -1,4 +1,5 @@
-﻿using Capisso.Entities;
+﻿using Capisso.Dto;
+using Capisso.Entities;
 using Capisso.Exceptions;
 using Capisso.Repository;
 using Capisso.Services;
@@ -131,12 +132,25 @@ namespace Capisso.Test.Services
             {
                 Id = 1,
                 Email = "123@gmail.com",
-                UserRole = UserRole.User,
+                UserRole = UserRole.Admin,
+            };
+
+            var remainingAdmins = new List<User>
+            {
+                new User
+                {
+                    Id = 1
+                }
             };
 
             _mockUserRepository
                 .Setup(x => x.GetByIdAsync(1))
                 .Returns(Task.FromResult(user))
+                .Verifiable();
+
+            _mockUserRepository
+                .Setup(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(Task.FromResult(remainingAdmins.AsEnumerable()))
                 .Verifiable();
 
             _mockUserRepository.Setup(x => x.Delete(user))
@@ -147,6 +161,38 @@ namespace Capisso.Test.Services
 
             // assert
             _mockUserRepository.Verify();
+        }
+
+        [Test]
+        public void TestDeleteExistingUserWithNoRemainingAdmins()
+        {
+            // arrange
+            var user = new User
+            {
+                Id = 1,
+                Email = "123@gmail.com",
+                UserRole = UserRole.Admin,
+            };
+
+            var remainingAdmins = new List<User> { };
+
+            _mockUserRepository
+                .Setup(x => x.GetByIdAsync(1))
+                .Returns(Task.FromResult(user))
+                .Verifiable();
+
+            _mockUserRepository
+                .Setup(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(Task.FromResult(remainingAdmins.AsEnumerable()))
+                .Verifiable();
+
+            _mockUserRepository.Setup(x => x.Delete(user));
+
+            // act and assert
+            Assert.ThrowsAsync<NoAdminExistsException>(() => _userService.DeleteUser(1));
+
+            _mockUserRepository.Verify();
+            _mockUserRepository.Verify(x => x.Delete(It.IsAny<User>()), Times.Never);
         }
 
         [Test]
@@ -163,6 +209,54 @@ namespace Capisso.Test.Services
 
             _mockUserRepository.Verify();
             _mockUserRepository.Verify(x => x.Delete(It.IsAny<User>()), Times.Never);
+        }
+
+        [Test]
+        public async Task TestUpdateUserValidInput()
+        {
+            var userDto = new UserDto
+            {
+                Id = 1,
+                Email = "p1@aucklanduni.ac.nz",
+                UserRole = UserRole.User
+            };
+
+            var remainingAdmins = new List<User>
+            {
+                new User { Id = 2 }
+            };
+
+            _mockUserRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>())).Returns(Task.FromResult(remainingAdmins.AsEnumerable()));
+            _mockUserRepository.Setup(x => x.Update(It.IsAny<User>()));
+
+            // Act
+            await _userService.UpdateUser(userDto);
+
+            // Assert
+            _mockUserRepository.Verify();
+        }
+
+        [Test]
+        public void TestUpdateUserWithNoRemainingAdmins()
+        {
+            var userDto = new UserDto
+            {
+                Id = 1,
+                Email = "someonehasanurzababafetish@aucklanduni.ac.nz",
+                UserRole = UserRole.User
+            };
+
+            var remainingAdmins = new List<User> { };
+
+            _mockUserRepository.Setup(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>())).Returns(Task.FromResult(remainingAdmins.AsEnumerable()));
+            _mockUserRepository.Setup(x => x.Update(It.IsAny<User>()));
+
+            // Act
+            Assert.ThrowsAsync<NoAdminExistsException>(() => _userService.UpdateUser(userDto));
+
+            // Assert
+            _mockUserRepository.Verify(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>()), Times.Once);
+            _mockUserRepository.Verify(x => x.Update(It.IsAny<User>()), Times.Never);
         }
     }
 }

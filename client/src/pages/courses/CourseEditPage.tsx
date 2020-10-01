@@ -1,10 +1,10 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { editCourse, getCourse } from '../../common/api/courses';
+import { editCourse } from '../../common/api/courses';
 import { CoursesForm } from '../../components/courses/CoursesForm';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
-import { ICourseDto } from '../../types/types';
+import { useCourse } from '../../common/hooks/apiHooks';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -16,16 +16,7 @@ const useStyles = makeStyles((theme) => ({
 export const CourseEditPage: React.FC<{}> = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [course, setCourse] = React.useState<ICourseDto>();
-  const [loading, setLoading] = React.useState<boolean>();
-
-  React.useEffect(() => {
-    setLoading(true);
-    getCourse(id)
-      .then((data) => setCourse(data))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }, [id]);
+  const { course, loading } = useCourse(id);
 
   return (
     <div className={classes.content}>

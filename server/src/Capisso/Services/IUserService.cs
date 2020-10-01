@@ -10,5 +10,6 @@ namespace Capisso.Services
         Task<IEnumerable<UserDto>> GetAllUsers();
         Task DeleteUser(int id);
         Task<int> AddUser(UserDto userDto);
+        Task UpdateUser(UserDto userDto);
     }
 }

@@ -27,3 +27,11 @@ export const addUser = async (user: IUserDto): Promise<ICreatedDto> => {
 
   return res.data as ICreatedDto;
 };
+
+export const editUser = async (user: IUserDto): Promise<void> => {
+  await axios.put(
+    `${process.env.REACT_APP_API_BASE}/users/${user.id}`,
+    user,
+    getAxiosConfig()
+  );
+};
