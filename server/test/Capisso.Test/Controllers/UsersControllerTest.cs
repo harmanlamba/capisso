@@ -88,12 +88,25 @@ namespace Capisso.Test.Controllers
             {
                 Id = 1,
                 Email = "123@gmail.com",
-                UserRole = UserRole.User,
+                UserRole = UserRole.Admin,
+            };
+
+            var remainingAdmins = new List<User>
+            {
+                new User
+                {
+                    Id = 1
+                }
             };
 
             _mockUserRepository
                 .Setup(x => x.GetByIdAsync(1))
                 .Returns(Task.FromResult(user))
+                .Verifiable();
+
+            _mockUserRepository
+                .Setup(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(Task.FromResult(remainingAdmins.AsEnumerable()))
                 .Verifiable();
 
             _mockUserRepository.Setup(x => x.Delete(user))
@@ -105,6 +118,40 @@ namespace Capisso.Test.Controllers
             // assert
             Assert.IsInstanceOf<NoContentResult>(response);
             _mockUserRepository.Verify();
+        }
+
+        [Test]
+        public async Task TestDeleteExistingUserWithNoRemainingAdmins()
+        {
+            // arrange
+            var user = new User
+            {
+                Id = 1,
+                Email = "123@gmail.com",
+                UserRole = UserRole.Admin,
+            };
+
+            var remainingAdmins = new List<User> { };
+
+            _mockUserRepository
+                .Setup(x => x.GetByIdAsync(1))
+                .Returns(Task.FromResult(user))
+                .Verifiable();
+
+            _mockUserRepository
+                .Setup(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(Task.FromResult(remainingAdmins.AsEnumerable()))
+                .Verifiable();
+
+            _mockUserRepository.Setup(x => x.Delete(user));
+
+            // act
+            var response = await _usersController.DeleteUser(1);
+
+            // assert
+            Assert.IsInstanceOf<BadRequestResult>(response);
+            _mockUserRepository.Verify();
+            _mockUserRepository.Verify(x => x.Delete(It.IsAny<User>()), Times.Never);
         }
 
         [Test]

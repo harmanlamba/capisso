@@ -77,6 +77,10 @@ namespace Capisso.Controllers
             {
                 return NotFound();
             }
+            catch (NoAdminExistsException)
+            {
+                return BadRequest();
+            }
 
             return NoContent();
         }

@@ -51,9 +51,13 @@ export const UsersList: React.FC<{
       return;
     }
 
-    await deleteUser(selectedUser.id);
-    setDeleteConfirmOpen(false);
-    onDelete();
+    deleteUser(selectedUser?.id)
+      .then(onDelete)
+      .catch((e) => {
+        console.error(e);
+        setSnackBarOpen(true);
+      })
+      .finally(() => setDeleteConfirmOpen(false));
   };
 
   const handleRoleEdit = async () => {
@@ -170,7 +174,7 @@ export const UsersList: React.FC<{
         isOpen={snackBarOpen}
         setOpen={setSnackBarOpen}
         severity="error"
-        text="The request could not be made. Please ensure that an admin exists"
+        text="The request could not be made. Please ensure that another admin exists"
       />
     </>
   );

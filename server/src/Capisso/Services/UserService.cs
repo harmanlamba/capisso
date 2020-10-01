@@ -68,6 +68,11 @@ namespace Capisso.Services
             var user = await _unitOfWork.UserRepository.GetByIdAsync(id) ??
                        throw new EntityNotFoundException($"User with id <{id}> not found");
 
+            if (user.UserRole.Equals(UserRole.Admin) && !(await CheckAdminExistsAfterUserRemoval(user)))
+            {
+                throw new NoAdminExistsException();
+            }
+
             _unitOfWork.UserRepository.Delete(user);
             await _unitOfWork.SaveAsync();
         }
@@ -101,19 +106,21 @@ namespace Capisso.Services
         {
             var user = UserMapper.FromDto(userDto);
 
-            if (user.UserRole.Equals(UserRole.User))
+            if (!user.UserRole.Equals(UserRole.Admin) && !(await CheckAdminExistsAfterUserRemoval(user)))
             {
-                var remainingAdminList = await _unitOfWork.UserRepository
-                    .FindByAsync(u => u.UserRole.Equals(UserRole.Admin) && !String.Equals(user.Email.ToLower(), u.Email.ToLower()));
-
-                if (!remainingAdminList.Any())
-                {
-                    throw new NoAdminExistsException();
-                }
+                throw new NoAdminExistsException();
             }
 
             _unitOfWork.UserRepository.Update(user);
             await _unitOfWork.SaveAsync();
+        }
+
+        private async Task<bool> CheckAdminExistsAfterUserRemoval(User removedUser)
+        {
+            var remainingAdminList = await _unitOfWork.UserRepository
+                    .FindByAsync(u => u.UserRole.Equals(UserRole.Admin) && !String.Equals(removedUser.Email.ToLower(), u.Email.ToLower()));
+
+            return remainingAdminList.Any();
         }
     }
 }
