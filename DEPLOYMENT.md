@@ -19,6 +19,8 @@ CREATE USER '<USERNAME>'@'<HOST>' IDENTIFIED BY '<PASSWORD>';
 GRANT ALL PRIVILEGES ON `capisso`.* TO '<USERNAME>'@'<HOST>';
 ```
 
+> Note: If hosting the database and docker container on the same machine `<HOST>` should be `docker.host.internal` on Windows, or `172.17.0.1` on Linux.
+
 ## Configuring Google Authentication
 
 <!--TODO -->
@@ -33,7 +35,7 @@ REACT_APP_GOOGLE_CLIENT_ID='<GOOGLE_CLIENT_ID>'
 REACT_APP_GOOGLE_HOSTED_DOMAIN='aucklanduni.ac.nz'
 ```
 
-1. Create the `server/src/Capisso/appsettings.Production.json` with the following contents:
+2. Create the `server/src/Capisso/appsettings.Production.json` with the following contents:
 
 ```json
 {
@@ -44,7 +46,7 @@ REACT_APP_GOOGLE_HOSTED_DOMAIN='aucklanduni.ac.nz'
 }
 ```
 
-1. Build the image using the command from the project root directory:
+3. Build the image using the command from the project root directory:
 
 ```
 docker build -t <IMAGE_NAME> .
