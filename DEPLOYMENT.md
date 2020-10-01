@@ -23,7 +23,11 @@ GRANT ALL PRIVILEGES ON `capisso`.* TO '<USERNAME>'@'<HOST>';
 
 ## Configuring Google Authentication
 
-<!--TODO -->
+1. Navigate to the Google Developer Console and create a new OAuth Consent screen
+2. In the Developer Console proceed to create a WebApp Credential and store the `Client_ID` safely.
+3. Update the `REACT_APP_GOOGLE_CLIENT_ID` field in the file `client/.env` file as mentioned in the 'Building the Docker Image'
+4. Create a 32 character `JWT Secret` to be used to sign the JWT Bearer Tokens
+5. Update the `JwtSecret` field in `appsettings.Production` in the docker image respectively
 
 ## Building the Docker image
 
@@ -39,10 +43,10 @@ REACT_APP_GOOGLE_HOSTED_DOMAIN='aucklanduni.ac.nz'
 
 ```json
 {
-    "Database": {
-        "ConnectionString": "Server=<HOST>;Database=capisso;User=<USERNAME>;Password=<PASSWORD>"
-    },
-    "JwtSecret": "<JWT_SECRET>"
+  "Database": {
+    "ConnectionString": "Server=<HOST>;Database=capisso;User=<USERNAME>;Password=<PASSWORD>"
+  },
+  "JwtSecret": "<JWT_SECRET>"
 }
 ```
 
