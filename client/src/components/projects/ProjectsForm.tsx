@@ -22,9 +22,9 @@ import {
 import { ProjectStatus } from '../../enums/enums';
 import { Autocomplete } from '@material-ui/lab';
 import { SnackbarMessage } from '../utility/SnackbarMessage';
-import Skeleton from '@material-ui/lab/Skeleton';
 import { addCourse, getAllCourses } from '../../common/api/courses';
 import { CoursesForm } from '../courses/CoursesForm';
+import { LoadingFieldSkeleton } from '../utility/LoadingFieldSkeleton';
 
 const useStyles = makeStyles(() => ({
   boxContainer: {
@@ -300,12 +300,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
               />
 
               {contactsLoading ? (
-                <Skeleton
-                  className={classes.skeleton}
-                  variant="rect"
-                  width={800}
-                  height={57}
-                />
+                <LoadingFieldSkeleton />
               ) : (
                 <Autocomplete
                   options={contacts}
@@ -329,12 +324,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
               )}
 
               {coursesLoading ? (
-                <Skeleton
-                  className={classes.skeleton}
-                  variant="rect"
-                  width={800}
-                  height={57}
-                />
+                <LoadingFieldSkeleton />
               ) : (
                 <Autocomplete
                   multiple={true}
