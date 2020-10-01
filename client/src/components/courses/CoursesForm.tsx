@@ -1,9 +1,7 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { makeStyles, TextField, Button, Box } from '@material-ui/core';
 import { Add, Edit } from '@material-ui/icons';
-
 import { ICourseDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +31,6 @@ export const CoursesForm: React.FC<ICourseFormProps> = ({
   handleCancel,
   handleSubmitSuccess,
 }) => {
-  const history = useHistory();
   const classes = useStyles();
 
   return (

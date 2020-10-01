@@ -102,13 +102,27 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
     setOpenCourseModal(false);
   };
 
-  const handleAddCourseSuccess = () => {
+  const handleCourseAddSuccess = (
+    setFieldValue: (
+      field: string,
+      value: number[],
+      validate?: boolean | undefined
+    ) => void,
+    courseIds: number[]
+  ) => {
     closeCourseModal();
 
+    // Re-fetch the courses
     setCoursesLoading(true);
     getAllCourses()
       .then((data) => {
+        // Autofill the course field to include the newly added course
         setCourseList(data);
+        setFieldValue(
+          'courseIds',
+          [...courseIds, data[data.length - 1].id!],
+          false
+        );
       })
       .catch((e) => console.error(e))
       .finally(() => {
@@ -319,7 +333,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                   className={classes.skeleton}
                   variant="rect"
                   width={800}
-                  height={59}
+                  height={57}
                 />
               ) : (
                 <Autocomplete
@@ -369,7 +383,9 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                       type="Add"
                       onSubmit={addCourse}
                       handleCancel={() => closeCourseModal()}
-                      handleSubmitSuccess={() => handleAddCourseSuccess()}
+                      handleSubmitSuccess={() => {
+                        handleCourseAddSuccess(setFieldValue, values.courseIds);
+                      }}
                     />
                   </div>
                 </DialogContent>
