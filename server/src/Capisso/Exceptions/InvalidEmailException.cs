@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Capisso.Exceptions
 {
     [Serializable]
-    internal class InvalidEmailException : Exception
+    public class InvalidEmailException : Exception
     {
         public InvalidEmailException()
         {
