@@ -18,7 +18,6 @@ import {
 } from '../../types/types';
 import { Autocomplete } from '@material-ui/lab';
 import { SnackbarMessage } from '../utility/SnackbarMessage';
-import Skeleton from '@material-ui/lab/Skeleton';
 
 const useStyles = makeStyles(() => ({
   boxContainer: {
@@ -63,7 +62,6 @@ export interface IProjectsFormProps {
   organisations: IOrganisationDto[];
   setOrganisationId: (organisationId: number) => void;
   contacts: IContactDto[];
-  contactsLoading: boolean;
 }
 
 export const ProjectsForm: React.FC<IProjectsFormProps> = ({
@@ -74,7 +72,6 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
   organisations,
   setOrganisationId,
   contacts,
-  contactsLoading,
 }) => {
   const history = useHistory();
   const classes = useStyles();
@@ -250,15 +247,9 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                 )}
               />
 
-              {contactsLoading ? (
-                <Skeleton
-                  className={classes.skeleton}
-                  variant="rect"
-                  width={800}
-                  height={59}
-                />
-              ) : (
+              {(contacts.length !== 0 || type === 'Add') && (
                 <Autocomplete
+                  key={values.organisationId}
                   options={contacts}
                   getOptionLabel={(option) => option.name}
                   noOptionsText="Please choose an organisation before selecting contact"

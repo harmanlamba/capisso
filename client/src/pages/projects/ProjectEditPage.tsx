@@ -46,7 +46,6 @@ export const ProjectEditPage: React.FC<{}> = () => {
           organisations={organisations.organisations}
           setOrganisationId={setOrganisationId}
           contacts={contactsForOrganisation.contacts}
-          contactsLoading={contactsForOrganisation.loading}
         />
       )}
     </div>
