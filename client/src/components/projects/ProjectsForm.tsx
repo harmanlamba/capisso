@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
     margin: '0 5px',
   },
   skeleton: {
-    margin: '9px 0',
+    margin: '12px 0',
   },
 }));
 
@@ -256,7 +256,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                   className={classes.skeleton}
                   variant="rect"
                   width={800}
-                  height={59}
+                  height={57}
                 />
               ) : (
                 <Autocomplete
