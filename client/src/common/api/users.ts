@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IUserDto } from '../../types/types';
+import { ICreatedDto, IUserDto } from '../../types/types';
 import { getAxiosConfig } from '../auth/userAuth';
 
 export const getAllUsers = async (): Promise<IUserDto[]> => {
@@ -16,4 +16,14 @@ export const deleteUser = async (userId: number): Promise<void> => {
     `${process.env.REACT_APP_API_BASE}/users/${userId}`,
     getAxiosConfig()
   );
+};
+
+export const addUser = async (user: IUserDto): Promise<ICreatedDto> => {
+  const res = await axios.post(
+    `${process.env.REACT_APP_API_BASE}/users`,
+    user,
+    getAxiosConfig()
+  );
+
+  return res.data as ICreatedDto;
 };

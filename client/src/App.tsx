@@ -24,6 +24,7 @@ import { ProjectViewPage } from './pages/projects/ProjectViewPage';
 import { getAuthUser, getAuthUserJWTData } from './common/auth/userAuth';
 import { LoginPage } from './pages/login/LoginPage';
 import { UsersViewAllPage } from './pages/users/UsersViewAllPage';
+import { UsersAddPage } from './pages/users/UsersAddPage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +47,7 @@ export const App: React.FC<{}> = () => {
           <>
             <NavigationDrawer />
 
-            <Box width="100%" padding="1em">
+            <Box width="100%" padding="6em">
               <Switch>
                 <Route
                   path="/organisations"
@@ -146,6 +147,14 @@ export const App: React.FC<{}> = () => {
                     path="/users"
                     exact={true}
                     component={UsersViewAllPage}
+                  />
+                )}
+
+                {userJWTData?.role === 'Admin' && (
+                  <Route
+                    path="/users/add"
+                    exact={true}
+                    component={UsersAddPage}
                   />
                 )}
 

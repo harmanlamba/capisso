@@ -10,7 +10,8 @@ import { ContactStatusChip } from '../contact/ContactStatusChip';
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    width: '100%',
+    width: '75%',
+    paddingLeft: '2em',
     flexGrow: 1,
     whiteSpace: 'pre-line',
   },
@@ -42,10 +43,10 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
       <Box mb={2}>
         <Paper>
           <Box p={2}>
-            <Typography variant="h6" color="primary" display="inline">
+            <Typography variant="h6" display="inline" color="textSecondary">
               Project Title
             </Typography>
-            <p>{project.title}</p>
+            <Typography variant="subtitle1">{project.title}</Typography>
           </Box>
         </Paper>
       </Box>
@@ -53,10 +54,10 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
         <Box mb={2}>
           <Paper>
             <Box p={2}>
-              <Typography variant="h6" color="primary" display="inline">
+              <Typography variant="h6" display="inline" color="textSecondary">
                 Notes
               </Typography>
-              <p>{project.notes}</p>
+              <Typography variant="subtitle1">{project.notes}</Typography>
             </Box>
           </Paper>
         </Box>
@@ -65,10 +66,10 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
         <Box mb={2}>
           <Paper>
             <Box p={2}>
-              <Typography variant="h6" color="primary" display="inline">
+              <Typography variant="h6" display="inline" color="textSecondary">
                 Outcomes
               </Typography>
-              <p>{project.outcome}</p>
+              <Typography variant="subtitle1">{project.outcome}</Typography>
             </Box>
           </Paper>
         </Box>
@@ -77,13 +78,13 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
         <Box mb={2}>
           <Paper>
             <Box p={2}>
-              <Typography variant="h6" color="primary" display="inline">
+              <Typography variant="h6" display="inline" color="textSecondary">
                 Start date - End date
               </Typography>
-              <p>
+              <Typography variant="subtitle1">
                 {formattedStartDate.format('YYYY-MM-DD')} -{' '}
                 {formattedEndDate.format('YYYY-MM-DD')}
-              </p>
+              </Typography>
             </Box>
           </Paper>
         </Box>
@@ -92,20 +93,18 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
         <Box mb={2}>
           <Paper>
             <Box p={2}>
-              <Typography variant="h6" color="primary" display="inline">
+              <Typography variant="h6" color="textSecondary">
                 Organisation
-                <Button
-                  color="primary"
-                  size="large"
-                  onClick={() =>
-                    history.push(
-                      `/organisations/${project.organisationId}/about`
-                    )
-                  }
-                >
-                  {organisation && <p>{organisation.name}</p>}
-                </Button>
               </Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() =>
+                  history.push(`/organisations/${project.organisationId}/about`)
+                }
+              >
+                {organisation && <Typography>{organisation.name}</Typography>}
+              </Button>
             </Box>
           </Paper>
         </Box>
@@ -114,24 +113,20 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
         <Box mb={2}>
           <Paper>
             <Box p={2}>
-              <Typography variant="h6" color="primary" display="inline">
+              <Typography variant="h6" color="textSecondary">
                 Courses
               </Typography>
-              <ul>
-                {courses.map((course) => (
-                  <li key={course.id}>
-                    <Button
-                      color="primary"
-                      size="large"
-                      onClick={() =>
-                        history.push(`/courses/${course.id}/about`)
-                      }
-                    >
-                      {course.code}: {course.name}
-                    </Button>
-                  </li>
-                ))}
-              </ul>
+              {courses.map((course) => (
+                <Button
+                  key={course.id}
+                  variant="contained"
+                  color="primary"
+                  style={{ marginRight: 10 }}
+                  onClick={() => history.push(`/courses/${course.id}/about`)}
+                >
+                  {course.code}: {course.name}
+                </Button>
+              ))}
             </Box>
           </Paper>
         </Box>
@@ -140,17 +135,25 @@ export const ProjectViewAbout: React.FC<{ project: IProjectDto }> = ({
         <Box mb={2}>
           <Paper>
             <Box p={2}>
-              <Typography variant="h6" color="primary" display="inline">
+              <Typography variant="h6" color="textSecondary" display="inline">
                 Project Contact Details
               </Typography>
               {contact && (
                 <div>
-                  <p>
+                  <Typography variant="subtitle1">
                     Name: {contact.name}{' '}
                     <ContactStatusChip status={contact.status} />
-                  </p>
-                  {contact.email && <p>Email: {contact.email}</p>}
-                  {contact.phoneNumber && <p>Phone: {contact.phoneNumber}</p>}
+                  </Typography>
+                  {contact.email && (
+                    <Typography variant="subtitle1">
+                      Email: {contact.email}
+                    </Typography>
+                  )}
+                  {contact.phoneNumber && (
+                    <Typography variant="subtitle1">
+                      Phone: {contact.phoneNumber}
+                    </Typography>
+                  )}
                 </div>
               )}
             </Box>

@@ -1,12 +1,12 @@
 import {
   makeStyles,
-  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   withStyles,
   IconButton,
 } from '@material-ui/core';
@@ -27,15 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 16,
-  },
-}))(TableCell);
+const StyledTableCell = withStyles((theme) => ({}))(TableCell);
 
 export const UsersList: React.FC<{
   users: IUserDto[];
@@ -58,7 +50,7 @@ export const UsersList: React.FC<{
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -76,10 +68,15 @@ export const UsersList: React.FC<{
                   root: 'no-underline',
                 }}
               >
-                <StyledTableCell>{user.email}</StyledTableCell>
+                <StyledTableCell>
+                  <Typography color="textSecondary" style={{ fontWeight: 500 }}>
+                    {user.email}
+                  </Typography>
+                </StyledTableCell>
                 <StyledTableCell>{user.userRole}</StyledTableCell>
                 <StyledTableCell>
                   <IconButton
+                    size="small"
                     onClick={() => {
                       setSelectedUser(user);
                       setConfirmOpen(true);

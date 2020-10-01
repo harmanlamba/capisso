@@ -1,5 +1,4 @@
 import {
-  AppBar,
   Box,
   Button,
   makeStyles,
@@ -83,17 +82,16 @@ export const ProjectViewPage: React.FC<{}> = () => {
                 startIcon={<Edit />}
                 color="primary"
                 component={Link}
+                style={{ marginLeft: 20 }}
                 to={`/projects/${project.id}/edit`}
               >
                 Edit
               </Button>
             </Box>
           </Box>
-          <AppBar position="static">
-            <Tabs value={value} onChange={handleChange} aria-label="">
-              <Tab label="About" />
-            </Tabs>
-          </AppBar>
+          <Tabs value={value} onChange={handleChange} indicatorColor="primary">
+            <Tab label="About" disableRipple={true} />
+          </Tabs>
           <Box pt={2}>
             <Switch>
               <Route

@@ -16,6 +16,7 @@ import {
   IOrganisationDto,
   IContactDto,
 } from '../../types/types';
+import { ProjectStatus } from '../../enums/enums';
 import { Autocomplete } from '@material-ui/lab';
 import { SnackbarMessage } from '../utility/SnackbarMessage';
 
@@ -85,7 +86,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
           title: '',
           startDate: '',
           endDate: '',
-          status: 'Pending',
+          status: ProjectStatus.Pending,
           notes: undefined,
           outcome: undefined,
           organisationId: 0,
