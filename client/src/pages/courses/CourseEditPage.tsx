@@ -26,14 +26,14 @@ export const CourseEditPage: React.FC<{}> = () => {
       {loading ? (
         <LoadingSpinner />
       ) : (
-          <CoursesForm
-            type="Edit"
-            initialValues={course}
-            onSubmit={editCourse}
-            handleCancel={() => history.goBack()}
-            handleSubmitSuccess={() => history.push('/courses')}
-          />
-        )}
+        <CoursesForm
+          type="Edit"
+          initialValues={course}
+          onSubmit={editCourse}
+          handleCancel={() => history.goBack()}
+          handleSubmitSuccess={() => history.push('/courses')}
+        />
+      )}
     </div>
   );
 };

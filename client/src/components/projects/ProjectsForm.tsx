@@ -4,9 +4,6 @@ import {
   makeStyles,
   TextField,
   MenuItem,
-  Dialog,
-  DialogContent,
-  DialogTitle,
 } from '@material-ui/core';
 import { Add, Edit } from '@material-ui/icons';
 import { Form, Formik } from 'formik';
@@ -22,9 +19,9 @@ import {
 import { ProjectStatus } from '../../enums/enums';
 import { Autocomplete } from '@material-ui/lab';
 import { SnackbarMessage } from '../utility/SnackbarMessage';
-import { addCourse, getAllCourses } from '../../common/api/courses';
-import { CoursesForm } from '../courses/CoursesForm';
+import { getAllCourses } from '../../common/api/courses';
 import { LoadingFieldSkeleton } from '../utility/LoadingFieldSkeleton';
+import { AddCourseDialog } from '../utility/AddCourseDialog';
 
 const useStyles = makeStyles(() => ({
   boxContainer: {
@@ -36,12 +33,6 @@ const useStyles = makeStyles(() => ({
   },
   button: {
     margin: '0 5px',
-  },
-  skeleton: {
-    margin: '12px 0',
-  },
-  modalContent: {
-    margin: '-50px -40px  -30px -40px',
   },
 }));
 
@@ -90,17 +81,8 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
 
   const [isConfirmationOpen, setConfirmationOpen] = React.useState(false);
   const [openCourseModal, setOpenCourseModal] = React.useState(false);
-
   const [courseList, setCourseList] = React.useState<ICourseDto[]>(courses);
   const [coursesLoading, setCoursesLoading] = React.useState(false);
-
-  const handleClickAddCourse = () => {
-    setOpenCourseModal(true);
-  };
-
-  const closeCourseModal = () => {
-    setOpenCourseModal(false);
-  };
 
   const handleCourseAddSuccess = (
     setFieldValue: (
@@ -110,13 +92,13 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
     ) => void,
     courseIds: number[]
   ) => {
-    closeCourseModal();
+    setOpenCourseModal(false);
 
     // Re-fetch the courses
     setCoursesLoading(true);
     getAllCourses()
       .then((data) => {
-        // Autofill the course field to include the newly added course
+        // Add the newly added course to the course field
         setCourseList(data);
         setFieldValue(
           'courseIds',
@@ -359,27 +341,18 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                 className={classes.button}
                 variant="contained"
                 color="primary"
-                size="small"
-                onClick={handleClickAddCourse}
+                onClick={() => setOpenCourseModal(true)}
               >
                 + Add new course
               </Button>
 
-              <Dialog open={openCourseModal} onClose={closeCourseModal}>
-                <DialogTitle>Add new course</DialogTitle>
-                <DialogContent>
-                  <div className={classes.modalContent}>
-                    <CoursesForm
-                      type="Add"
-                      onSubmit={addCourse}
-                      handleCancel={() => closeCourseModal()}
-                      handleSubmitSuccess={() => {
-                        handleCourseAddSuccess(setFieldValue, values.courseIds);
-                      }}
-                    />
-                  </div>
-                </DialogContent>
-              </Dialog>
+              <AddCourseDialog
+                open={openCourseModal}
+                close={() => setOpenCourseModal(false)}
+                handleSuccess={() =>
+                  handleCourseAddSuccess(setFieldValue, values.courseIds)
+                }
+              />
 
               <Box
                 className={classes.textField}
