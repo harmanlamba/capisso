@@ -25,6 +25,9 @@ const useStyles = makeStyles(() => ({
   text: {
     margin: '12px 0',
   },
+  noDataText: {
+    margin: '42px 0 69px 0',
+  },
   button: {
     margin: '0 5px',
   },
@@ -80,7 +83,7 @@ export const UsersUploadDialog: React.FC<IUsersUploadDialogProps> = ({
               {data.length > 0 ? (
                 <UsersUploadList data={data} />
               ) : (
-                <Typography className={classes.text} align="center">
+                <Typography className={classes.noDataText} align="center">
                   No Data Found
                 </Typography>
               )}
