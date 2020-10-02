@@ -8,8 +8,8 @@ import { ICourseDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
   boxContainer: {
-    margin: '50px 40px',
-    maxWidth: 800,
+    margin: '20px 0px',
+    maxWidth: 700,
   },
   textField: {
     margin: '12px 0',
