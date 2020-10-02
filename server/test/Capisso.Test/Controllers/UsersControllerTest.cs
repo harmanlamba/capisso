@@ -314,5 +314,107 @@ namespace Capisso.Test.Controllers
             _mockUserRepository.Verify(x => x.FindByAsync(It.IsAny<Expression<Func<User, bool>>>()), Times.Once);
             _mockUserRepository.Verify(x => x.Update(It.IsAny<User>()), Times.Never);
         }
+
+        [Test]
+        public async Task TestAddValidUserCollection()
+        {
+            // arrange
+            var userDtos = new UserDto[] {
+                new UserDto { Email = "test@aucklanduni.ac.nz", UserRole = UserRole.User },
+                new UserDto { Email = "test1@aucklanduni.ac.nz", UserRole = UserRole.User },
+                new UserDto { Email = "test2@aucklanduni.ac.nz", UserRole = UserRole.Admin },
+                new UserDto { Email = "test3@aucklanduni.ac.nz", UserRole = UserRole.User }
+            };
+
+            var existingUsers = new User[] {
+                new User { Email = "test4@aucklanduni.ac.nz", UserRole = UserRole.User },
+                new User { Email = "test5@aucklanduni.ac.nz", UserRole = UserRole.User },
+                new User { Email = "test6@aucklanduni.ac.nz", UserRole = UserRole.User }
+            };
+
+            _mockUserRepository
+                .Setup(x => x.InsertManyAsync(It.IsAny<IEnumerable<User>>()))
+                .Returns(Task.FromResult(1));
+
+            _mockUserRepository.Setup(x => x.GetAllAsync()).Returns(Task.FromResult(existingUsers.AsEnumerable()));
+
+            // act
+            ActionResult<CreatedDto> response = await _usersController.AddUserCollection(userDtos);
+
+            // assert
+            Assert.IsInstanceOf<CreatedResult>(response.Result);
+            CreatedResult createdResult = response.Result as CreatedResult;
+            Assert.AreEqual(201, createdResult.StatusCode);
+
+            CreatedDto value = createdResult.Value.As<CreatedDto>();
+
+            _mockUserRepository.Verify(x => x.InsertManyAsync(It.IsAny<IEnumerable<User>>()), Times.Once);
+        }
+
+        [Test]
+        public async Task TestAddInvalidUserCollection()
+        {
+            // arrange
+            var userDtos = new UserDto[] {
+                new UserDto { Email = "test@gmail.ac.nz", UserRole = UserRole.User },
+                new UserDto { Email = "test1@aucklanduni.ac.nz", UserRole = UserRole.User },
+                new UserDto { Email = "test2@aucklanduni.ac.nz", UserRole = UserRole.Admin },
+                new UserDto { Email = "test3@aucklanduni.ac.nz", UserRole = UserRole.User }
+            };
+
+            // act
+            ActionResult<CreatedDto> response = await _usersController.AddUserCollection(userDtos);
+
+            // assert
+            Assert.IsInstanceOf<BadRequestResult>(response.Result);
+
+            _mockUserRepository.Verify(x => x.InsertManyAsync(It.IsAny<IEnumerable<User>>()), Times.Never);
+        }
+
+        [Test]
+        public async Task TestAddNewDuplicatedUserCollection()
+        {
+            // arrange
+            var userDtos = new UserDto[] {
+                new UserDto { Email = "test@aucklanduni.ac.nz", UserRole = UserRole.User },
+                new UserDto { Email = "test3@aucklanduni.ac.nz", UserRole = UserRole.User },
+                new UserDto { Email = "test1@aucklanduni.ac.nz", UserRole = UserRole.User },
+                new UserDto { Email = "test3@aucklanduni.ac.nz", UserRole = UserRole.Admin }
+            };
+
+            // act
+            ActionResult<CreatedDto> response = await _usersController.AddUserCollection(userDtos);
+
+            // assert
+            Assert.IsInstanceOf<BadRequestResult>(response.Result);
+
+            _mockUserRepository.Verify(x => x.InsertManyAsync(It.IsAny<IEnumerable<User>>()), Times.Never);
+        }
+
+        [Test]
+        public async Task TestAddExistingDuplicatedUserCollection()
+        {
+            // arrange
+            var userDtos = new UserDto[] {
+                new UserDto { Email = "test@aucklanduni.ac.nz", UserRole = UserRole.User },
+                new UserDto { Email = "test1@aucklanduni.ac.nz", UserRole = UserRole.User },
+                new UserDto { Email = "test2@aucklanduni.ac.nz", UserRole = UserRole.User }
+            };
+            IEnumerable<User> existingUsers = new List<User>
+            {
+                new User {Email = "test@aucklanduni.ac.nz", UserRole = UserRole.Admin,},
+                new User {Email = "test@aucklanduni.ac.nz", UserRole = UserRole.Admin,}
+            };
+
+            _mockUserRepository.Setup(x => x.GetAllAsync()).Returns(Task.FromResult(existingUsers));
+
+            // act
+            ActionResult<CreatedDto> response = await _usersController.AddUserCollection(userDtos);
+
+            // assert
+            Assert.IsInstanceOf<BadRequestResult>(response.Result);
+
+            _mockUserRepository.Verify(x => x.InsertManyAsync(It.IsAny<IEnumerable<User>>()), Times.Never);
+        }
     }
 }
