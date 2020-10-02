@@ -29,8 +29,8 @@ import { UsersAddPage } from './pages/users/UsersAddPage';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    backgroundColor: theme.palette.background.default,
-    height: '100vh',
+    backgroundColor: '#f4f4f4',
+    minHeight: '100vh',
   },
 }));
 
@@ -47,7 +47,12 @@ export const App: React.FC<{}> = () => {
           <>
             <NavigationDrawer />
 
-            <Box width="100%" padding="6em">
+            <Box
+              width="100%"
+              paddingTop="6em"
+              paddingLeft="10em"
+              paddingRight="10em"
+            >
               <Switch>
                 <Route
                   path="/organisations"
