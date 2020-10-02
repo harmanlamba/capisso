@@ -16,6 +16,7 @@ import { Add } from '@material-ui/icons';
 import { UsersUploadAlert } from './UsersUploadAlert';
 import { addUserCollection } from '../../common/api/users';
 import { SnackbarMessage } from '../utility/SnackbarMessage';
+import { UsersUploadHelp } from './UsersUploadHelp';
 
 const useStyles = makeStyles(() => ({
   dialog: {
@@ -57,7 +58,9 @@ export const UsersUploadDialog: React.FC<IUsersUploadDialogProps> = ({
   return (
     <>
       <Dialog open={open} onClose={onClose} maxWidth={'md'} fullWidth={true}>
-        <DialogTitle>Importing users from {file?.name}</DialogTitle>
+        <DialogTitle>
+          Importing users from {file?.name} <UsersUploadHelp />
+        </DialogTitle>
         <DialogContent className={classes.dialog}>
           {loading ? (
             <LoadingSpinner />

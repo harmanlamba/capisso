@@ -13,6 +13,7 @@ import { Add, CloudUpload } from '@material-ui/icons';
 import { useUsers } from '../../common/hooks/apiHooks';
 import { UsersList } from '../../components/users/UsersList';
 import { UsersUploadDialog } from '../../components/users/UsersUploadDialog';
+import { UsersUploadHelp } from '../../components/users/UsersUploadHelp';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -20,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   button: {
-    marginInlineEnd: '14px',
+    marginInlineEnd: '6px',
+    marginInlineStart: '12px',
   },
 }));
 
@@ -41,8 +43,8 @@ export const UsersViewAllPage: React.FC<{}> = () => {
   };
 
   const handleUploadClose = () => {
-    setUploadFile(null);
     setOpenUploadModal(false);
+    setUploadFile(null);
     refetch();
   };
 
@@ -93,6 +95,7 @@ export const UsersViewAllPage: React.FC<{}> = () => {
                   Bulk Upload
                 </Button>
               </label>
+              <UsersUploadHelp />
             </Box>
           </Box>
           <Box mt={0.3}>
