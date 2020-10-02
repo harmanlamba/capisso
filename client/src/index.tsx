@@ -27,7 +27,7 @@ const capissoTheme = createMuiTheme({
     },
     secondary: {
       main: '#ffdbcc',
-      contrastText: '#727272',
+      contrastText: '#000',
     },
     text: {
       secondary: '#5c90f7',
@@ -57,14 +57,17 @@ const capissoTheme = createMuiTheme({
     // Table
     MuiTableHead: {
       root: {
-        backgroundColor: theme.palette.common.white,
-        borderRadius: '20px !important',
+        backgroundColor: '#fff',
         boxShadow: '0px 3px 3px rgba(0,0,0,0.2)',
       },
     },
     MuiTableRow: {
       root: {
         background: 'rgba(255,255,255,0)',
+      },
+      head: {
+        fill: '#fff',
+        borderRadius: 20,
       },
     },
     MuiTableCell: {
@@ -75,7 +78,6 @@ const capissoTheme = createMuiTheme({
       },
       head: {
         borderBottom: '0',
-        borderRadius: '20px !important',
         fontSize: 17,
         fontWeight: 500,
       },
@@ -83,6 +85,9 @@ const capissoTheme = createMuiTheme({
 
     // Chip
     MuiChip: {
+      root: {
+        marginRight: 5,
+      },
       colorPrimary: {
         backgroundColor: '#deffde',
         color: '#212121',
@@ -119,6 +124,7 @@ const capissoTheme = createMuiTheme({
           color: 'inherit',
         },
         borderRadius: 20,
+
         '&$selected:hover': {
           backgroundColor: theme.palette.primary.main,
           color: theme.palette.primary.contrastText,
@@ -143,13 +149,13 @@ const capissoTheme = createMuiTheme({
         borderRadius: 10,
         '& .MuiOutlinedInput-root': {
           '& fieldset': {
-            borderColor: 'white',
+            borderColor: 'rgba(0,0,0,0)',
           },
           '&:hover fieldset': {
-            borderColor: 'white',
+            borderColor: 'rgba(0,0,0,0)',
           },
           '&.Mui-focused fieldset': {
-            borderColor: 'white',
+            borderColor: 'rgba(0,0,0,0)',
           },
         },
       },
@@ -158,6 +164,7 @@ const capissoTheme = createMuiTheme({
     MuiFilledInput: {
       root: {
         backgroundColor: '#fff',
+        borderRadius: 10,
 
         '&.Mui-focused': {
           backgroundColor: '#fff',
@@ -180,12 +187,26 @@ const capissoTheme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: ['Signika', 'sans-serif'].join(','),
+    fontFamily: ['Roboto', 'sans-serif'].join(','),
+
+    h3: {
+      fontFamily: ['Miriam Libre', 'sans-serif'].join(','),
+      fontWeight: 700,
+    },
+    h4: {
+      fontFamily: ['Miriam Libre', 'sans-serif'].join(','),
+      fontWeight: 700,
+    },
+    h6: {
+      fontFamily: ['Miriam Libre', 'sans-serif'].join(','),
+      fontWeight: 700,
+    },
     body1: {
-      fontSize: 18,
+      fontWeight: 500,
+      fontSize: 16,
     },
     body2: {
-      fontSize: 15,
+      fontSize: 14,
     },
   },
 });

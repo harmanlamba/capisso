@@ -10,7 +10,6 @@ import {
   makeStyles,
   ListItemIcon,
   Button,
-  Icon,
 } from '@material-ui/core';
 
 import { AccountTree, Group, Business, Book } from '@material-ui/icons';
@@ -98,6 +97,7 @@ export const NavigationDrawer: React.FC<{}> = () => {
       <div>
         <Button
           className={classes.titleButton}
+          onClick={() => history.push('/organisations')}
           size="large"
           disableRipple={true}
         >

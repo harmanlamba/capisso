@@ -29,7 +29,7 @@ import { UsersAddPage } from './pages/users/UsersAddPage';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: '#f4f4f4',
     height: '100vh',
   },
 }));
