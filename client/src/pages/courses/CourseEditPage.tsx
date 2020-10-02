@@ -5,6 +5,7 @@ import { editCourse } from '../../common/api/courses';
 import { CoursesForm } from '../../components/courses/CoursesForm';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { useCourse } from '../../common/hooks/apiHooks';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 export const CourseEditPage: React.FC<{}> = () => {
   const classes = useStyles();
   const { id } = useParams();
+  const history = useHistory();
   const { course, loading } = useCourse(id);
 
   return (
@@ -24,7 +26,13 @@ export const CourseEditPage: React.FC<{}> = () => {
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <CoursesForm initialValues={course} onSubmit={editCourse} type="Edit" />
+        <CoursesForm
+          type="Edit"
+          initialValues={course}
+          onSubmit={editCourse}
+          handleCancel={() => history.goBack()}
+          handleSubmitSuccess={() => history.push('/courses')}
+        />
       )}
     </div>
   );

@@ -19,7 +19,9 @@ import {
 import { ProjectStatus } from '../../enums/enums';
 import { Autocomplete } from '@material-ui/lab';
 import { SnackbarMessage } from '../utility/SnackbarMessage';
-import Skeleton from '@material-ui/lab/Skeleton';
+import { getAllCourses } from '../../common/api/courses';
+import { LoadingFieldSkeleton } from '../utility/LoadingFieldSkeleton';
+import { AddCourseDialog } from '../utility/AddCourseDialog';
 
 const useStyles = makeStyles(() => ({
   boxContainer: {
@@ -31,9 +33,6 @@ const useStyles = makeStyles(() => ({
   },
   button: {
     margin: '0 5px',
-  },
-  skeleton: {
-    margin: '12px 0',
   },
 }));
 
@@ -81,6 +80,30 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
   const classes = useStyles();
 
   const [isConfirmationOpen, setConfirmationOpen] = React.useState(false);
+  const [openCourseModal, setOpenCourseModal] = React.useState(false);
+  const [courseList, setCourseList] = React.useState<ICourseDto[]>(courses);
+  const [coursesLoading, setCoursesLoading] = React.useState(false);
+
+  const handleCourseAddSuccess = (
+    setFieldValue: (field: string, value: number[], validate?: boolean) => void,
+    courseIds: number[],
+    newCourseId: number
+  ) => {
+    setOpenCourseModal(false);
+
+    // Re-fetch the courses
+    setCoursesLoading(true);
+    getAllCourses()
+      .then((data) => {
+        // Add the newly added course to the course field
+        setCourseList(data);
+        setFieldValue('courseIds', [...courseIds, newCourseId]);
+      })
+      .catch((e) => console.error(e))
+      .finally(() => {
+        setCoursesLoading(false);
+      });
+  };
 
   return (
     <React.Fragment>
@@ -252,12 +275,7 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
               />
 
               {contactsLoading ? (
-                <Skeleton
-                  className={classes.skeleton}
-                  variant="rect"
-                  width={800}
-                  height={57}
-                />
+                <LoadingFieldSkeleton />
               ) : (
                 <Autocomplete
                   options={contacts}
@@ -280,30 +298,57 @@ export const ProjectsForm: React.FC<IProjectsFormProps> = ({
                 />
               )}
 
-              <Autocomplete
-                multiple={true}
-                options={courses}
-                getOptionLabel={(course) => `${course?.code}: ${course?.name}`}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    className={classes.textField}
-                    variant="filled"
-                    label="Courses"
-                    fullWidth={true}
-                    required={true}
-                    error={!!errors.courseIds}
-                  />
-                )}
-                onChange={(_e, v) =>
-                  setFieldValue(
-                    'courseIds',
-                    v.map((course) => course?.id)
+              {coursesLoading ? (
+                <LoadingFieldSkeleton />
+              ) : (
+                <Autocomplete
+                  multiple={true}
+                  options={courseList}
+                  getOptionLabel={(course) =>
+                    `${course?.code}: ${course?.name}`
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      className={classes.textField}
+                      variant="filled"
+                      label="Courses"
+                      fullWidth={true}
+                      required={true}
+                      error={!!errors.courseIds}
+                    />
+                  )}
+                  onChange={(_e, v) =>
+                    setFieldValue(
+                      'courseIds',
+                      v.map((course) => course?.id)
+                    )
+                  }
+                  value={values.courseIds.map((id) =>
+                    courseList.find((c) => c.id === id)
+                  )}
+                />
+              )}
+
+              <Button
+                className={classes.button}
+                variant="contained"
+                color="primary"
+                onClick={() => setOpenCourseModal(true)}
+              >
+                + Add new course
+              </Button>
+
+              <AddCourseDialog
+                open={openCourseModal}
+                close={() => setOpenCourseModal(false)}
+                handleSuccess={(newCourseId) =>
+                  handleCourseAddSuccess(
+                    setFieldValue,
+                    values.courseIds,
+                    newCourseId!
                   )
                 }
-                value={values.courseIds.map((id) =>
-                  courses.find((c) => c.id === id)
-                )}
               />
 
               <Box

@@ -1,9 +1,7 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { makeStyles, TextField, Button, Box } from '@material-ui/core';
 import { Add, Edit } from '@material-ui/icons';
-
 import { ICourseDto } from '../../types/types';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,13 +21,16 @@ export interface ICourseFormProps {
   initialValues?: ICourseDto;
   onSubmit(course: ICourseDto): Promise<any>;
   type: 'Add' | 'Edit';
+  handleCancel: () => void;
+  handleSubmitSuccess: (newCourseId?: number) => void;
 }
 export const CoursesForm: React.FC<ICourseFormProps> = ({
   initialValues,
   onSubmit,
   type,
+  handleCancel,
+  handleSubmitSuccess,
 }) => {
-  const history = useHistory();
   const classes = useStyles();
 
   return (
@@ -42,8 +43,8 @@ export const CoursesForm: React.FC<ICourseFormProps> = ({
       }}
       onSubmit={async (values, { resetForm }) => {
         try {
-          await onSubmit(values);
-          history.push('/courses');
+          const id = await onSubmit(values);
+          id ? handleSubmitSuccess(id.id) : handleSubmitSuccess();
         } catch (e) {
           console.error(e);
         }
@@ -109,9 +110,7 @@ export const CoursesForm: React.FC<ICourseFormProps> = ({
                 className={classes.button}
                 variant="contained"
                 color="default"
-                onClick={() => {
-                  history.goBack();
-                }}
+                onClick={() => handleCancel()}
               >
                 Cancel
               </Button>
