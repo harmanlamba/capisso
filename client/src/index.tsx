@@ -76,6 +76,8 @@ const capissoTheme = createMuiTheme({
       head: {
         borderBottom: '0',
         borderRadius: '20px !important',
+        fontSize: 17,
+        fontWeight: 500,
       },
     },
 
@@ -90,6 +92,7 @@ const capissoTheme = createMuiTheme({
     // Tabs
     MuiTabs: {
       root: {
+        fontSize: 16,
         fontWeight: 500,
         display: 'flex',
         justifyContent: 'center',
@@ -108,6 +111,8 @@ const capissoTheme = createMuiTheme({
         fontSize: 16,
       },
     },
+
+    // list item
     MuiListItem: {
       root: {
         '& .MuiListItemIcon-root': {
@@ -125,6 +130,51 @@ const capissoTheme = createMuiTheme({
         '&:hover': {
           backgroundColor: theme.palette.primary.main,
           color: theme.palette.primary.contrastText,
+        },
+      },
+    },
+
+    // Form
+    MuiTextField: {
+      root: {
+        backgroundColor: '#fff',
+        borderColor: '#fff',
+        boxShadow: '0px 3px 3px rgba(0,0,0,0.2)',
+        borderRadius: 10,
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            borderColor: 'white',
+          },
+          '&:hover fieldset': {
+            borderColor: 'white',
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: 'white',
+          },
+        },
+      },
+    },
+
+    MuiFilledInput: {
+      root: {
+        backgroundColor: '#fff',
+
+        '&.Mui-focused': {
+          backgroundColor: '#fff',
+        },
+        '&:hover': {
+          backgroundColor: '#fff',
+        },
+      },
+      underline: {
+        '&:before': {
+          borderBottom: 0,
+        },
+        '&:after': {
+          borderBottom: '2px solid #5c90f7',
+        },
+        '&:hover:not($disabled):not($focused):not($error):before': {
+          borderBottom: 0,
         },
       },
     },

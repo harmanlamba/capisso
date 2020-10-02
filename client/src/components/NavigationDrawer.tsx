@@ -55,7 +55,6 @@ function getIcon(name: string) {
 }
 
 const useStyles = makeStyles(() => ({
-  div: {},
   drawer: {
     display: 'flex',
     width: DRAWER_WIDTH,
@@ -68,9 +67,7 @@ const useStyles = makeStyles(() => ({
   listElements: {
     marginTop: 20,
   },
-  logo: {
-    width: 10,
-    height: 10,
+  titleButton: {
     fontSize: '1.25em',
     fontWeight: 'bold',
     backgroundColor: 'transparent !important',
@@ -99,9 +96,16 @@ export const NavigationDrawer: React.FC<{}> = () => {
       classes={{ paper: classes.drawerPaper }}
     >
       <div>
-        <Typography variant="h3" component="h1">
-          Capisso
-        </Typography>
+        <Button
+          className={classes.titleButton}
+          size="large"
+          disableRipple={true}
+        >
+          <Logo />
+          <Typography style={{ marginLeft: 5 }} variant="h3" component="h1">
+            Capisso
+          </Typography>
+        </Button>
         <List>
           {filterdRoutes.map((route, index) => (
             <ListItem
