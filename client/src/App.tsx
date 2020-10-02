@@ -47,7 +47,12 @@ export const App: React.FC<{}> = () => {
           <>
             <NavigationDrawer />
 
-            <Box width="100%" padding="6em">
+            <Box
+              width="100%"
+              paddingTop="6em"
+              paddingLeft="10em"
+              paddingRight="10em"
+            >
               <Switch>
                 <Route
                   path="/organisations"

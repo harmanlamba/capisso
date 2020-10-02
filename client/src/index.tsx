@@ -141,6 +141,16 @@ const capissoTheme = createMuiTheme({
     },
 
     // Form
+    MuiInputLabel: {
+      root: {
+        color: '#707070',
+
+        '&.Mui-focused': {
+          color: '#5c90f7',
+        },
+      },
+    },
+
     MuiTextField: {
       root: {
         backgroundColor: '#fff',
@@ -203,10 +213,11 @@ const capissoTheme = createMuiTheme({
     },
     body1: {
       fontWeight: 500,
-      fontSize: 16,
+      fontSize: 18,
     },
     body2: {
-      fontSize: 14,
+      fontWeight: 500,
+      fontSize: 15,
     },
   },
 });
