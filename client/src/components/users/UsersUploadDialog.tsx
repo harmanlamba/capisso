@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     margin: '0px',
   },
   dialog: {
-    backgroundColor: '#f4f4f4 !important',
+    background: '#f4f4f4',
   },
   textField: {
     margin: '12px 0',
@@ -45,13 +45,7 @@ export const UsersUploadDialog: React.FC<IUsersUploadDialogProps> = ({
   const { data, loading, errors } = useParseUsersCsv(file);
 
   return (
-    <Dialog
-      className={classes.dialog}
-      open={open}
-      onClose={onClose}
-      maxWidth={'md'}
-      fullWidth={true}
-    >
+    <Dialog open={open} onClose={onClose} maxWidth={'md'} fullWidth={true}>
       <DialogTitle>Importing users from {file?.name}</DialogTitle>
       <DialogContent className={classes.dialog}>
         {loading ? (

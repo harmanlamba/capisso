@@ -9,7 +9,7 @@ export interface UploadCsvUserError {
   row: number;
 }
 
-export const useParseUsersCsv = (file: File | undefined) => {
+export const useParseUsersCsv = (file: File | null) => {
   const [data, setData] = useState<IUserDto[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [errors, setErrors] = useState<UploadCsvUserError[]>([]);

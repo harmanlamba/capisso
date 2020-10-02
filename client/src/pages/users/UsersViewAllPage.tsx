@@ -8,7 +8,7 @@ import {
   Grid,
   TextField,
 } from '@material-ui/core';
-import { Add, SystemUpdateAlt } from '@material-ui/icons';
+import { Add, CloudUpload } from '@material-ui/icons';
 
 import { useUsers } from '../../common/hooks/apiHooks';
 import { UsersList } from '../../components/users/UsersList';
@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     width: `100%`,
     flexGrow: 1,
   },
+  button: {
+    marginInlineEnd: '14px',
+  },
 }));
 
 export const UsersViewAllPage: React.FC<{}> = () => {
@@ -26,15 +29,20 @@ export const UsersViewAllPage: React.FC<{}> = () => {
 
   const { users, refetch } = useUsers();
 
-  const [openImportModal, setOpenImportModal] = useState<boolean>(false);
+  const [openUploadModal, setOpenUploadModal] = useState<boolean>(false);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [filterTerm, setFilterTerm] = useState<string>();
-  const [importFile, setImportFile] = useState<File>();
 
-  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e?.target?.files) {
-      setImportFile(e.target.files[0]);
-      setOpenImportModal(true);
+      setUploadFile(e?.target?.files[0]);
+      setOpenUploadModal(true);
     }
+  };
+
+  const handleUploadClose = () => {
+    setUploadFile(null);
+    setOpenUploadModal(false);
   };
 
   const filteredUsers = users.filter(
@@ -54,6 +62,7 @@ export const UsersViewAllPage: React.FC<{}> = () => {
             </Typography>
             <Box ml={2} position="relative" top="-0.5em" display="inline">
               <Button
+                className={classes.button}
                 component={Link}
                 startIcon={<Add />}
                 to="/users/add"
@@ -63,20 +72,24 @@ export const UsersViewAllPage: React.FC<{}> = () => {
                 Add
               </Button>
               <input
-                accept=".csv, .xlsx, .xls"
-                id="import-file-button"
+                accept=".csv"
+                id="upload-file-button"
                 hidden={true}
                 type="file"
-                onChange={handleImport}
+                onChange={handleUpload}
+                onClick={(e: any) => {
+                  e.target.value = '';
+                }}
               />
-              <label htmlFor="import-file-button">
+              <label htmlFor="upload-file-button">
                 <Button
-                  startIcon={<SystemUpdateAlt />}
+                  className={classes.button}
+                  startIcon={<CloudUpload />}
                   component="span"
                   variant="contained"
                   color="primary"
                 >
-                  Bulk Import
+                  Bulk Upload
                 </Button>
               </label>
             </Box>
@@ -99,9 +112,9 @@ export const UsersViewAllPage: React.FC<{}> = () => {
         onRoleChange={refetch}
       />
       <UsersUploadDialog
-        open={openImportModal}
-        onClose={() => setOpenImportModal(false)}
-        file={importFile!}
+        open={openUploadModal}
+        onClose={handleUploadClose}
+        file={uploadFile!}
       />
     </div>
   );
