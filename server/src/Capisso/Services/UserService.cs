@@ -115,6 +115,39 @@ namespace Capisso.Services
             await _unitOfWork.SaveAsync();
         }
 
+        public async Task AddUserCollection(UserDto[] userDtos)
+        {
+            var users = userDtos.Select(u => UserMapper.FromDto(u));
+            string pattern = @"^([\w-.]+)@aucklanduni.ac.nz$";
+
+            foreach (var user in users)
+            {
+                Match m = Regex.Match(user.Email, pattern, RegexOptions.IgnoreCase);
+
+                if (!m.Success)
+                {
+                    throw new InvalidEmailException();
+                }
+            }
+
+            var userEmails = users.Select(u => u.Email);
+
+            if (userEmails.Distinct().Count() != users.Count())
+            {
+                throw new DuplicateEmailException();
+            }
+
+            var duplicateEmails = (await _unitOfWork.UserRepository.GetAllAsync()).Select(u => u.Email).Intersect(userEmails, StringComparer.InvariantCultureIgnoreCase);
+
+            if (duplicateEmails.Any())
+            {
+                throw new DuplicateEmailException();
+            }
+
+            await _unitOfWork.UserRepository.InsertManyAsync(users);
+            await _unitOfWork.SaveAsync();
+        }
+
         private async Task<bool> CheckAdminExistsAfterUserRemoval(User removedUser)
         {
             var remainingAdminList = await _unitOfWork.UserRepository
