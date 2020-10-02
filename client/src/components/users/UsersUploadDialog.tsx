@@ -28,9 +28,6 @@ const useStyles = makeStyles(() => ({
   button: {
     margin: '0 5px',
   },
-  alert: {
-    margin: '10px 0px',
-  },
 }));
 
 export interface IUsersUploadDialogProps {
@@ -63,10 +60,20 @@ export const UsersUploadDialog: React.FC<IUsersUploadDialogProps> = ({
           <UsersUploadAlert errors={errors} />
         ) : (
           <div className={classes.modalContent}>
-            <Typography variant="h6" className={classes.textField}>
-              Preview:
-            </Typography>
-            {data ? <UsersUploadList data={data} /> : 'No data found'}
+            <Box
+              className={classes.textField}
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
+            >
+              <Typography variant="h6">Preview:</Typography>
+              <Typography variant="h6">{data.length} Users</Typography>
+            </Box>
+            {data.length > 0 ? (
+              <UsersUploadList data={data} />
+            ) : (
+              'No data found'
+            )}
           </div>
         )}
       </DialogContent>

@@ -3,13 +3,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { UploadCsvUserError } from '../../common/hooks/parsingHooks';
 
-const useStyles = makeStyles((theme) => ({
-  alertContent: {
-    fontSize: '13px',
-    fontWeight: 300,
-  },
-}));
-
 export interface IUsersUploadAlertProps {
   errors: UploadCsvUserError[];
 }
@@ -17,15 +10,13 @@ export interface IUsersUploadAlertProps {
 export const UsersUploadAlert: React.FC<IUsersUploadAlertProps> = ({
   errors,
 }) => {
-  const classes = useStyles();
-
   const groupedErrors = errors.reduce((r: any, a) => {
     r[a.message] = [...(r[a.message] || []), a];
     return r;
   }, {});
 
   return (
-    <Alert severity="error" className={classes.alertContent}>
+    <Alert severity="error">
       <AlertTitle>Error - Invalid Data</AlertTitle>
       Please fix the following issues and try again:
       <ul>
