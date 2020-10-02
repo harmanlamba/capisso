@@ -2,11 +2,13 @@ import React from 'react';
 import { makeStyles, Box, Typography, Grid, Paper } from '@material-ui/core';
 import Logo from '../../assets/Logo';
 import { LoginHeader } from '../../components/LoginHeader';
+import './login.css';
+
 const useStyles = makeStyles((theme) => ({
   content: {
     width: `100%`,
     flexGrow: 1,
-    backgroundColor: '#4885ed',
+    backgroundColor: '#821124',
   },
   titleButton: {
     fontSize: '1.25em',
@@ -20,6 +22,17 @@ export const LoginPage: React.FC<{}> = () => {
 
   return (
     <div className={classes.content}>
+      <ul className="squares">
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+      </ul>
       <Grid
         container={true}
         spacing={0}
