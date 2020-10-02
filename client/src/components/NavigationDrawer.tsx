@@ -8,10 +8,12 @@ import {
   ListItemText,
   Typography,
   makeStyles,
+  ListItemIcon,
+  Button,
 } from '@material-ui/core';
 
+import { AccountTree, Group, Business, Book } from '@material-ui/icons';
 import { DRAWER_WIDTH } from '../constants/constants';
-import { Button } from '@material-ui/core';
 import GoogleIcon from '../assets/GoogleIcon';
 import { getAuthUserJWTData, onSignOut } from '../common/auth/userAuth';
 
@@ -37,6 +39,18 @@ const routes = [
     admin: true,
   },
 ];
+function getIcon(name: string) {
+  switch (name) {
+    case 'Organisations':
+      return <Business />;
+    case 'Courses':
+      return <Book />;
+    case 'Projects':
+      return <AccountTree />;
+    case 'Users':
+      return <Group />;
+  }
+}
 
 const useStyles = makeStyles(() => ({
   drawer: {
@@ -44,7 +58,12 @@ const useStyles = makeStyles(() => ({
   },
   drawerPaper: {
     width: DRAWER_WIDTH,
+    padding: 30,
   },
+  listElements: {
+    marginTop: 20,
+  },
+  customIcon: {},
 }));
 
 export const NavigationDrawer: React.FC<{}> = () => {
@@ -75,10 +94,14 @@ export const NavigationDrawer: React.FC<{}> = () => {
         {filterdRoutes.map((route, index) => (
           <ListItem
             button={true}
+            className={classes.listElements}
             key={index}
             onClick={() => history.push(route.location)}
             selected={location.pathname.startsWith(route.location)}
           >
+            <ListItemIcon className={classes.customIcon}>
+              {getIcon(route.name)}
+            </ListItemIcon>
             <ListItemText primary={route.name} />
           </ListItem>
         ))}

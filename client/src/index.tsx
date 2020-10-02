@@ -108,6 +108,26 @@ const capissoTheme = createMuiTheme({
         fontSize: 16,
       },
     },
+    MuiListItem: {
+      root: {
+        '& .MuiListItemIcon-root': {
+          color: 'inherit',
+        },
+        borderRadius: 20,
+        '&$selected:hover': {
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
+        },
+        '&$selected': {
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
+        },
+        '&:hover': {
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
+        },
+      },
+    },
   },
   typography: {
     fontFamily: ['Signika', 'sans-serif'].join(','),
