@@ -65,7 +65,8 @@ export const LoginPage: React.FC<{}> = () => {
                   variant="h6"
                   component="h1"
                 >
-                  Welcome to your contact management tool. Let's get started!
+                  Welcome to your organisation management tool. Let's get
+                  started!
                 </Typography>
               </Box>
 
