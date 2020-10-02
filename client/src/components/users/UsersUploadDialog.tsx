@@ -7,9 +7,9 @@ import {
   Button,
   Box,
   Typography,
+  CircularProgress,
 } from '@material-ui/core';
 import React, { useState } from 'react';
-import { LoadingSpinner } from '../LoadingSpinner';
 import { UsersUploadList } from './UsersUploadList';
 import { useParseUsersCsv } from '../../common/hooks/parsingHooks';
 import { Add } from '@material-ui/icons';
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   text: {
     margin: '12px 0',
   },
-  noDataText: {
+  noData: {
     margin: '42px 0 69px 0',
   },
   button: {
@@ -66,7 +66,9 @@ export const UsersUploadDialog: React.FC<IUsersUploadDialogProps> = ({
         </DialogTitle>
         <DialogContent className={classes.dialog}>
           {loading ? (
-            <LoadingSpinner />
+            <Box display="flex" justifyContent="center">
+              <CircularProgress className={classes.noData} color="inherit" />
+            </Box>
           ) : errors.length > 0 ? (
             <UsersUploadAlert errors={errors} />
           ) : (
@@ -83,7 +85,7 @@ export const UsersUploadDialog: React.FC<IUsersUploadDialogProps> = ({
               {data.length > 0 ? (
                 <UsersUploadList data={data} />
               ) : (
-                <Typography className={classes.noDataText} align="center">
+                <Typography className={classes.noData} align="center">
                   No Data Found
                 </Typography>
               )}
