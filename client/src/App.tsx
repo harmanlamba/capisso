@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     backgroundColor: '#f4f4f4',
-    height: '100vh',
+    minHeight: '100vh',
   },
 }));
 
