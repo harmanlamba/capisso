@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
 export interface IAddCourseDialogProps {
   open: boolean;
   close: () => void;
-  handleSuccess: () => void;
+  handleSuccess: (newCourseId?: number) => void;
 }
 
 export const AddCourseDialog: React.FC<IAddCourseDialogProps> = ({
@@ -36,7 +36,7 @@ export const AddCourseDialog: React.FC<IAddCourseDialogProps> = ({
             type="Add"
             onSubmit={addCourse}
             handleCancel={() => close()}
-            handleSubmitSuccess={() => handleSuccess()}
+            handleSubmitSuccess={(newCourseId) => handleSuccess(newCourseId)}
           />
         </div>
       </DialogContent>

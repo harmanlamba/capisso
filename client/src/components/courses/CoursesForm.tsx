@@ -22,7 +22,7 @@ export interface ICourseFormProps {
   onSubmit(course: ICourseDto): Promise<any>;
   type: 'Add' | 'Edit';
   handleCancel: () => void;
-  handleSubmitSuccess: () => void;
+  handleSubmitSuccess: (newCourseId?: number) => void;
 }
 export const CoursesForm: React.FC<ICourseFormProps> = ({
   initialValues,
@@ -43,8 +43,8 @@ export const CoursesForm: React.FC<ICourseFormProps> = ({
       }}
       onSubmit={async (values, { resetForm }) => {
         try {
-          await onSubmit(values);
-          handleSubmitSuccess();
+          const id = await onSubmit(values);
+          id ? handleSubmitSuccess(id.id) : handleSubmitSuccess();
         } catch (e) {
           console.error(e);
         }
