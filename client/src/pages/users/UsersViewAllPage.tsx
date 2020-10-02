@@ -43,6 +43,7 @@ export const UsersViewAllPage: React.FC<{}> = () => {
   const handleUploadClose = () => {
     setUploadFile(null);
     setOpenUploadModal(false);
+    refetch();
   };
 
   const filteredUsers = users.filter(

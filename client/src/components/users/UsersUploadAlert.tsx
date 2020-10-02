@@ -1,6 +1,5 @@
 import { Alert, AlertTitle } from '@material-ui/lab';
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
 import { UploadCsvUserError } from '../../common/hooks/parsingHooks';
 
 export interface IUsersUploadAlertProps {
