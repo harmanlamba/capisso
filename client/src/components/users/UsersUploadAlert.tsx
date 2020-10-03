@@ -9,9 +9,9 @@ export interface IUsersUploadAlertProps {
 export const UsersUploadAlert: React.FC<IUsersUploadAlertProps> = ({
   errors,
 }) => {
-  const groupedErrors = errors.reduce((r: any, a) => {
-    r[a.message] = [...(r[a.message] || []), a];
-    return r;
+  const groupedErrors = errors.reduce((prev: any, curr) => {
+    prev[curr.message] = [...(prev[curr.message] || []), curr];
+    return prev;
   }, {});
 
   return (

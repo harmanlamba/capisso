@@ -69,10 +69,9 @@ export const UsersUploadDialog: React.FC<IUsersUploadDialogProps> = ({
             <Box display="flex" justifyContent="center">
               <CircularProgress className={classes.noData} color="inherit" />
             </Box>
-          ) : errors.length > 0 ? (
-            <UsersUploadAlert errors={errors} />
           ) : (
             <>
+              {errors.length > 0 && <UsersUploadAlert errors={errors} />}
               <Box
                 className={classes.text}
                 display="flex"
@@ -83,7 +82,7 @@ export const UsersUploadDialog: React.FC<IUsersUploadDialogProps> = ({
                 <Typography variant="h6">{data.length} Users</Typography>
               </Box>
               {data.length > 0 ? (
-                <UsersUploadList data={data} />
+                <UsersUploadList data={data} errors={errors} />
               ) : (
                 <Typography className={classes.noData} align="center">
                   No Data Found
