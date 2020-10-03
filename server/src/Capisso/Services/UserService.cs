@@ -1,4 +1,4 @@
-using Capisso.Exceptions;
+﻿using Capisso.Exceptions;
 using Capisso.Repository;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -18,6 +18,7 @@ namespace Capisso.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private const string pattern = @"^([\w-.]+)@aucklanduni.ac.nz$";
 
         public UserService(IUnitOfWork unitOfWork)
         {
@@ -80,7 +81,6 @@ namespace Capisso.Services
         public async Task<int> AddUser(UserDto userDto)
         {
             var user = UserMapper.FromDto(userDto);
-            string pattern = @"^([\w-.]+)@aucklanduni.ac.nz$";
 
             Match m = Regex.Match(user.Email, pattern, RegexOptions.IgnoreCase);
 
@@ -118,7 +118,6 @@ namespace Capisso.Services
         public async Task AddUserCollection(UserDto[] userDtos)
         {
             var users = userDtos.Select(u => UserMapper.FromDto(u));
-            string pattern = @"^([\w-.]+)@aucklanduni.ac.nz$";
 
             foreach (var user in users)
             {

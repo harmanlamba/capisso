@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -403,7 +403,6 @@ namespace Capisso.Test.Controllers
             IEnumerable<User> existingUsers = new List<User>
             {
                 new User {Email = "test@aucklanduni.ac.nz", UserRole = UserRole.Admin,},
-                new User {Email = "test@aucklanduni.ac.nz", UserRole = UserRole.Admin,}
             };
 
             _mockUserRepository.Setup(x => x.GetAllAsync()).Returns(Task.FromResult(existingUsers));
