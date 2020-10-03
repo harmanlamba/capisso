@@ -40,7 +40,7 @@ export const addUserCollection = async (
   users: IUserDto[]
 ): Promise<ICreatedDto> => {
   const res = await axios.post(
-    `${process.env.REACT_APP_API_BASE}/users/user-collection`,
+    `${process.env.REACT_APP_API_BASE}/users/collection`,
     users,
     getAxiosConfig()
   );

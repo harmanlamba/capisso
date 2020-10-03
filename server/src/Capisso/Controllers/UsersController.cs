@@ -131,7 +131,7 @@ namespace Capisso.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        [Route("user-collection")]
+        [Route("collection")]
         public async Task<ActionResult> AddUserCollection(UserDto[] userDtos)
         {
             try
@@ -147,7 +147,7 @@ namespace Capisso.Controllers
                 return BadRequest();
             }
 
-            return Created("/user-collection", new CreatedDto { });
+            return Created("/users/collection", new CreatedDto { });
         }
     }
 }
