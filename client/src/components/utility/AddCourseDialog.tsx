@@ -1,7 +1,18 @@
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent } from '@material-ui/core';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  makeStyles,
+} from '@material-ui/core';
 import { addCourse } from '../../common/api/courses';
 import { CoursesForm } from '../courses/CoursesForm';
+
+const useStyles = makeStyles(() => ({
+  dialog: {
+    background: '#f4f4f4',
+  },
+}));
 
 export interface IAddCourseDialogProps {
   open: boolean;
@@ -14,10 +25,12 @@ export const AddCourseDialog: React.FC<IAddCourseDialogProps> = ({
   close,
   handleSuccess,
 }) => {
+  const classes = useStyles();
+
   return (
     <Dialog open={open} onClose={close}>
       <DialogTitle>Add new course</DialogTitle>
-      <DialogContent>
+      <DialogContent className={classes.dialog}>
         <CoursesForm
           type="Add"
           onSubmit={addCourse}
