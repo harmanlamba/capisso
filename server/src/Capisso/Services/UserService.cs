@@ -18,6 +18,7 @@ namespace Capisso.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private const string pattern = @"^([\w-.]+)@aucklanduni.ac.nz$";
 
         public UserService(IUnitOfWork unitOfWork)
         {
@@ -80,7 +81,6 @@ namespace Capisso.Services
         public async Task<int> AddUser(UserDto userDto)
         {
             var user = UserMapper.FromDto(userDto);
-            string pattern = @"^([\w-.]+)@aucklanduni.ac.nz$";
 
             Match m = Regex.Match(user.Email, pattern, RegexOptions.IgnoreCase);
 
@@ -112,6 +112,38 @@ namespace Capisso.Services
             }
 
             _unitOfWork.UserRepository.Update(user);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task AddUserCollection(UserDto[] userDtos)
+        {
+            var users = userDtos.Select(u => UserMapper.FromDto(u));
+
+            foreach (var user in users)
+            {
+                Match m = Regex.Match(user.Email, pattern, RegexOptions.IgnoreCase);
+
+                if (!m.Success)
+                {
+                    throw new InvalidEmailException();
+                }
+            }
+
+            var userEmails = users.Select(u => u.Email);
+
+            if (userEmails.Distinct(StringComparer.InvariantCultureIgnoreCase).Count() != users.Count())
+            {
+                throw new DuplicateEmailException();
+            }
+
+            var duplicateEmails = (await _unitOfWork.UserRepository.GetAllAsync()).Select(u => u.Email).Intersect(userEmails, StringComparer.InvariantCultureIgnoreCase);
+
+            if (duplicateEmails.Any())
+            {
+                throw new DuplicateEmailException();
+            }
+
+            await _unitOfWork.UserRepository.InsertManyAsync(users);
             await _unitOfWork.SaveAsync();
         }
 

@@ -35,3 +35,15 @@ export const editUser = async (user: IUserDto): Promise<void> => {
     getAxiosConfig()
   );
 };
+
+export const addUserCollection = async (
+  users: IUserDto[]
+): Promise<ICreatedDto> => {
+  const res = await axios.post(
+    `${process.env.REACT_APP_API_BASE}/users/collection`,
+    users,
+    getAxiosConfig()
+  );
+
+  return res.data as ICreatedDto;
+};

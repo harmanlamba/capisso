@@ -8,15 +8,21 @@ import {
   Grid,
   TextField,
 } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import { Add, CloudUpload } from '@material-ui/icons';
 
 import { useUsers } from '../../common/hooks/apiHooks';
 import { UsersList } from '../../components/users/UsersList';
+import { UsersUploadDialog } from '../../components/users/UsersUploadDialog';
+import { UsersUploadHelp } from '../../components/users/UsersUploadHelp';
 
 const useStyles = makeStyles((theme) => ({
   content: {
     width: `100%`,
     flexGrow: 1,
+  },
+  button: {
+    marginInlineEnd: '6px',
+    marginInlineStart: '12px',
   },
 }));
 
@@ -25,7 +31,22 @@ export const UsersViewAllPage: React.FC<{}> = () => {
 
   const { users, refetch } = useUsers();
 
+  const [openUploadModal, setOpenUploadModal] = useState<boolean>(false);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [filterTerm, setFilterTerm] = useState<string>();
+
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e?.target?.files) {
+      setUploadFile(e?.target?.files[0]);
+      setOpenUploadModal(true);
+    }
+  };
+
+  const handleUploadClose = () => {
+    setOpenUploadModal(false);
+    setUploadFile(null);
+    refetch();
+  };
 
   const filteredUsers = users.filter(
     (user) =>
@@ -44,6 +65,7 @@ export const UsersViewAllPage: React.FC<{}> = () => {
             </Typography>
             <Box ml={2} position="relative" top="-0.5em" display="inline">
               <Button
+                className={classes.button}
                 component={Link}
                 startIcon={<Add />}
                 to="/users/add"
@@ -52,6 +74,28 @@ export const UsersViewAllPage: React.FC<{}> = () => {
               >
                 Add
               </Button>
+              <input
+                accept=".csv"
+                id="upload-file-button"
+                hidden={true}
+                type="file"
+                onChange={handleUpload}
+                onClick={(e: any) => {
+                  e.target.value = '';
+                }}
+              />
+              <label htmlFor="upload-file-button">
+                <Button
+                  className={classes.button}
+                  startIcon={<CloudUpload />}
+                  component="span"
+                  variant="contained"
+                  color="primary"
+                >
+                  Bulk Upload
+                </Button>
+              </label>
+              <UsersUploadHelp />
             </Box>
           </Box>
           <Box mt={0.3}>
@@ -70,6 +114,11 @@ export const UsersViewAllPage: React.FC<{}> = () => {
         users={filteredUsers}
         onDelete={refetch}
         onRoleChange={refetch}
+      />
+      <UsersUploadDialog
+        open={openUploadModal}
+        onClose={handleUploadClose}
+        file={uploadFile!}
       />
     </div>
   );

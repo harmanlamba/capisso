@@ -128,5 +128,26 @@ namespace Capisso.Controllers
 
             return NoContent();
         }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [Route("collection")]
+        public async Task<ActionResult> AddUserCollection(UserDto[] userDtos)
+        {
+            try
+            {
+                await _userService.AddUserCollection(userDtos);
+            }
+            catch (InvalidEmailException)
+            {
+                return BadRequest();
+            }
+            catch (DuplicateEmailException)
+            {
+                return BadRequest();
+            }
+
+            return Created("/users/collection", new CreatedDto { });
+        }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Capisso.Repository
@@ -11,6 +12,11 @@ namespace Capisso.Repository
     {
         public UserRepository(DbContext dbContext) : base(dbContext)
         {
+        }
+
+        public async Task InsertManyAsync(IEnumerable<User> entities)
+        {
+            await _dbSet.AddRangeAsync(entities);
         }
     }
 }

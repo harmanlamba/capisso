@@ -11,5 +11,6 @@ namespace Capisso.Services
         Task DeleteUser(int id);
         Task<int> AddUser(UserDto userDto);
         Task UpdateUser(UserDto userDto);
+        Task AddUserCollection(UserDto[] userDtos);
     }
 }
