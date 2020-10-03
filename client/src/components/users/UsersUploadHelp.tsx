@@ -51,6 +51,10 @@ export const UsersUploadHelp: React.FC<{}> = () => {
             <li className={classes.listItem}>
               The first row is assumed to be for headers and will be ignored
             </li>
+            <li className={classes.listItem}>
+              Role can be either "Admin" or "User" (will default to "User" if
+              empty)
+            </li>
           </ul>
         </>
       }
