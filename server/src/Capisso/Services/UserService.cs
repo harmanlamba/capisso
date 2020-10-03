@@ -1,4 +1,4 @@
-﻿using Capisso.Exceptions;
+using Capisso.Exceptions;
 using Capisso.Repository;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -132,7 +132,7 @@ namespace Capisso.Services
 
             var userEmails = users.Select(u => u.Email);
 
-            if (userEmails.Distinct().Count() != users.Count())
+            if (userEmails.Distinct(StringComparer.InvariantCultureIgnoreCase).Count() != users.Count())
             {
                 throw new DuplicateEmailException();
             }

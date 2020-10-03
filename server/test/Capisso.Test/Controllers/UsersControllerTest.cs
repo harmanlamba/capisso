@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -379,7 +379,7 @@ namespace Capisso.Test.Controllers
                 new UserDto { Email = "test@aucklanduni.ac.nz", UserRole = UserRole.User },
                 new UserDto { Email = "test3@aucklanduni.ac.nz", UserRole = UserRole.User },
                 new UserDto { Email = "test1@aucklanduni.ac.nz", UserRole = UserRole.User },
-                new UserDto { Email = "test3@aucklanduni.ac.nz", UserRole = UserRole.Admin }
+                new UserDto { Email = "TEST3@aucklanduni.ac.nz", UserRole = UserRole.Admin }
             };
 
             // act
