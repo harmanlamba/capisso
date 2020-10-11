@@ -1,0 +1,30 @@
+name: Docker Deploy Workflow
+
+on:
+  push:
+    branches: [feature/docker-deployment]
+
+jobs:
+  deploy:
+    name: Deploy Docker Container
+    runs-on: ubuntu-latest
+    env:
+      REPO: ${{ secrets.DOCKER_REPO}}
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS}}
+
+      - name: Build docker image
+        run: >
+          docker build 
+          -t $REPO:latest -t $REPO:${GITHUB_SHA::8} 
+          --build-arg REACT_APP_API_BASE=${{ secrets.REACT_APP_API_BASE}} 
+          --build-arg REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID}} 
+          --build-arg REACT_APP_GOOGLE_HOSTED_DOMAIN=${{ secrets.REACT_APP_GOOGLE_HOSTED_DOMAIN}} 
+          .
+
+      - name: Publish docker image
+        run: docker push $REPO

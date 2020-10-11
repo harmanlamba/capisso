@@ -1,6 +1,10 @@
 # build frontend
 FROM node:14 AS build-frontend
 
+ARG REACT_APP_API_BASE
+ARG REACT_APP_GOOGLE_CLIENT_ID
+ARG REACT_APP_GOOGLE_HOSTED_DOMAIN
+
 WORKDIR /app
 COPY client/package.json client/yarn.lock ./
 RUN yarn
