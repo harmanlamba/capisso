@@ -28,3 +28,12 @@ jobs:
 
       - name: Publish docker image
         run: docker push $REPO
+
+      - name: Restart deployment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_URL }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }}
+          port: 22
+          script: ./restart.sh
