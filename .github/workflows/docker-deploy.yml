@@ -2,7 +2,7 @@ name: Docker Deploy Workflow
 
 on:
   push:
-    branches: [feature/docker-deployment]
+    branches: [master]
 
 jobs:
   deploy:

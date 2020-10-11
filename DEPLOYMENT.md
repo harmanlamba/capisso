@@ -67,3 +67,7 @@ docker run -p 3000:80 <IMAGE_NAME>
 ## Deploying the Docker container
 
 1. Host the docker container on your preferred cloud provider or virtual private server
+
+2. Port 80 and 443 are exposable from the container. Note that Google Auth will NOT work with a non-secure HTTP deployment.
+
+3. For convenience, we recommend using a reverse proxy that handles SSL. Let's Encrypt offers free certificates that can easily be configured with nginx, apache, etc.
