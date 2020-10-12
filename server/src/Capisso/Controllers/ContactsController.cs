@@ -3,7 +3,6 @@ using Capisso.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Capisso.Exceptions;
-using System.Collections;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 
@@ -21,6 +20,14 @@ namespace Capisso.Controllers
             _contactService = contactService;
         }
 
+        /// <summary>
+        /// Creates a contact from the data in the given contactDto object.
+        /// </summary>
+        /// <param name="contactDto">Contains the data for the contact to be created.</param>
+        /// <returns>
+        /// A Created response in the case of the request being successful, where the URI in the location header 
+        /// is the location of the newly created contact, and in the body the id of the created contact is returned.
+        /// </returns>
         [HttpPost]
         public async Task<ActionResult<CreatedDto>> CreateContact([FromBody] ContactDto contactDto)
         {
@@ -36,6 +43,18 @@ namespace Capisso.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets a list of all contacts, optionally filtered by organisation id and active status.
+        /// </summary>
+        /// <param name="organisationId">If present, only contacts in this organisation will be returned.</param>
+        /// <param name="isActive">
+        /// If present, contacts will be filtered by their status.
+        /// If true, only active contacts will be returned. If false, only inactive contacts will be returned.
+        /// </param>
+        /// <returns>
+        /// An Ok response in the case that the request was successful, with the body containing
+        /// the list of all filtered contacts.
+        /// </returns>
         [HttpGet]
         public async Task<IEnumerable<ContactDto>> GetContacts([FromQuery] int? organisationId = null, [FromQuery] bool? isActive = null)
         {
@@ -58,6 +77,16 @@ namespace Capisso.Controllers
             return Ok(contactDto);
         }
 
+        /// <summary>
+        /// Updates the contact with the given id, with the data in the given contactDto.
+        /// </summary>
+        /// <param name="contactDto">Contains the new data to update the contact with.</param>
+        /// <param name="contactId">The id of the contact to be updated.</param>
+        /// <returns>
+        /// A NoContent response in the case that the update was successful.
+        /// A BadRequest response in the case that the given contact ids do not match.
+        /// A NotFound response in the case that the organisation was not found.
+        /// </returns>
         [HttpPut("{contactId:int}")]
         public async Task<ActionResult> UpdateContact([FromBody] ContactDto contactDto, [FromRoute] int contactId)
         {

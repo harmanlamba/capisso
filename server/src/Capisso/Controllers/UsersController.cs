@@ -24,6 +24,15 @@ namespace Capisso.Controllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// Attempts to login the user with details from the given oneTimeToken.
+        /// </summary>
+        /// <param name="onetimeToken">The Google-issued Json web token to login with.</param>
+        /// <returns>
+        /// An Ok response in the case that the request was successful, with the login data returned in the body.
+        /// An UnauthorizedResult response in the case that the JWT is invalid or a user with the 
+        /// email was not found.
+        /// </returns>
         [HttpPost]
         [Route("login")]
         public async Task<ActionResult<LoginDto>> GoogleLogin([FromBody] OneTimeTokenDto onetimeToken)
@@ -55,6 +64,13 @@ namespace Capisso.Controllers
             return Ok(loginDto);
         }
 
+        /// <summary>
+        /// Gets a list of all users.
+        /// </summary>
+        /// <returns>
+        /// An Ok response in the case that the request was successful, with the body containing
+        /// the list of all users.
+        /// </returns>
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
@@ -64,6 +80,16 @@ namespace Capisso.Controllers
             return Ok(users);
         }
 
+        /// <summary>
+        /// Deletes the user with the given userId.
+        /// </summary>
+        /// <param name="userId">The id of the user to be deleted.</param>
+        /// <returns>
+        /// A NoContent response in the case that the user was successfully deleted.
+        /// A NotFound response in the case where no user with the given id is found.
+        /// A BadRequest response in the case where the user cannot be deleted 
+        /// because no other admins exist.
+        /// </returns>
         [HttpDelete]
         [Route("{userId:int}")]
         [Authorize(Roles = "Admin")]
@@ -85,6 +111,14 @@ namespace Capisso.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Adds a user with the data in the given userDto object.
+        /// </summary>
+        /// <param name="userDto">Contains the data for the new user to be created.</param>
+        /// <returns>
+        /// A Created response in the case of the user being successfully created. 
+        /// A BadRequest response in the case that the provided email is invalid or already exists.
+        /// </returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> AddUser(UserDto userDto)
@@ -106,7 +140,17 @@ namespace Capisso.Controllers
 
             return Created($"/users/{userId}", new CreatedDto { Id = userId });
         }
-
+ 
+        /// <summary>
+        /// Updates the user with the given id, with the data in the given userDto.
+        /// </summary>
+        /// <param name="userDto">Contains the new data to update the user with.</param>
+        /// <param name="userId">The id of the user to be updated.</param>
+        /// <returns>
+        /// A NoContent response in the case that the update was successful.
+        /// A BadRequest response in the case that the given user ids do not match, or
+        /// the user cannot be demoted because no other admin exists.
+        /// </returns>
         [HttpPut]
         [Route("{userId}")]
         [Authorize(Roles = "Admin")]
@@ -129,6 +173,15 @@ namespace Capisso.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Adds a given collection of users.
+        /// </summary>
+        /// <param name="userDtos">A collection of users and their details to be created.</param>
+        /// <returns>
+        /// A Created response in the case of all users being successfully created. 
+        /// A BadRequest response in the case that one of the provided emails is invalid, already exists
+        /// or is given more than once.
+        /// </returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [Route("collection")]
