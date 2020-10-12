@@ -23,9 +23,11 @@ namespace Capisso
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _env;
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -75,6 +77,13 @@ namespace Capisso
                   };
               });
 
+            if (_env.IsProduction())
+            {
+                services.AddSpaStaticFiles(config =>
+                {
+                    config.RootPath = "ClientApp/build";
+                });
+            }
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IOrganisationService, OrganisationService>();
@@ -100,6 +109,15 @@ namespace Capisso
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            if (env.IsProduction())
+            {
+                app.UseSpaStaticFiles();
+                app.UseSpa(spa =>
+                {
+                    spa.Options.SourcePath = "ClientApp";
+                });
+            }
 
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
             var context = serviceScope.ServiceProvider.GetRequiredService<CapissoContext>();

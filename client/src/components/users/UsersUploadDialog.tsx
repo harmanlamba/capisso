@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
     margin: '12px 0',
   },
   noData: {
-    margin: '42px 0 69px 0',
+    margin: '40px 0 70px 0',
   },
   button: {
     margin: '0 5px',

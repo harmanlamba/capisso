@@ -41,7 +41,7 @@ namespace Capisso.Test.Services
                 new User
                 {
                     Id = 1,
-                    Email = "urzababa@aucklanduni.ac.nz",
+                    Email = "test@aucklanduni.ac.nz",
                     UserRole = UserRole.Admin
                 }
             };
@@ -49,7 +49,7 @@ namespace Capisso.Test.Services
                 .Returns(Task.FromResult(users))
                 .Verifiable();
 
-            const string email = "urzababa@aucklanduni.ac.nz"; // user exists
+            const string email = "test@aucklanduni.ac.nz"; // user exists
             const string secret = "evKsNMn9EK13T3uyoTlmEa6MVvNFzl0D"; // random secret
 
             // act
@@ -76,7 +76,7 @@ namespace Capisso.Test.Services
                 .Returns(Task.FromResult(users))
                 .Verifiable();
 
-            const string email = "babs@aucklanduni.ac.nz"; // user doesn't exist
+            const string email = "test@aucklanduni.ac.nz"; // user doesn't exist
             const string secret = "evKsNMn9EK13T3uyoTlmEa6MVvNFzl0D"; // random secret
 
             // act and assert
@@ -242,7 +242,7 @@ namespace Capisso.Test.Services
             var userDto = new UserDto
             {
                 Id = 1,
-                Email = "someonehasanurzababafetish@aucklanduni.ac.nz",
+                Email = "test@aucklanduni.ac.nz",
                 UserRole = UserRole.User
             };
 
