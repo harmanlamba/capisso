@@ -39,6 +39,7 @@ export const getAxiosConfig = () => {
 
   const user = getAuthUser();
   if (user) {
+    signOutIfTokenExpired(user);
     config.headers.Authorization = `Bearer ${user.jwtToken}`;
   }
 
@@ -49,4 +50,14 @@ export const onSignOut = () => {
   localStorage.removeItem('authenticatedUser');
   // Force React to reload so it picks up the (now empty) user localstorage state
   window.location.href = '/';
+};
+
+const signOutIfTokenExpired = (user: ILoginDto) => {
+  const { exp } = jwt_decode(user.jwtToken);
+
+  // Expire the token one minute earlier to avoid latency issues
+  const expTimeInMs = exp * 1000 - 60000;
+  if (Date.now() >= expTimeInMs) {
+    onSignOut();
+  }
 };
