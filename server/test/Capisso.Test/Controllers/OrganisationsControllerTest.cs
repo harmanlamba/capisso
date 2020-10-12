@@ -69,7 +69,7 @@ namespace Capisso.Test.Controllers
         public async Task TestGetAllOrganisationOne()
         {
             //Arrange
-            var projects = new List<Project> { new Project { Id = 1 }, new Project { Id = 42 } };
+            var projects = new List<Project> { new Project { Id = 1 }, new Project { Id = 2 } };
             IEnumerable<Organisation> organisations = new List<Organisation>
             {
                 new Organisation
@@ -101,7 +101,7 @@ namespace Capisso.Test.Controllers
         public async Task TestGetOneOrganisation()
         {
             //Arrange
-            var projects = new List<Project> { new Project { Id = 1 }, new Project { Id = 42 } };
+            var projects = new List<Project> { new Project { Id = 1 }, new Project { Id = 2 } };
             var organisation = new Organisation
             {
                 Id = 1,

@@ -82,13 +82,13 @@ namespace Capisso.Test.Controllers
                 Name = "name",
                 PhoneNumber = "123",
                 Email = "name@name.com",
-                OrganisationId = 69,
+                OrganisationId = 2,
             };
             _mockContactRepository
                 .Setup(x => x.InsertAsync(It.IsAny<Contact>()))
                 .Returns(Task.FromResult(1));
             _mockOrganisationRepository
-                .Setup(x => x.GetByIdAsync(69))
+                .Setup(x => x.GetByIdAsync(2))
                 .Returns(Task.FromResult<Organisation>(null))
                 .Verifiable();
 
@@ -110,7 +110,7 @@ namespace Capisso.Test.Controllers
                 new Contact
                 {
                     Id = 1,
-                    Name = "Ur'Zababa",
+                    Name = "Test Name",
                     Email = "test@gmail.com",
                     PhoneNumber = "111",
                     OrganisationId = 1,
@@ -141,7 +141,7 @@ namespace Capisso.Test.Controllers
             // assert
             Assert.AreEqual(1, response.Count());
             Assert.AreEqual(1, responseList[0].Id);
-            Assert.AreEqual("Ur'Zababa", responseList[0].Name);
+            Assert.AreEqual("Test Name", responseList[0].Name);
         }
 
         [Test]
@@ -151,10 +151,10 @@ namespace Capisso.Test.Controllers
             Contact contact = new Contact
             {
                 Id = 1,
-                Name = "Ur'Zababa",
+                Name = "Test Name",
                 Email = "test@gmail.com",
                 PhoneNumber = "111",
-                OrganisationId = 69,
+                OrganisationId = 2,
                 Projects = new List<Project>
                 {
                     new Project {
@@ -225,7 +225,7 @@ namespace Capisso.Test.Controllers
         {
             var contactDto = new ContactDto
             {
-                Id = 69,
+                Id = 2,
                 Name = "NewName",
                 PhoneNumber = "021111111111",
                 Email = "new@email.com",

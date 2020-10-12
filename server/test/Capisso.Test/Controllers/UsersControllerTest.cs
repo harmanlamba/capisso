@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Capisso.Controllers;
 using Capisso.Dto;
 using Capisso.Entities;
-using Capisso.Exceptions;
 using Capisso.Repository;
 using Capisso.Services;
 using Capisso.Test.Repository;

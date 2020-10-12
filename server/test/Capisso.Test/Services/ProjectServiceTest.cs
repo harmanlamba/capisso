@@ -9,7 +9,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace Capisso.Test.Services
 {
@@ -66,10 +65,10 @@ namespace Capisso.Test.Services
             Contact contact = new Contact
             {
                 Id = 1,
-                Name = "Ur'Zababa",
+                Name = "Test Name",
                 Email = "test@gmail.com",
                 PhoneNumber = "111",
-                OrganisationId = 69,
+                OrganisationId = 1,
                 Projects = new List<Project>
                 {
                     new Project {
@@ -306,10 +305,10 @@ namespace Capisso.Test.Services
             Contact contact = new Contact
             {
                 Id = 1,
-                Name = "Ur'Zababa",
+                Name = "Test Name",
                 Email = "test@gmail.com",
                 PhoneNumber = "111",
-                OrganisationId = 69,
+                OrganisationId = 1,
                 Projects = new List<Project>
                 {
                     new Project {
