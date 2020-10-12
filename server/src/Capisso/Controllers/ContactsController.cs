@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Capisso.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "Admin,User")]
     public class ContactsController : ControllerBase
