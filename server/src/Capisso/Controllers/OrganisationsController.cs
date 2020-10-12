@@ -18,7 +18,7 @@ namespace Capisso.Controllers
         {
             _organisationService = organisationService;
         }
-        
+
         /// <summary>
         /// Gets a list of all organisations.
         /// </summary>

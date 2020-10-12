@@ -71,10 +71,10 @@ namespace Capisso.Test.Controllers
             Contact contact = new Contact
             {
                 Id = 1,
-                Name = "Ur'Zababa",
+                Name = "Test Name",
                 Email = "test@gmail.com",
                 PhoneNumber = "111",
-                OrganisationId = 69,
+                OrganisationId = 1,
                 Projects = new List<Project>
                 {
                     new Project {
@@ -189,10 +189,10 @@ namespace Capisso.Test.Controllers
             Contact contact = new Contact
             {
                 Id = 1,
-                Name = "Ur'Zababa",
+                Name = "Test Name",
                 Email = "test@gmail.com",
                 PhoneNumber = "111",
-                OrganisationId = 69,
+                OrganisationId = 2,
                 Projects = new List<Project>
                 {
                     new Project {
@@ -226,7 +226,7 @@ namespace Capisso.Test.Controllers
         {
             var projectDto = new ProjectDto
             {
-                Id = 69,
+                Id = 2,
                 Title = "NewTitle",
                 Notes = "NewNotes",
                 Outcome = "NewOutcome",
@@ -239,7 +239,7 @@ namespace Capisso.Test.Controllers
             _mockProjectRepository.Setup(x => x.Update(It.IsAny<Project>()));
 
             // Act
-            ActionResult<NonActionAttribute> response = await _projectsController.UpdateProject(projectDto, 420);
+            ActionResult<NonActionAttribute> response = await _projectsController.UpdateProject(projectDto, 1);
 
             // Assert
             Assert.IsInstanceOf<BadRequestResult>(response.Result);

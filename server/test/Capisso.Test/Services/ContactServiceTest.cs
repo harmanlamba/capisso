@@ -71,13 +71,13 @@ namespace Capisso.Test.Services
                 Name = "name",
                 PhoneNumber = "123",
                 Email = "name@name.com",
-                OrganisationId = 69,
+                OrganisationId = 1,
             };
             _mockContactRepository
                 .Setup(x => x.InsertAsync(It.IsAny<Contact>()))
                 .Returns(Task.FromResult(1));
             _mockOrganisationRepository
-                .Setup(x => x.GetByIdAsync(69))
+                .Setup(x => x.GetByIdAsync(1))
                 .Returns(Task.FromResult<Organisation>(null))
                 .Verifiable();
 
@@ -94,10 +94,10 @@ namespace Capisso.Test.Services
             Contact contact = new Contact
             {
                 Id = 1,
-                Name = "Ur'Zababa",
+                Name = "Test Name",
                 Email = "test@gmail.com",
                 PhoneNumber = "111",
-                OrganisationId = 69,
+                OrganisationId = 1,
                 Projects = new List<Project>
                 {
                     new Project {

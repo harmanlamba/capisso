@@ -140,7 +140,7 @@ namespace Capisso.Controllers
 
             return Created($"/users/{userId}", new CreatedDto { Id = userId });
         }
- 
+
         /// <summary>
         /// Updates the user with the given id, with the data in the given userDto.
         /// </summary>
