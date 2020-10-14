@@ -3,6 +3,10 @@
 # Capisso
 Capisso is organisation management tool that tracks student projects.
 
+## Demo
+
+You can access Capisso at https://capisso.jedrobertson.com to test the application. You will need to login with a aucklanduni.ac.nz account that has been whitelisted, contact the maintainers if you should be, but are not, whitelisted. 
+
 ## Environment Setup
 1. Ensure Node.js v12 and Yarn v1.2.x are installed and on the system path.
 1. Ensure ASP.NET Core 3.1.x is installed on on the system path.
